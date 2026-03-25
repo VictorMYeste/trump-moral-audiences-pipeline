@@ -1,0 +1,246 @@
+# Preprocessing Protocol
+
+This document defines the reproducible preprocessing pipeline for Trump archive posts.
+
+The implementation source of truth is:
+- `scripts/preprocess_posts.py`
+
+## 1. Objective
+
+Produce a prompt-ready, anonymized, issue-topic subset for synthetic audience prompting, while preserving a broader analytical archive for moderation-status analysis.
+
+## 2. Input Dataset
+
+Default input file:
+- `data/raw/trump_archive_me2bert_filtered_2021.csv`
+
+Planned extension input file:
+- `data/raw/trump_archive_me2bert_filtered_2024.csv` (not yet added)
+
+Source provenance:
+- Current window source (up to 2021): Kaggle archive
+  - <https://www.kaggle.com/datasets/headsortails/trump-twitter-archive>
+  - https://www.kaggle.com/datasets/headsortails/trump-twitter-archive
+- Planned extension source (2021-2024): The Trump Archive
+  - <https://www.thetrumparchive.com/>
+  - https://www.thetrumparchive.com/
+- Current protocol window: `2009-05-12` to `2021-01-08`
+
+Planned extension window:
+- `2021-01-09` to `2024-12-31` from The Trump Archive.
+- The extension input must follow the same raw schema defined below.
+
+Required source columns:
+- `id`
+- `text`
+- `isRetweet`
+- `isDeleted`
+- `date`
+- `isFlagged`
+- `dominant_moral_dimension`
+- `is_morally_relevant`
+
+### 2.1 Expected Raw CSV Schema
+
+Expected header (17 columns):
+
+1. `id`
+2. `text`
+3. `isRetweet`
+4. `isDeleted`
+5. `device`
+6. `favorites`
+7. `retweets`
+8. `date`
+9. `isFlagged`
+10. `CH`
+11. `FC`
+12. `LB`
+13. `AS`
+14. `PD`
+15. `moral_max`
+16. `dominant_moral_dimension`
+17. `is_morally_relevant`
+
+Field format contract:
+
+| Field | Type | Expected format / values | Used by pipeline |
+| --- | --- | --- | --- |
+| `id` | string/integer | unique tweet id (digits recommended) | yes |
+| `text` | string | UTF-8 text content | yes |
+| `isRetweet` | string bool | `t`/`f` (parser also accepts common boolean variants) | yes |
+| `isDeleted` | string bool | `t`/`f` | yes |
+| `device` | string | free text source label | no (pass-through) |
+| `favorites` | integer | non-negative integer | no (pass-through) |
+| `retweets` | integer | non-negative integer | no (pass-through) |
+| `date` | datetime string | `YYYY-MM-DD HH:MM:SS` | yes |
+| `isFlagged` | string bool | `t`/`f` | yes |
+| `CH` | float | moral score in `[0, 1]` | no (pass-through) |
+| `FC` | float | moral score in `[0, 1]` | no (pass-through) |
+| `LB` | float | moral score in `[0, 1]` | no (pass-through) |
+| `AS` | float | moral score in `[0, 1]` | no (pass-through) |
+| `PD` | float | moral score in `[0, 1]` | no (pass-through) |
+| `moral_max` | float | max moral score in `[0, 1]` | no (pass-through) |
+| `dominant_moral_dimension` | enum string | one of `CH`, `FC`, `LB`, `AS`, `PD` | yes |
+| `is_morally_relevant` | string bool | `True`/`False` (or parser-compatible boolean values) | yes |
+
+Reference synthetic sample:
+- `data/reference/examples/raw_input_sample.csv`
+
+The sample is illustrative only and contains no original raw post content.
+
+Example (synthetic):
+
+```csv
+id,text,isRetweet,isDeleted,device,favorites,retweets,date,isFlagged,CH,FC,LB,AS,PD,moral_max,dominant_moral_dimension,is_morally_relevant
+111111111111111111,"Our border policies must be lawful and secure for everyone.",f,f,Twitter for iPhone,10234,2456,2020-02-01 12:34:56,f,0.12345,0.23456,0.34567,0.45678,0.56789,0.56789,PD,True
+```
+
+## 3. Output Files
+
+Default output directory:
+- `data/interim/preprocessing/`
+
+Generated files:
+1. `posts_clean.csv`
+2. `posts_topic_labeled.csv`
+3. `posts_topic_validated.csv`
+4. `posts_prompt_ready.csv`
+5. `posts_moderation_analysis.csv`
+
+## 4. Derived Columns
+
+The pipeline appends these columns:
+- `year`
+- `month`
+- `role`
+- `moderation_status`
+- `text_html_decoded`
+- `text_no_url`
+- `text_clean`
+- `review_flag`
+- `topic_candidates`
+- `topic`
+- `topic_confidence`
+- `keep_for_prompt`
+- `exclude_reason`
+- `text_anon`
+
+## 5. Deterministic Processing Rules
+
+Rules are applied in fixed order.
+
+### 5.1 Hard filters before topic labeling
+
+1. Keep only rows with `is_morally_relevant = true`.
+2. Drop retweets (`isRetweet = true` or text starts with `RT @`).
+3. Decode HTML entities in `text` into `text_html_decoded`.
+4. Remove URLs (`https?://\S+`) into `text_no_url`.
+5. Normalize whitespace into `text_clean`.
+6. Drop if `len(text_clean) < 40`.
+7. Drop if alphabetic token count (`[A-Za-z]+(?:'[A-Za-z]+)?`) is less than 7.
+8. Drop if cleaned text matches low-information patterns exactly:
+   - `thank you`
+   - `true`
+   - `so true`
+   - `rigged`
+   - `vote`
+   - `great`
+9. Set `review_flag = truncated_text` if text contains `...` or `...`.
+
+### 5.2 Role and moderation metadata
+
+`role` from `date`:
+- `public_figure`: 2009-05-12 to 2015-06-15
+- `candidate`: 2015-06-16 to 2016-11-08
+- `president_elect`: 2016-11-09 to 2017-01-19
+- `sitting_president`: 2017-01-20 to 2021-01-08
+- `out_of_range`: all others
+
+`moderation_status` from `isDeleted`, `isFlagged`:
+- `deleted_and_flagged`
+- `deleted`
+- `flagged`
+- `not_deleted_not_flagged`
+
+### 5.3 Topic labeling
+
+Each row is matched against fixed issue-topic regex patterns. Current labels:
+- `immigration_border`
+- `economy_jobs_trade`
+- `election_integrity_democracy`
+- `foreign_policy_national_security`
+- `crime_policing_criminal_justice`
+- `covid_public_health`
+- `judiciary_courts`
+
+Assignment rules:
+- 1 topic hit -> `topic=<label>`, `topic_confidence=high`
+- >1 topic hit -> `topic=review_needed`, `topic_confidence=medium`
+- 0 topic hits -> `topic=other_campaign_generic`, `topic_confidence=low`
+
+Exact regex patterns are documented in code:
+- `scripts/preprocess_posts.py` (`TOPIC_PATTERNS`)
+
+### 5.4 Optional manual override layer
+
+If provided, `--manual-review-csv` can override row-level values by `id`.
+Supported override columns:
+- `id`
+- `topic`
+- `topic_confidence`
+- `review_flag`
+- `exclude_reason_add`
+
+### 5.5 Anonymization
+
+`text_anon` is produced from `text_clean` using ordered replacements:
+1. Role-sensitive replacements (for example, `President Trump` -> `the president`).
+2. Identity replacement (`Trump`, `Donald Trump`, `@realDonaldTrump` -> `[POLITICAL_ACTOR]`).
+3. Campaign tag replacement (`MAGA`, `KAG2020`, etc. -> `[CAMPAIGN_TAG]`).
+4. Institution allowlist normalization (for example, `@CDCgov` -> `CDC`).
+5. Remaining handles -> `[USER]`.
+
+Anonymization quality checks:
+- detect identity leaks (`trump`, `donald`, specific campaign tags)
+- flag degradation if text becomes too short/sparse after anonymization
+
+### 5.6 Prompt-readiness exclusions
+
+Rows are excluded from `posts_prompt_ready.csv` if any apply:
+- `role_out_of_range`
+- `identity_leak_after_anonymization`
+- `anonymization_degraded_text`
+- `other_campaign_generic`
+- `multi_topic_ambiguous`
+- `truncated_or_context_dependent`
+- `excluded_from_prompt_due_to_moderation_status`
+- `duplicate_after_cleaning`
+
+`keep_for_prompt=yes` is assigned only when `exclude_reason` is empty.
+
+### 5.7 Final deduplication
+
+Prompt candidates are deduplicated by normalized lowercase `text_anon`.
+First occurrence is kept; subsequent duplicates are excluded with `duplicate_after_cleaning`.
+
+## 6. Interpretation of Output Files
+
+- `posts_prompt_ready.csv`: strict prompting pool.
+- `posts_moderation_analysis.csv`: full post-filter pool including deleted/flagged statuses for comparative analysis.
+
+## 7. Reproducible Execution
+
+Run:
+
+```bash
+python3 scripts/preprocess_posts.py
+```
+
+Optional overrides:
+
+```bash
+python3 scripts/preprocess_posts.py --manual-review-csv path/to/manual_review_overrides.csv
+```
+
+The script prints row counts, drop counts, topic counts, moderation counts, and prompt-keep counts for auditability.

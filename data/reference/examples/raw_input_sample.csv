@@ -1,0 +1,4 @@
+id,text,isRetweet,isDeleted,device,favorites,retweets,date,isFlagged,CH,FC,LB,AS,PD,moral_max,dominant_moral_dimension,is_morally_relevant
+111111111111111111,"Our border policies must be lawful and secure for everyone.",f,f,Twitter for iPhone,10234,2456,2020-02-01 12:34:56,f,0.12345,0.23456,0.34567,0.45678,0.56789,0.56789,PD,True
+222222222222222222,"RT @example: Great rally tonight!",t,f,Twitter Web Client,0,321,2016-08-15 09:10:11,f,0.11111,0.22222,0.33333,0.44444,0.55555,0.55555,PD,True
+333333333333333333,"New jobs report shows strong growth in manufacturing and wages.",f,t,Twitter for Android,88321,14022,2019-11-07 18:45:00,f,0.21000,0.92000,0.41000,0.52000,0.17000,0.92000,FC,True

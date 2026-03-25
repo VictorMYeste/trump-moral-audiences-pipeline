@@ -1,0 +1,26 @@
+# Private notes
+docs/private/
+
+# macOS noise
+.DS_Store
+**/.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+build/
+dist/
+pip-wheel-metadata/
+
+# Editor-local files
+*.code-workspace
+
+# Local/private datasets (not for public repo)
+data/raw/
+data/pew_datasets/
+data/interim/
+
+# Local generated run artifacts
+reports/
