@@ -5,6 +5,7 @@ This document defines the reproducible preprocessing pipeline for Trump archive 
 The implementation source of truth is:
 - `scripts/preprocess_posts.py`
 - `data/reference/methods/filter_spec.json` (machine-readable rule list used for appendix export)
+- `data/reference/methods/topic_keywords.json` (canonical topic keyword registry)
 
 ## 1. Objective
 
@@ -183,7 +184,8 @@ Assignment rules:
 - 0 topic hits -> `topic=other_campaign_generic`, `topic_confidence=low`
 
 Exact regex patterns are documented in code:
-- `scripts/preprocess_posts.py` (`TOPIC_PATTERNS`)
+- `data/reference/methods/topic_keywords.json` (canonical reusable registry)
+- `scripts/topic_rules.py` (shared loader used by post and PEW scripts)
 - `reports/methods/topic_patterns.csv` (generated table for appendix use)
 
 ### 5.4 Optional manual override layer

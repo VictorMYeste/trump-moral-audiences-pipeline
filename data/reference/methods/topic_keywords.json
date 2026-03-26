@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "spec_name": "topic_keyword_registry",
+    "spec_version": "1.0.0",
+    "last_updated": "2026-03-26",
+    "selection_method": "deductive_high_precision_pew_aligned",
+    "notes": "Topic regexes are intentionally conservative and optimized for reproducibility and precision over recall."
+  },
+  "topics": [
+    {
+      "topic": "immigration_border",
+      "regex": "\\b(border|immigration|immigrant|immigrants|migrant|migrants|asylum|refugee|refugees|wall|dreamer|dreamers|ice)\\b",
+      "applies_to": [
+        "posts",
+        "pew"
+      ],
+      "selection_rationale": "Captures border governance and migration policy debate used in both campaign messaging and PEW policy items.",
+      "source_basis": "PEW immigration item wording + policy-domain terms found in the post corpus."
+    },
+    {
+      "topic": "economy_jobs_trade",
+      "regex": "\\b(economy|economic|job|jobs|employment|unemployment|trade|tariff|tariffs|tax|taxes|market|markets|manufacturing|manufacturer|manufacturers|small business|small businesses|wage|wages|inflation)\\b",
+      "applies_to": [
+        "posts",
+        "pew"
+      ],
+      "selection_rationale": "Represents core economic performance and industrial policy language relevant to presidential evaluation.",
+      "source_basis": "PEW economy/tax/trade constructs + campaign-era macroeconomic vocabulary."
+    },
+    {
+      "topic": "election_integrity_democracy",
+      "regex": "\\b(election|elections|vote|votes|voting|voter|voters|ballot|ballots|mail[ -]?in|absentee|fraud|democracy|electoral|poll watcher|poll watchers)\\b",
+      "applies_to": [
+        "posts",
+        "pew"
+      ],
+      "selection_rationale": "Maps to electoral-process legitimacy, voting administration, and democracy framing.",
+      "source_basis": "PEW election-democracy batteries + election-administration terminology in posts."
+    },
+    {
+      "topic": "foreign_policy_national_security",
+      "regex": "\\b(china|iran|russia|north korea|nato|isis|afghanistan|iraq|syria|israel|middle east|terror|terrorism|terrorist|terrorists|peace deal|foreign policy)\\b",
+      "applies_to": [
+        "posts",
+        "pew"
+      ],
+      "selection_rationale": "Captures external relations, conflict theaters, and national-security framing.",
+      "source_basis": "PEW foreign-policy question language + geopolitical entities appearing in posts."
+    },
+    {
+      "topic": "crime_policing_criminal_justice",
+      "regex": "\\b(crime|police|law enforcement|criminal justice|justice|violent crime|violent|murder|murders|homicide|riots|riot|looting|prison|jail|antifa)\\b",
+      "applies_to": [
+        "posts",
+        "pew"
+      ],
+      "selection_rationale": "Covers public-order, policing, and punitive-justice issue framing.",
+      "source_basis": "PEW crime/public-safety items + law-and-order lexical field in posts."
+    },
+    {
+      "topic": "covid_public_health",
+      "regex": "\\b(covid|covid19|covid-19|coronavirus|virus|pandemic|vaccine|vaccines|vaccination|cdc|fda|mask|masks|lockdown|lockdowns|ventilator|ventilators|hospital|hospitals|health care|healthcare)\\b",
+      "applies_to": [
+        "posts",
+        "pew"
+      ],
+      "selection_rationale": "Captures pandemic management and public-health governance language.",
+      "source_basis": "PEW COVID/health policy items + pandemic-era institutional terms in posts."
+    },
+    {
+      "topic": "judiciary_courts",
+      "regex": "\\b(court|courts|judge|judges|justice|justices|supreme court|scotus|ruling|injunction|constitutional)\\b",
+      "applies_to": [
+        "posts",
+        "pew"
+      ],
+      "selection_rationale": "Captures judicial institutions, legal rulings, and constitutional framing.",
+      "source_basis": "PEW court/governance framing + judicial lexicon in posts."
+    }
+  ]
+}

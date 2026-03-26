@@ -8,6 +8,7 @@ Core design docs:
 - `docs/proposal.md`
 - `docs/preprocessing_protocol.md`
 - `docs/topic_pew_alignment.md`
+- `docs/topic_keyword_registry.md`
 
 ## Repository Layout
 
@@ -18,6 +19,8 @@ Core design docs:
 - `data/reference/pew/waves_manifest.csv`: manifest of wave folders to validate before running.
 - `data/reference/examples/raw_input_sample.csv`: synthetic example of expected raw input schema.
 - `scripts/preprocess_posts.py`: post cleaning, topic labeling, anonymization, prompt-ready filtering.
+- `scripts/topic_rules.py`: shared topic-registry loader/validator used by post and PEW selectors.
+- `scripts/validate_topic_rules.py`: preflight validation of the shared topic keyword registry.
 - `scripts/build_waves_manifest.py`: auto-build wave manifest by scanning wave folders.
 - `scripts/validate_pew_wave_inputs.py`: preflight validation of wave folders (`readme` and `.sav` checks).
 - `scripts/build_pew_inventory.py`: generate one wave-level PEW inventory partial.
@@ -29,6 +32,7 @@ Core design docs:
 - `scripts/export_methods_appendix.py`: export appendix-ready rules/regex/audit artifacts for methods reporting.
 - `scripts/run_full_pipeline.sh`: run the full end-to-end sequence in one command.
 - `data/reference/methods/filter_spec.json`: machine-readable canonical filter/selection rule specification.
+- `data/reference/methods/topic_keywords.json`: canonical reusable topic-keyword registry (regex + rationale).
 - `data/interim/pew/pew_question_inventory.csv`: merged PEW inventory (generated).
 - `data/interim/pew/pew_rq4_inventory.csv`: RQ4 deterministic selection table (generated).
 
@@ -137,20 +141,22 @@ python3 -c "import pypdf; print(pypdf.__version__)"
 
 1. Run `build_waves_manifest.py` to auto-build `waves_manifest.csv` from downloaded wave folders.
 2. Run `validate_pew_wave_inputs.py` to catch missing/invalid wave folders before extraction.
-3. Run `build_pew_inventory.py` for each wave to create `pew_question_inventory_partial.csv`.
-4. Run `merge_pew_inventories.py` to produce `data/interim/pew/pew_question_inventory.csv`.
-5. Run `select_pew_for_rq4.py` to auto-select rows compatible with current RQ4 constraints.
-6. Run `preprocess_posts.py` to generate prompt-ready post bundles.
-7. Run `report_topic_overlap.py` to inspect PEW-vs-post topic coverage.
-8. Run `build_rq4_final_subsets.py` to produce one final topic list and both final subsets.
-9. Run `build_pipeline_summary.py` to produce auditable run summaries in `reports/`.
-10. Run `export_methods_appendix.py` to generate appendix-ready rule/pattern/audit artifacts in `reports/methods/`.
+3. Run `validate_topic_rules.py` to validate the shared topic-keyword registry.
+4. Run `build_pew_inventory.py` for each wave to create `pew_question_inventory_partial.csv`.
+5. Run `merge_pew_inventories.py` to produce `data/interim/pew/pew_question_inventory.csv`.
+6. Run `select_pew_for_rq4.py` to auto-select rows compatible with current RQ4 constraints.
+7. Run `preprocess_posts.py` to generate prompt-ready post bundles.
+8. Run `report_topic_overlap.py` to inspect PEW-vs-post topic coverage.
+9. Run `build_rq4_final_subsets.py` to produce one final topic list and both final subsets.
+10. Run `build_pipeline_summary.py` to produce auditable run summaries in `reports/`.
+11. Run `export_methods_appendix.py` to generate appendix-ready rule/pattern/audit artifacts in `reports/methods/`.
 
 ## Script: preprocess_posts.py
 
 Purpose:
 - Applies protocol rules to source posts.
 - Adds derived metadata (role, moderation status, cleaned text, topics).
+- Uses shared topic regexes from `data/reference/methods/topic_keywords.json` via `scripts/topic_rules.py`.
 - Anonymizes text and excludes rows not suitable for first prompt-ready pool.
 - Keeps moderation statuses for analysis in a separate output.
 
@@ -298,6 +304,7 @@ Purpose:
 - Applies deterministic RQ4 inclusion/exclusion rules.
 - Produces a minimal selection table with deterministic include/exclude logic.
 - Provides auditability via `exclude_code` and `rule_trace`.
+- Uses the same shared topic regex registry as post preprocessing.
 
 Basic run:
 
@@ -400,6 +407,7 @@ python3 scripts/export_methods_appendix.py
 
 Arguments:
 - `--spec` default `data/reference/methods/filter_spec.json`.
+- `--topic-spec` default `data/reference/methods/topic_keywords.json`.
 - `--outdir` default `reports/methods`.
 - `--raw` default `data/raw/trump_archive_me2bert_filtered_2021.csv`.
 - `--posts-clean` default `data/interim/preprocessing/posts_clean.csv`.
@@ -409,10 +417,25 @@ Arguments:
 
 Outputs in `reports/methods/`:
 1. `filter_table.csv`
-2. `topic_patterns.csv`
+2. `topic_patterns.csv` (topic regexes + rationale + source_basis + cross-script reuse flags)
 3. `anonymization_rules.csv`
 4. `pew_selection_rules.csv`
 5. `decision_audit.md`
+
+## Script: validate_topic_rules.py
+
+Purpose:
+- Validates the canonical topic-keyword registry before extraction/filtering.
+- Checks schema, topic uniqueness, and regex compile validity.
+
+Basic run:
+
+```bash
+python3 scripts/validate_topic_rules.py
+```
+
+Arguments:
+- `--spec` default `data/reference/methods/topic_keywords.json`.
 
 ## Script: run_full_pipeline.sh
 
@@ -456,7 +479,13 @@ python3 scripts/build_waves_manifest.py
 python3 scripts/validate_pew_wave_inputs.py --strict
 ```
 
-3. Build all wave partials:
+3. Validate shared topic keyword registry:
+
+```bash
+python3 scripts/validate_topic_rules.py
+```
+
+4. Build all wave partials:
 
 ```bash
 for d in data/pew_datasets/W*; do
@@ -464,49 +493,49 @@ for d in data/pew_datasets/W*; do
 done
 ```
 
-4. Merge all partials:
+5. Merge all partials:
 
 ```bash
 python3 scripts/merge_pew_inventories.py --overwrite
 ```
 
-5. Build deterministic RQ4 selection table:
+6. Build deterministic RQ4 selection table:
 
 ```bash
 python3 scripts/select_pew_for_rq4.py --overwrite
 ```
 
-6. Preprocess posts:
+7. Preprocess posts:
 
 ```bash
 python3 scripts/preprocess_posts.py
 ```
 
-7. Check topic overlap between PEW and prompt-ready posts:
+8. Check topic overlap between PEW and prompt-ready posts:
 
 ```bash
 python3 scripts/report_topic_overlap.py
 ```
 
-8. Build final topics plus both final subsets:
+9. Build final topics plus both final subsets:
 
 ```bash
 python3 scripts/build_rq4_final_subsets.py --overwrite
 ```
 
-9. Build summary artifacts:
+10. Build summary artifacts:
 
 ```bash
 python3 scripts/build_pipeline_summary.py
 ```
 
-10. Export methods appendix artifacts:
+11. Export methods appendix artifacts:
 
 ```bash
 python3 scripts/export_methods_appendix.py
 ```
 
-11. Optionally rerun post preprocessing with manual overrides:
+12. Optionally rerun post preprocessing with manual overrides:
 
 ```bash
 python3 scripts/preprocess_posts.py --manual-review-csv manual_review_overrides.csv
@@ -517,10 +546,13 @@ python3 scripts/preprocess_posts.py --manual-review-csv manual_review_overrides.
 Rule provenance and audit artifacts are fully script-generated:
 1. Canonical rule specification:
    - `data/reference/methods/filter_spec.json`
-2. Code-level rule implementation:
+2. Canonical topic-keyword registry:
+   - `data/reference/methods/topic_keywords.json`
+3. Code-level rule implementation:
    - `scripts/preprocess_posts.py`
    - `scripts/select_pew_for_rq4.py`
-3. Appendix-ready exports:
+   - `scripts/topic_rules.py`
+4. Appendix-ready exports:
    - `reports/methods/filter_table.csv`
    - `reports/methods/topic_patterns.csv`
    - `reports/methods/anonymization_rules.csv`

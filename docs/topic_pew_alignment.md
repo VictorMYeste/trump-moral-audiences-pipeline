@@ -2,11 +2,15 @@
 
 This document defines the public alignment rules between PEW survey items and tweet-topic subsets.
 
+Detailed topic-keyword governance is documented in:
+- `docs/topic_keyword_registry.md`
+
 Implementation source of truth:
 - `scripts/select_pew_for_rq4.py`
 - `scripts/report_topic_overlap.py`
 - `scripts/build_rq4_final_subsets.py`
 - `data/reference/methods/filter_spec.json`
+- `data/reference/methods/topic_keywords.json`
 
 ## 1. Alignment Objective
 
@@ -49,9 +53,22 @@ Current deterministic topic set:
 
 Important:
 - Topic regexes are intentionally conservative and auditable.
-- Exact patterns are defined in code and should be changed only via versioned edits.
+- Exact patterns are defined in `data/reference/methods/topic_keywords.json` and loaded by both selectors.
 - Generated appendix table:
   - `reports/methods/topic_patterns.csv`
+
+## 3.1 Keyword Selection and Reuse Policy
+
+Topic keywords are selected with a deterministic, high-precision policy:
+1. Start from PEW issue-domain wording relevant to Trump-targeted item families.
+2. Add policy-domain terms observed in the post corpus.
+3. Keep terms specific enough to reduce cross-topic leakage.
+4. Avoid trait/emotion terms that are not issue-domain anchors.
+
+Reuse rule:
+1. `scripts/preprocess_posts.py` and `scripts/select_pew_for_rq4.py` must load topics from the same canonical registry (`topic_keywords.json`).
+2. Registry validity is checked via `scripts/validate_topic_rules.py`.
+3. Any registry update requires pipeline rerun and regenerated methods appendix artifacts.
 
 ## 4. Alignment Outputs
 

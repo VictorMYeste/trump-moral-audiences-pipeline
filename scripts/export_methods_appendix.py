@@ -19,8 +19,10 @@ from typing import Dict, Iterable, List, Sequence
 
 import preprocess_posts as pp
 import select_pew_for_rq4 as sp
+import topic_rules as tr
 
 SPEC_DEFAULT = "data/reference/methods/filter_spec.json"
+TOPIC_SPEC_DEFAULT = "data/reference/methods/topic_keywords.json"
 OUTDIR_DEFAULT = "reports/methods"
 RAW_DEFAULT = "data/raw/trump_archive_me2bert_filtered_2021.csv"
 POSTS_CLEAN_DEFAULT = "data/interim/preprocessing/posts_clean.csv"
@@ -34,6 +36,7 @@ def parse_args() -> argparse.Namespace:
         description="Export appendix-ready method tables and decision audit files."
     )
     parser.add_argument("--spec", default=SPEC_DEFAULT)
+    parser.add_argument("--topic-spec", default=TOPIC_SPEC_DEFAULT)
     parser.add_argument("--outdir", default=OUTDIR_DEFAULT)
     parser.add_argument("--raw", default=RAW_DEFAULT)
     parser.add_argument("--posts-clean", default=POSTS_CLEAN_DEFAULT)
@@ -136,27 +139,60 @@ def export_filter_table(spec: Dict[str, object], outdir: Path) -> Path:
     return path
 
 
-def export_topic_patterns(outdir: Path) -> Path:
+def export_topic_patterns(outdir: Path, topic_spec_path: Path) -> Path:
+    topic_spec = tr.load_topic_spec(topic_spec_path)
+    metadata = topic_spec.get("metadata", {})
+    spec_version = ""
+    if isinstance(metadata, dict):
+        spec_version = str(metadata.get("spec_version", "")).strip()
+
+    posts_topics = {topic for topic, _ in pp.TOPIC_PATTERNS}
+    pew_topics = {topic for topic, _ in sp.TOPIC_PATTERNS}
+
     rows: List[Dict[str, str]] = []
-    for topic, pattern in pp.TOPIC_PATTERNS:
-        rows.append(
-            {
-                "source_script": "preprocess_posts.py",
-                "topic": topic,
-                "regex": pattern.pattern,
-            }
-        )
-    for topic, pattern in sp.TOPIC_PATTERNS:
-        rows.append(
-            {
-                "source_script": "select_pew_for_rq4.py",
-                "topic": topic,
-                "regex": pattern.pattern,
-            }
-        )
+    topics = topic_spec.get("topics", [])
+    if isinstance(topics, list):
+        for item in topics:
+            if not isinstance(item, dict):
+                continue
+            topic = str(item.get("topic", "")).strip()
+            regex = str(item.get("regex", "")).strip()
+            applies_to_raw = item.get("applies_to", [])
+            applies_to = applies_to_raw if isinstance(applies_to_raw, list) else []
+            applies_to_text = "|".join(str(v) for v in applies_to)
+            rationale = str(item.get("selection_rationale", "")).strip()
+            source_basis = str(item.get("source_basis", "")).strip()
+            if not topic:
+                continue
+            rows.append(
+                {
+                    "topic": topic,
+                    "regex": regex,
+                    "applies_to": applies_to_text,
+                    "selection_rationale": rationale,
+                    "source_basis": source_basis,
+                    "used_in_preprocess_posts": "yes" if topic in posts_topics else "no",
+                    "used_in_select_pew_for_rq4": "yes" if topic in pew_topics else "no",
+                    "topic_spec_version": spec_version,
+                }
+            )
+    rows.sort(key=lambda r: r["topic"])
 
     path = outdir / "topic_patterns.csv"
-    write_csv(path, ["source_script", "topic", "regex"], rows)
+    write_csv(
+        path,
+        [
+            "topic",
+            "regex",
+            "applies_to",
+            "selection_rationale",
+            "source_basis",
+            "used_in_preprocess_posts",
+            "used_in_select_pew_for_rq4",
+            "topic_spec_version",
+        ],
+        rows,
+    )
     return path
 
 
@@ -445,6 +481,7 @@ def export_decision_audit(
 def main() -> None:
     args = parse_args()
     spec_path = Path(args.spec)
+    topic_spec_path = Path(args.topic_spec)
     outdir = Path(args.outdir)
 
     spec = load_spec(spec_path)
@@ -456,7 +493,7 @@ def main() -> None:
     pew_rows = read_csv_rows(Path(args.pew_rq4))
 
     out_filter = export_filter_table(spec, outdir)
-    out_topics = export_topic_patterns(outdir)
+    out_topics = export_topic_patterns(outdir, topic_spec_path)
     out_anon = export_anonymization_rules(outdir)
     out_pew = export_pew_selection_rules(outdir)
     out_audit = export_decision_audit(
@@ -470,6 +507,7 @@ def main() -> None:
     )
 
     print(f"Spec: {spec_path}")
+    print(f"Topic spec: {topic_spec_path}")
     print(f"Output directory: {outdir}")
     print(f"Wrote: {out_filter}")
     print(f"Wrote: {out_topics}")

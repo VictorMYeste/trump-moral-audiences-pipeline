@@ -41,6 +41,7 @@ Key generated assets:
 ## 3. Core Method Decisions
 
 1. Use deterministic, PEW-oriented issue topics instead of unsupervised topic discovery.
+   - Topic regexes are centralized in `data/reference/methods/topic_keywords.json` and reused by both PEW and post filters.
 2. Keep deleted/flagged posts in the analytical archive, but exclude them from the prompt-ready pool.
 3. Apply identity anonymization that preserves issue meaning.
 4. Require topic overlap between included PEW rows and prompt-ready posts before final subsetting.

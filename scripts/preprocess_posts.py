@@ -4,7 +4,7 @@
 # Simple explanation of this script (step by step):
 # 1) Load the posts CSV and apply hard filters (retweets, minimum length, etc.).
 # 2) Clean text (HTML, URLs, spaces) and derive metadata (role, moderation status).
-# 3) Assign topics with rules, allow manual overrides, and mark ambiguous rows.
+# 3) Assign topics using the shared topic keyword registry, allow manual overrides, and mark ambiguous rows.
 # 4) Anonymize text and drop rows not suitable for prompting.
 # 5) Export multiple output layers (clean, labeled, validated, prompt_ready, moderation_analysis).
 
@@ -18,6 +18,8 @@ from collections import Counter
 from datetime import date
 from pathlib import Path
 from typing import Dict, List, Tuple
+
+import topic_rules as tr
 
 
 REQUIRED_SOURCE_COLUMNS = [
@@ -47,66 +49,7 @@ LOW_INFO_PATTERNS = [
     re.compile(r"^great[.! ]*$", re.IGNORECASE),
 ]
 
-TOPIC_PATTERNS: List[Tuple[str, re.Pattern[str]]] = [
-    (
-        "immigration_border",
-        re.compile(
-            r"\b(border|immigration|immigrant|immigrants|migrant|migrants|asylum|"
-            r"refugee|refugees|wall|dreamer|dreamers|ice)\b",
-            re.IGNORECASE,
-        ),
-    ),
-    (
-        "economy_jobs_trade",
-        re.compile(
-            r"\b(economy|economic|job|jobs|employment|unemployment|trade|tariff|tariffs|"
-            r"tax|taxes|market|markets|manufacturing|manufacturer|manufacturers|"
-            r"small business|small businesses|wage|wages|inflation)\b",
-            re.IGNORECASE,
-        ),
-    ),
-    (
-        "election_integrity_democracy",
-        re.compile(
-            r"\b(election|elections|vote|votes|voting|voter|voters|ballot|ballots|"
-            r"mail[ -]?in|absentee|fraud|democracy|electoral|poll watcher|poll watchers)\b",
-            re.IGNORECASE,
-        ),
-    ),
-    (
-        "foreign_policy_national_security",
-        re.compile(
-            r"\b(china|iran|russia|north korea|nato|isis|afghanistan|iraq|syria|israel|"
-            r"middle east|terror|terrorism|terrorist|terrorists|peace deal|foreign policy)\b",
-            re.IGNORECASE,
-        ),
-    ),
-    (
-        "crime_policing_criminal_justice",
-        re.compile(
-            r"\b(crime|police|law enforcement|criminal justice|justice|violent crime|"
-            r"violent|murder|murders|homicide|riots|riot|looting|prison|jail|antifa)\b",
-            re.IGNORECASE,
-        ),
-    ),
-    (
-        "covid_public_health",
-        re.compile(
-            r"\b(covid|covid19|covid-19|coronavirus|virus|pandemic|vaccine|vaccines|"
-            r"vaccination|cdc|fda|mask|masks|lockdown|lockdowns|ventilator|ventilators|"
-            r"hospital|hospitals|health care|healthcare)\b",
-            re.IGNORECASE,
-        ),
-    ),
-    (
-        "judiciary_courts",
-        re.compile(
-            r"\b(court|courts|judge|judges|justice|justices|supreme court|scotus|"
-            r"ruling|injunction|constitutional)\b",
-            re.IGNORECASE,
-        ),
-    ),
-]
+TOPIC_PATTERNS: List[Tuple[str, re.Pattern[str]]] = tr.compile_topic_patterns(scope="posts")
 
 ROLE_REPLACEMENTS: List[Tuple[re.Pattern[str], str]] = [
     (re.compile(r"(?i)\bpresident[- ]elect trump\b"), "the president-elect"),
