@@ -1,0 +1,33 @@
+{
+  "generated_utc": "2026-03-26T09:02:50.616362+00:00",
+  "wave_glob": "data/pew_datasets/W*",
+  "inputs": {
+    "raw_posts": {
+      "path": "data/raw/trump_archive_me2bert_filtered_2021.csv",
+      "name": "trump_archive_me2bert_filtered_2021.csv",
+      "exists": "yes"
+    },
+    "manifest": {
+      "path": "data/reference/pew/waves_manifest.csv",
+      "name": "waves_manifest.csv",
+      "exists": "yes"
+    },
+    "filter_spec": {
+      "path": "data/reference/methods/filter_spec.json",
+      "name": "filter_spec.json",
+      "exists": "yes"
+    },
+    "topic_spec": {
+      "path": "data/reference/methods/topic_keywords.json",
+      "name": "topic_keywords.json",
+      "exists": "yes"
+    }
+  },
+  "wave_folder_count": 1,
+  "wave_folders": [
+    {
+      "folder_name": "W55_Oct19",
+      "path": "data/pew_datasets/W55_Oct19"
+    }
+  ]
+}

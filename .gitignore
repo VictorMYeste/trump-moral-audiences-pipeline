@@ -8,6 +8,7 @@ docs/private/
 # Python cache
 __pycache__/
 *.pyc
+.pycache_local/
 .venv/
 *.egg-info/
 build/

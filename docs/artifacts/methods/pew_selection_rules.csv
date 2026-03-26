@@ -1,0 +1,19 @@
+rule_group,rule_name,output_code,pattern
+trump_target,TRUMP_DIRECT_RE,trump_direct (trace),\b(trump|donald|president[- ]elect)\b
+trump_target,PRESIDENT_REF_RE + TRUMP_CONTEXT_HINT_RE,president_context (trace),\b(the )?president\b && \b(impeach|impeachment|white house|administration|inquiry|job approval|job as president)\b
+excluded_form,THERMOMETER_RE,exclude_thermometer,\bthermometer\b|\b0\s*(to|-)\s*100\b
+excluded_form,TRAIT_RE,exclude_trait,\b(honest|keeps? promises?|mentally sharp|even[- ]tempered|describe\s+donald trump)\b
+excluded_form,AFFECT_RE,exclude_affective_reaction,\b(feel|frustrated|angry|hopeful|proud|surprised|excited|upset)\b
+excluded_form,KNOWLEDGE_RE,exclude_knowledge_or_awareness,\b(how much have you heard|as far as you know|know enough)\b
+excluded_form,BROAD_FAVORABILITY_RE,exclude_broad_favorability,\b(favorable|unfavorable|favorability)\b
+judgment_family,APPROVAL_RE,approval,\bapprove or disapprove\b|\bapprove\b.*\bdisapprove\b
+judgment_family,CONFIDENCE_RE,confidence,\bhow confident are you\b|\bconfidence\b
+judgment_family,FAVOR_OPPOSE_RE,policy_support,\bfavor or oppose\b|\bfavor\b.*\boppose\b
+judgment_family,SUPPORT_OPPOSE_RE,policy_support,\bsupport or oppose\b|\bsupport\b.*\boppose\b
+issue_topic,TOPIC_PATTERNS::immigration_border,immigration_border,\b(border|immigration|immigrant|immigrants|migrant|migrants|asylum|refugee|refugees|wall|dreamer|dreamers|ice)\b
+issue_topic,TOPIC_PATTERNS::economy_jobs_trade,economy_jobs_trade,\b(economy|economic|job|jobs|employment|unemployment|trade|tariff|tariffs|tax|taxes|market|markets|manufacturing|manufacturer|manufacturers|small business|small businesses|wage|wages|inflation)\b
+issue_topic,TOPIC_PATTERNS::election_integrity_democracy,election_integrity_democracy,\b(election|elections|vote|votes|voting|voter|voters|ballot|ballots|mail[ -]?in|absentee|fraud|democracy|electoral|poll watcher|poll watchers)\b
+issue_topic,TOPIC_PATTERNS::foreign_policy_national_security,foreign_policy_national_security,\b(china|iran|russia|north korea|nato|isis|afghanistan|iraq|syria|israel|middle east|terror|terrorism|terrorist|terrorists|peace deal|foreign policy)\b
+issue_topic,TOPIC_PATTERNS::crime_policing_criminal_justice,crime_policing_criminal_justice,\b(crime|police|law enforcement|criminal justice|justice|violent crime|violent|murder|murders|homicide|riots|riot|looting|prison|jail|antifa)\b
+issue_topic,TOPIC_PATTERNS::covid_public_health,covid_public_health,\b(covid|covid19|covid-19|coronavirus|virus|pandemic|vaccine|vaccines|vaccination|cdc|fda|mask|masks|lockdown|lockdowns|ventilator|ventilators|hospital|hospitals|health care|healthcare)\b
+issue_topic,TOPIC_PATTERNS::judiciary_courts,judiciary_courts,\b(court|courts|judge|judges|justice|justices|supreme court|scotus|ruling|injunction|constitutional)\b

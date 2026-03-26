@@ -1,0 +1,25 @@
+rule_set,rule_order,rule_id,stage,input_columns,condition,action,output_code,rationale
+pew,1,pew_trump_target_required,inclusion_gate,variable_name|question_text_raw,must match direct Trump pattern OR constrained president context,exclude when not matched,exclude_not_trump_target,Keep only Trump-targeted items.
+pew,2,pew_excluded_forms,inclusion_gate,question_text_raw,matches excluded form families,exclude,exclude_thermometer|exclude_trait|exclude_affective_reaction|exclude_knowledge_or_awareness|exclude_broad_favorability,Remove non-comparable item forms.
+pew,3,pew_judgment_family_supported,inclusion_gate,question_text_raw,"judgment_family in {approval, confidence, policy_support}",exclude when not supported,exclude_judgment_not_supported,Only comparable judgment families are included.
+pew,4,pew_response_scale_known,inclusion_gate,question_text_raw,response scale is inferred and not unknown,exclude when unknown,exclude_unknown_response_scale,Require interpretable response scale.
+pew,5,pew_issue_topic_single_match,inclusion_gate,variable_name|question_text_raw,exactly one issue topic hit,exclude when none or multiple,exclude_no_topic_match|exclude_multi_topic_ambiguous,Require single deterministic topic assignment.
+pew,6,pew_final_include,final_keep_decision,exclude_code,no exclusion code,set include_for_rq4,include_for_rq4=yes else no,Single deterministic include gate.
+preprocess,1,pp_not_morally_relevant,hard_drop,is_morally_relevant,is_morally_relevant is false,drop,not_morally_relevant,Keep only morally relevant rows.
+preprocess,2,pp_retweet,hard_drop,isRetweet|text,isRetweet is true OR text starts with RT @,drop,retweet,Use only original posts.
+preprocess,3,pp_min_chars,hard_drop,text_clean,len(text_clean) < 40,drop,too_short_after_url_strip,Remove rows too short for stable interpretation.
+preprocess,4,pp_min_alpha_tokens,hard_drop,text_clean,alphabetic token count < 7,drop,too_few_tokens,Require minimum lexical content.
+preprocess,5,pp_low_information_text,hard_drop,text_clean,text_clean matches exact low-information patterns,drop,low_information_text,Remove low-information formulaic rows.
+preprocess,6,pp_truncated_flag,flag,text_clean,text contains ... or unicode ellipsis,set_review_flag,truncated_text,Mark potentially context-dependent text.
+preprocess,7,pp_role_out_of_range,exclude_reason,date|role,role == out_of_range,add_exclude_reason,role_out_of_range,Keep rows in defined role windows.
+preprocess,8,pp_topic_assignment_single,topic_assignment,text_clean,exactly one topic regex hit,set_topic_and_confidence,"topic=<matched>,topic_confidence=high",Prefer unambiguous issue assignment.
+preprocess,9,pp_topic_assignment_multi,topic_assignment,text_clean,more than one topic regex hit,set_topic_and_confidence,"topic=review_needed,topic_confidence=medium",Flag multi-topic ambiguity.
+preprocess,10,pp_topic_assignment_none,topic_assignment,text_clean,no topic regex hits,set_topic_and_confidence,"topic=other_campaign_generic,topic_confidence=low",Separate non-issue rows from issue rows.
+preprocess,11,pp_identity_leak,exclude_reason,text_anon,identity leak pattern found after anonymization,add_exclude_reason,identity_leak_after_anonymization,Prevent identity leakage in prompt text.
+preprocess,12,pp_anonymization_degraded_text,exclude_reason,text_anon,anon text too short/sparse after replacement thresholds,add_exclude_reason,anonymization_degraded_text,Drop rows degraded by anonymization.
+preprocess,13,pp_other_campaign_generic,exclude_reason,topic,topic == other_campaign_generic,add_exclude_reason,other_campaign_generic,Prompt pool focuses on issue-oriented content.
+preprocess,14,pp_multi_topic_ambiguous,exclude_reason,topic,topic == review_needed,add_exclude_reason,multi_topic_ambiguous,Prompt pool prefers single-topic rows.
+preprocess,15,pp_truncated_or_context_dependent,exclude_reason,review_flag,review_flag not empty,add_exclude_reason,truncated_or_context_dependent,Exclude context-dependent rows from first prompt pool.
+preprocess,16,pp_moderation_status_excluded_from_prompt,exclude_reason,moderation_status,moderation_status != not_deleted_not_flagged,add_exclude_reason,excluded_from_prompt_due_to_moderation_status,Prompt-ready pool excludes deleted/flagged rows.
+preprocess,17,pp_prompt_keep_flag,final_keep_decision,exclude_reason,exclude_reason empty,set_keep_for_prompt,keep_for_prompt=yes else no,Single deterministic keep gate.
+preprocess,18,pp_duplicate_after_cleaning,deduplication,text_anon|date|id,normalized text_anon duplicated in prompt candidates,keep first and exclude later duplicates,duplicate_after_cleaning,Avoid duplicate prompt content.

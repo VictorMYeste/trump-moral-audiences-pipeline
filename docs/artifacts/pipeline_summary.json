@@ -1,0 +1,45 @@
+{
+  "generated_utc": "2026-03-25T16:42:08.794900+00:00",
+  "counts": {
+    "wave_partial_files": 1,
+    "wave_partial_rows_total": 6,
+    "merged_inventory_rows": 6,
+    "rq4_inventory_rows": 6,
+    "rq4_include_yes": 0,
+    "rq4_include_no": 6,
+    "posts_validated_rows": 17497,
+    "posts_prompt_ready_rows": 3718,
+    "final_topics_rows": 0,
+    "overlap_topic_count": 0
+  },
+  "wave_partial_rows": [
+    {
+      "wave_folder": "W55_Oct19",
+      "path": "data/pew_datasets/W55_Oct19/pew_question_inventory_partial.csv",
+      "rows": "6"
+    }
+  ],
+  "rq4_exclude_counts": {
+    "exclude_not_trump_target": 3,
+    "exclude_no_topic_match": 1,
+    "exclude_judgment_not_supported": 1,
+    "exclude_knowledge_or_awareness": 1
+  },
+  "rq4_included_topic_counts": {},
+  "prompt_topic_counts": {
+    "election_integrity_democracy": 774,
+    "foreign_policy_national_security": 916,
+    "covid_public_health": 232,
+    "crime_policing_criminal_justice": 343,
+    "economy_jobs_trade": 922,
+    "judiciary_courts": 130,
+    "immigration_border": 401
+  },
+  "moderation_status_counts": {
+    "not_deleted_not_flagged": 17123,
+    "flagged": 107,
+    "deleted": 267
+  },
+  "overlap_topics": [],
+  "final_topics": []
+}

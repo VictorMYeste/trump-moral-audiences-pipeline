@@ -7,7 +7,7 @@ set -euo pipefail
 # 3) Build PEW partial files per wave and then merge them.
 # 4) Select PEW rows valid for RQ4.
 # 5) Preprocess posts and compute topic overlap.
-# 6) Generate final PEW/post subsets, run summary, and export methods appendix artifacts.
+# 6) Generate final PEW/post subsets, then write provenance, summary, methods, and publishable artifacts.
 
 usage() {
   cat <<'EOF'
@@ -27,6 +27,7 @@ Options:
   --skip-preflight             Skip wave input preflight validation
   --skip-summary               Skip pipeline summary artifact generation
   --skip-methods               Skip methods appendix artifact generation
+  --skip-publishable           Skip export of sanitized publishable artifacts
   --no-overwrite               Do not pass --overwrite to scripts that support it
   -h, --help                   Show this help
 
@@ -49,6 +50,7 @@ REFRESH_MANIFEST=1
 SKIP_PREFLIGHT=0
 SKIP_SUMMARY=0
 SKIP_METHODS=0
+SKIP_PUBLISHABLE=0
 OVERWRITE=1
 
 while [[ $# -gt 0 ]]; do
@@ -93,6 +95,10 @@ while [[ $# -gt 0 ]]; do
       SKIP_METHODS=1
       shift
       ;;
+    --skip-publishable)
+      SKIP_PUBLISHABLE=1
+      shift
+      ;;
     --no-overwrite)
       OVERWRITE=0
       shift
@@ -119,7 +125,7 @@ if [[ $REFRESH_MANIFEST -eq 1 ]]; then
 fi
 
 if [[ $SKIP_PREFLIGHT -eq 0 ]]; then
-  echo "[0/10] Running preflight validation..."
+  echo "[0/12] Running preflight validation..."
   PREFLIGHT_CMD=( "$PYTHON_BIN" scripts/validate_pew_wave_inputs.py --wave-glob "$WAVE_GLOB" )
   if [[ -n "$MANIFEST_PATH" ]]; then
     PREFLIGHT_CMD+=( --manifest "$MANIFEST_PATH" )
@@ -127,10 +133,10 @@ if [[ $SKIP_PREFLIGHT -eq 0 ]]; then
   "${PREFLIGHT_CMD[@]}"
 fi
 
-echo "[1/10] Validating shared topic registry..."
+echo "[1/12] Validating shared topic registry..."
 "$PYTHON_BIN" scripts/validate_topic_rules.py
 
-echo "[2/10] Building per-wave PEW partial inventories..."
+echo "[2/12] Building per-wave PEW partial inventories..."
 shopt -s nullglob
 wave_dirs=( $WAVE_GLOB )
 if [[ ${#wave_dirs[@]} -eq 0 ]]; then
@@ -149,31 +155,31 @@ for d in "${wave_dirs[@]}"; do
 done
 shopt -u nullglob
 
-echo "[3/10] Merging partial inventories..."
+echo "[3/12] Merging partial inventories..."
 if [[ $OVERWRITE -eq 1 ]]; then
   "$PYTHON_BIN" scripts/merge_pew_inventories.py --overwrite
 else
   "$PYTHON_BIN" scripts/merge_pew_inventories.py
 fi
 
-echo "[4/10] Selecting PEW rows for RQ4..."
+echo "[4/12] Selecting PEW rows for RQ4..."
 if [[ $OVERWRITE -eq 1 ]]; then
   "$PYTHON_BIN" scripts/select_pew_for_rq4.py --overwrite
 else
   "$PYTHON_BIN" scripts/select_pew_for_rq4.py
 fi
 
-echo "[5/10] Preprocessing posts..."
+echo "[5/12] Preprocessing posts..."
 POSTS_CMD=( "$PYTHON_BIN" scripts/preprocess_posts.py )
 if [[ -n "$MANUAL_REVIEW_CSV" ]]; then
   POSTS_CMD+=( --manual-review-csv "$MANUAL_REVIEW_CSV" )
 fi
 "${POSTS_CMD[@]}"
 
-echo "[6/10] Reporting topic overlap..."
+echo "[6/12] Reporting topic overlap..."
 "$PYTHON_BIN" scripts/report_topic_overlap.py
 
-echo "[7/10] Building final RQ4 topic list and subsets..."
+echo "[7/12] Building final RQ4 topic list and subsets..."
 if [[ $OVERWRITE -eq 1 ]]; then
   "$PYTHON_BIN" scripts/build_rq4_final_subsets.py \
     --min-pew-per-topic "$MIN_PEW_PER_TOPIC" \
@@ -185,14 +191,29 @@ else
     --min-posts-per-topic "$MIN_POSTS_PER_TOPIC"
 fi
 
+echo "[8/12] Writing run provenance artifact..."
+"$PYTHON_BIN" scripts/build_run_provenance.py \
+  --raw-posts "data/raw/trump_archive_me2bert_filtered_2021.csv" \
+  --wave-glob "$WAVE_GLOB" \
+  --manifest "$MANIFEST_PATH"
+
 if [[ $SKIP_SUMMARY -eq 0 ]]; then
-  echo "[8/10] Building pipeline summary artifacts..."
+  echo "[9/12] Building pipeline summary artifacts..."
   "$PYTHON_BIN" scripts/build_pipeline_summary.py
 fi
 
 if [[ $SKIP_METHODS -eq 0 ]]; then
-  echo "[9/10] Exporting methods appendix artifacts..."
+  echo "[10/12] Exporting methods appendix artifacts..."
   "$PYTHON_BIN" scripts/export_methods_appendix.py
+fi
+
+if [[ $SKIP_PUBLISHABLE -eq 0 ]]; then
+  echo "[11/12] Exporting publishable sanitized artifacts..."
+  PUBLISHABLE_CMD=( "$PYTHON_BIN" scripts/export_publishable_reports.py )
+  if [[ $OVERWRITE -eq 1 ]]; then
+    PUBLISHABLE_CMD+=( --overwrite )
+  fi
+  "${PUBLISHABLE_CMD[@]}"
 fi
 
 echo "Pipeline completed."

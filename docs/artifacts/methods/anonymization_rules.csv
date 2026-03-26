@@ -1,0 +1,21 @@
+rule_order,group,pattern,replacement,notes
+1,role_replacements,(?i)\bpresident[- ]elect trump\b,the president-elect,Role-sensitive normalization
+2,role_replacements,(?i)\bpresident donald j\.? trump\b,the president,Role-sensitive normalization
+3,role_replacements,(?i)\bpresident donald trump\b,the president,Role-sensitive normalization
+4,role_replacements,(?i)\bpresident trump\b,the president,Role-sensitive normalization
+5,role_replacements,(?i)\bcandidate donald j\.? trump\b,the candidate,Role-sensitive normalization
+6,role_replacements,(?i)\bcandidate donald trump\b,the candidate,Role-sensitive normalization
+7,role_replacements,(?i)\bcandidate trump\b,the candidate,Role-sensitive normalization
+8,identity_replacements,(?i)@realdonaldtrump\b,[POLITICAL_ACTOR],Direct identity masking
+9,identity_replacements,(?i)\bdonald j\.? trump\b,[POLITICAL_ACTOR],Direct identity masking
+10,identity_replacements,(?i)\bdonald trump\b,[POLITICAL_ACTOR],Direct identity masking
+11,identity_replacements,(?i)\btrump\b,[POLITICAL_ACTOR],Direct identity masking
+12,campaign_tag_replacement,(?i)#?(maga|kag2020|marchfortrump|trump2020|trumppence|votetrump|americafirst)\b,[CAMPAIGN_TAG],Campaign-specific hashtag masking
+13,allowlist_replacements,(?i)@WhiteHouse\b,the White House,Institution handle normalization
+14,allowlist_replacements,(?i)@CDCgov\b,CDC,Institution handle normalization
+15,allowlist_replacements,(?i)@CDC\b,CDC,Institution handle normalization
+16,allowlist_replacements,(?i)@US_FDA\b,FDA,Institution handle normalization
+17,allowlist_replacements,(?i)@FDA\b,FDA,Institution handle normalization
+18,allowlist_replacements,(?i)@DHSgov\b,DHS,Institution handle normalization
+19,allowlist_replacements,(?i)@ICEgov\b,ICE,Institution handle normalization
+20,generic_handle_replacement,"@[A-Za-z0-9_]{1,15}",[USER],Fallback replacement for remaining handles

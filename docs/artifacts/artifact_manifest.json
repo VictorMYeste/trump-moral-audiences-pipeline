@@ -1,0 +1,46 @@
+{
+  "generated_utc": "2026-03-26T09:21:43.402947+00:00",
+  "source_root": "reports",
+  "outdir": "docs/artifacts",
+  "exported_count": 9,
+  "missing_count": 0,
+  "exported": [
+    {
+      "source": "reports/methods/filter_table.csv",
+      "destination": "docs/artifacts/methods/filter_table.csv"
+    },
+    {
+      "source": "reports/methods/topic_patterns.csv",
+      "destination": "docs/artifacts/methods/topic_patterns.csv"
+    },
+    {
+      "source": "reports/methods/anonymization_rules.csv",
+      "destination": "docs/artifacts/methods/anonymization_rules.csv"
+    },
+    {
+      "source": "reports/methods/pew_selection_rules.csv",
+      "destination": "docs/artifacts/methods/pew_selection_rules.csv"
+    },
+    {
+      "source": "reports/methods/decision_audit.md",
+      "destination": "docs/artifacts/methods/decision_audit.md"
+    },
+    {
+      "source": "reports/pipeline_summary.md",
+      "destination": "docs/artifacts/pipeline_summary.md"
+    },
+    {
+      "source": "reports/pipeline_summary.json",
+      "destination": "docs/artifacts/pipeline_summary.json"
+    },
+    {
+      "source": "reports/run_provenance.md",
+      "destination": "docs/artifacts/run_provenance.md"
+    },
+    {
+      "source": "reports/run_provenance.json",
+      "destination": "docs/artifacts/run_provenance.json"
+    }
+  ],
+  "missing": []
+}

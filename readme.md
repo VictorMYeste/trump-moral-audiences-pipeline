@@ -28,8 +28,10 @@ Core design docs:
 - `scripts/select_pew_for_rq4.py`: create a minimal, deterministic PEW selection table for RQ4.
 - `scripts/report_topic_overlap.py`: print PEW vs prompt-ready topic overlap and coverage counts.
 - `scripts/build_rq4_final_subsets.py`: build final overlap topic list and subset both PEW rows and posts.
+- `scripts/build_run_provenance.py`: write a compact run-level provenance artifact under `reports/`.
 - `scripts/build_pipeline_summary.py`: generate run-level Markdown/JSON summary artifacts.
 - `scripts/export_methods_appendix.py`: export appendix-ready rules/regex/audit artifacts for methods reporting.
+- `scripts/export_publishable_reports.py`: sanitize and copy publishable report artifacts to `docs/artifacts/`.
 - `scripts/run_full_pipeline.sh`: run the full end-to-end sequence in one command.
 - `data/reference/methods/filter_spec.json`: machine-readable canonical filter/selection rule specification.
 - `data/reference/methods/topic_keywords.json`: canonical reusable topic-keyword registry (regex + rationale).
@@ -74,6 +76,7 @@ Git-ignore scope:
 
 Publishable data artifacts:
 - `data/reference/` (templates and synthetic examples only)
+- `docs/artifacts/` (sanitized publishable report copies exported from `reports/`)
 
 ## Data Availability
 
@@ -148,8 +151,10 @@ python3 -c "import pypdf; print(pypdf.__version__)"
 7. Run `preprocess_posts.py` to generate prompt-ready post bundles.
 8. Run `report_topic_overlap.py` to inspect PEW-vs-post topic coverage.
 9. Run `build_rq4_final_subsets.py` to produce one final topic list and both final subsets.
-10. Run `build_pipeline_summary.py` to produce auditable run summaries in `reports/`.
-11. Run `export_methods_appendix.py` to generate appendix-ready rule/pattern/audit artifacts in `reports/methods/`.
+10. Run `build_run_provenance.py` to record run date, input files, and detected wave folders in `reports/`.
+11. Run `build_pipeline_summary.py` to produce auditable run summaries in `reports/`.
+12. Run `export_methods_appendix.py` to generate appendix-ready rule/pattern/audit artifacts in `reports/methods/`.
+13. Run `export_publishable_reports.py --overwrite` to copy sanitized publishable report files into `docs/artifacts/`.
 
 ## Script: preprocess_posts.py
 
@@ -393,6 +398,22 @@ Basic run:
 python3 scripts/build_pipeline_summary.py
 ```
 
+## Script: build_run_provenance.py
+
+Purpose:
+- Writes a compact provenance record for one pipeline run.
+- Captures run date, key input file names/paths, and the set of detected wave folders.
+
+Basic run:
+
+```bash
+python3 scripts/build_run_provenance.py
+```
+
+Outputs:
+- `reports/run_provenance.md`
+- `reports/run_provenance.json`
+
 ## Script: export_methods_appendix.py
 
 Purpose:
@@ -421,6 +442,31 @@ Outputs in `reports/methods/`:
 3. `anonymization_rules.csv`
 4. `pew_selection_rules.csv`
 5. `decision_audit.md`
+
+## Script: export_publishable_reports.py
+
+Purpose:
+- Copies publishable report artifacts from `reports/` into `docs/artifacts/`.
+- Sanitizes local-path details before publishing.
+
+Basic run:
+
+```bash
+python3 scripts/export_publishable_reports.py --overwrite
+```
+
+Outputs in `docs/artifacts/`:
+1. `methods/filter_table.csv`
+2. `methods/topic_patterns.csv`
+3. `methods/anonymization_rules.csv`
+4. `methods/pew_selection_rules.csv`
+5. `methods/decision_audit.md`
+6. `pipeline_summary.md`
+7. `pipeline_summary.json`
+8. `run_provenance.md`
+9. `run_provenance.json`
+10. `artifact_manifest.json`
+11. `README.md`
 
 ## Script: validate_topic_rules.py
 
@@ -457,6 +503,7 @@ Useful options:
 - `--skip-preflight` skip wave preflight validation.
 - `--skip-summary` skip summary artifact generation.
 - `--skip-methods` skip methods appendix artifact generation.
+- `--skip-publishable` skip export of sanitized publishable artifacts.
 - `--no-overwrite` do not pass overwrite flags to scripts that support them.
 
 ## Recommended Command Sequence
@@ -523,19 +570,31 @@ python3 scripts/report_topic_overlap.py
 python3 scripts/build_rq4_final_subsets.py --overwrite
 ```
 
-10. Build summary artifacts:
+10. Build run provenance artifact:
+
+```bash
+python3 scripts/build_run_provenance.py
+```
+
+11. Build summary artifacts:
 
 ```bash
 python3 scripts/build_pipeline_summary.py
 ```
 
-11. Export methods appendix artifacts:
+12. Export methods appendix artifacts:
 
 ```bash
 python3 scripts/export_methods_appendix.py
 ```
 
-12. Optionally rerun post preprocessing with manual overrides:
+13. Export sanitized publishable artifacts:
+
+```bash
+python3 scripts/export_publishable_reports.py --overwrite
+```
+
+14. Optionally rerun post preprocessing with manual overrides:
 
 ```bash
 python3 scripts/preprocess_posts.py --manual-review-csv manual_review_overrides.csv
@@ -553,11 +612,23 @@ Rule provenance and audit artifacts are fully script-generated:
    - `scripts/select_pew_for_rq4.py`
    - `scripts/topic_rules.py`
 4. Appendix-ready exports:
-   - `reports/methods/filter_table.csv`
-   - `reports/methods/topic_patterns.csv`
-   - `reports/methods/anonymization_rules.csv`
-   - `reports/methods/pew_selection_rules.csv`
-   - `reports/methods/decision_audit.md`
+    - `reports/methods/filter_table.csv`
+    - `reports/methods/topic_patterns.csv`
+    - `reports/methods/anonymization_rules.csv`
+    - `reports/methods/pew_selection_rules.csv`
+    - `reports/methods/decision_audit.md`
+
+## Limitations
+
+Two methodological constraints remain explicit in this repository:
+
+1. Upstream moral labels:
+   - `preprocess_posts.py` uses the input column `is_morally_relevant` as an upstream filter.
+   - This repository does not recreate that label; it treats it as an external input assumption that should be documented in the paper.
+
+2. Conservative regex matching:
+   - Topic assignment is intentionally high-precision and deterministic rather than recall-maximizing.
+   - Some substantively relevant posts or PEW items may be missed when they do not contain the registry terms in `data/reference/methods/topic_keywords.json`.
 
 Recommended for paper appendix generation:
 1. Run `scripts/run_full_pipeline.sh`.
