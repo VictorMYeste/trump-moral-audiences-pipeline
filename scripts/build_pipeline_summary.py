@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 """Build a compact, reproducible pipeline summary artifact."""
 
+# Simple explanation of this script (step by step):
+# 1) Read the main output files from the pipeline (PEW, RQ4, and posts).
+# 2) Compute key counts (included/excluded, topics, overlaps, etc.).
+# 3) Summarize results by wave and by processing stage.
+# 4) Generate two reports: one readable (`.md`) and one structured (`.json`).
+
 from __future__ import annotations
 
 import argparse

@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 """Validate PEW wave folder readiness before bulk extraction."""
 
+# Simple explanation of this script (step by step):
+# 1) Read wave folders from the manifest or from a folder pattern.
+# 2) Check whether each wave has required files (readme and .sav).
+# 3) Report optional files as well (pdfs, generated partial inventory).
+# 4) Write a preflight CSV report with one status per wave.
+# 5) In strict mode, fail if required files are missing.
+
 from __future__ import annotations
 
 import argparse

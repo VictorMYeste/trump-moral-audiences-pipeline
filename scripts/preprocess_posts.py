@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 """Preprocess Trump archive rows following preprocessing_protocol.md."""
 
+# Simple explanation of this script (step by step):
+# 1) Load the posts CSV and apply hard filters (retweets, minimum length, etc.).
+# 2) Clean text (HTML, URLs, spaces) and derive metadata (role, moderation status).
+# 3) Assign topics with rules, allow manual overrides, and mark ambiguous rows.
+# 4) Anonymize text and drop rows not suitable for prompting.
+# 5) Export multiple output layers (clean, labeled, validated, prompt_ready, moderation_analysis).
+
 from __future__ import annotations
 
 import argparse

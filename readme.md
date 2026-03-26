@@ -8,7 +8,6 @@ Core design docs:
 - `docs/proposal.md`
 - `docs/preprocessing_protocol.md`
 - `docs/topic_pew_alignment.md`
-- `data/reference/pew/pew_question_inventory_template.csv`
 
 ## Repository Layout
 
@@ -188,7 +187,7 @@ Purpose:
 - Builds one wave-level partial inventory from ATP wave files.
 - Uses `readme + .sav` extraction for variable names/question text.
 - Uses ATP codebook PDF (via `pypdf`) to detect `F_` profile variables and improve cleanup.
-- Defaults to `rq4_minimal` schema so manual-alignment columns are not created.
+- Uses a single minimal output schema (manual-alignment columns are not created).
 
 Basic run for one wave:
 
@@ -200,8 +199,6 @@ python3 scripts/build_pew_inventory.py \
 
 Arguments:
 - `--wave-folder` required wave directory.
-- `--schema` default `rq4_minimal` (`rq4_minimal` or `legacy`).
-- `--template` default `data/reference/pew/pew_question_inventory_template.csv` (used only with `--schema legacy`).
 - `--codebook-pdf` default `data/pew_datasets/Codebook-and-instructions-for-working-with-ATP-data.pdf`.
 - `--output` optional custom output path.
 - `--trump-only` default enabled. Keep only Trump-related variables/questions.
@@ -274,7 +271,7 @@ Arguments:
 
 Purpose:
 - Merges all wave-level partial inventories into one master inventory.
-- Normalizes all rows to the RQ4 minimal schema.
+- Normalizes all rows to the minimal inventory schema.
 - Sorts deterministically by `pew_wave` and `variable_name`.
 - Deduplicates by `(pew_wave, variable_name)`.
 

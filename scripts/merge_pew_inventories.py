@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 """Merge wave-level PEW inventory partial CSVs into one master inventory CSV."""
 
+# Simple explanation of this script (step by step):
+# 1) Read all wave-level `pew_question_inventory_partial.csv` files.
+# 2) Normalize columns to the minimal inventory schema.
+# 3) Sort rows deterministically.
+# 4) Remove duplicates by (pew_wave, variable_name).
+# 5) Save one combined master inventory.
+
 from __future__ import annotations
 
 import argparse
@@ -12,7 +19,7 @@ from typing import Dict, List, Tuple
 
 INPUT_GLOB_DEFAULT = "data/pew_datasets/W*/pew_question_inventory_partial.csv"
 OUTPUT_DEFAULT = "data/interim/pew/pew_question_inventory.csv"
-RQ4_MINIMAL_HEADER = [
+INVENTORY_HEADER = [
     "inventory_id",
     "pew_wave",
     "field_dates",
@@ -106,7 +113,7 @@ def main() -> None:
     if not input_files:
         raise FileNotFoundError(f"No partial inventory files matched: {args.input_glob}")
 
-    header = list(RQ4_MINIMAL_HEADER)
+    header = list(INVENTORY_HEADER)
     all_rows: List[Dict[str, str]] = []
     rows_read_total = 0
 
@@ -134,7 +141,7 @@ def main() -> None:
         writer.writerows(deduped)
 
     print(f"Input files: {len(input_files)}")
-    print("Schema: rq4_minimal")
+    print("Schema: minimal")
     print(f"Rows read: {rows_read_total}")
     print(f"Duplicate rows dropped (pew_wave + variable_name): {duplicate_count}")
     print(f"Rows written: {len(deduped)}")

@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Simple explanation of this script (step by step):
+# 1) Refresh the wave manifest (optional) and validate inputs before processing.
+# 2) Build PEW partial files per wave and then merge them.
+# 3) Select PEW rows valid for RQ4.
+# 4) Preprocess posts and compute topic overlap.
+# 5) Generate final PEW/post subsets and a final pipeline summary.
+
 usage() {
   cat <<'EOF'
 Run the full RQ4 preprocessing pipeline end-to-end.

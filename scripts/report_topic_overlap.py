@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 """Report topic overlap between PEW RQ4 inventory and prompt-ready posts."""
 
+# Simple explanation of this script (step by step):
+# 1) Read the PEW inventory for RQ4 and the prompt-ready posts.
+# 2) Count topics in both datasets.
+# 3) Show overlap (shared topics) and topics that are missing on one side.
+# 4) Print diagnostic tables to support coverage decisions.
+
 from __future__ import annotations
 
 import argparse
@@ -123,7 +129,7 @@ def main() -> None:
 
     print(f"Included PEW topics: {len(included_topics)}")
     print(f"Prompt-ready post topics: {len(posts_topics)}")
-    print(f"Topic overlap (included PEW ∩ posts): {len(overlap_topics)}")
+    print(f"Topic overlap (included PEW and posts): {len(overlap_topics)}")
     print("")
 
     print("Overlap topics:")

@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 """Build final RQ4 topic list plus PEW/posts subsets from overlap topics."""
 
+# Simple explanation of this script (step by step):
+# 1) Load the PEW inventory already filtered for RQ4 and the prompt-ready posts.
+# 2) Find topics that exist in both datasets.
+# 3) Apply minimum thresholds per topic (PEW rows and post rows).
+# 4) Write three final outputs: topic list, PEW subset, and post subset.
+
 from __future__ import annotations
 
 import argparse

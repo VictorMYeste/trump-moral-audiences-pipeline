@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 """Build/update wave manifest from existing wave folders."""
 
+# Simple explanation of this script (step by step):
+# 1) Scan wave folders found by a folder pattern (glob).
+# 2) For each folder, count readme, sav, and pdf files.
+# 3) Build one summary row per wave (including `enabled`).
+# 4) Save/update `waves_manifest.csv` for validation and traceability.
+
 from __future__ import annotations
 
 import argparse

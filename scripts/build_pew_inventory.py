@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 """Build a partial PEW question inventory CSV for one ATP wave folder."""
 
+# Simple explanation of this script (step by step):
+# 1) Read one PEW wave folder (readme + .sav and, optionally, the codebook PDF).
+# 2) Extract variable names and question text automatically.
+# 3) Clean noisy text and apply filters (for example: Trump-only, no weights, no cross-wave).
+# 4) Build rows using a single minimal schema.
+# 5) Write `pew_question_inventory_partial.csv` for that wave.
+
 from __future__ import annotations
 
 import argparse
@@ -11,10 +18,8 @@ from pathlib import Path
 from typing import Dict, List, Tuple
 
 
-TEMPLATE_DEFAULT = "data/reference/pew/pew_question_inventory_template.csv"
 CODEBOOK_DEFAULT = "data/pew_datasets/Codebook-and-instructions-for-working-with-ATP-data.pdf"
-SCHEMA_DEFAULT = "rq4_minimal"
-RQ4_MINIMAL_HEADER = [
+INVENTORY_HEADER = [
     "inventory_id",
     "pew_wave",
     "field_dates",
@@ -72,20 +77,6 @@ def parse_args() -> argparse.Namespace:
         help="Path to one wave folder (e.g., data/pew_datasets/W55_Oct19)",
     )
     parser.add_argument(
-        "--template",
-        default=TEMPLATE_DEFAULT,
-        help="Template CSV used for legacy header schema",
-    )
-    parser.add_argument(
-        "--schema",
-        default=SCHEMA_DEFAULT,
-        choices=["rq4_minimal", "legacy"],
-        help=(
-            "Output schema. 'rq4_minimal' writes only columns needed by RQ4 selection; "
-            "'legacy' keeps full template columns."
-        ),
-    )
-    parser.add_argument(
         "--codebook-pdf",
         default=CODEBOOK_DEFAULT,
         help=(
@@ -139,14 +130,6 @@ def find_single(pattern: str, root: Path) -> Path | None:
     if not matches:
         return None
     return matches[0]
-
-
-def read_template_header(template_path: Path) -> List[str]:
-    with template_path.open(newline="", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        if reader.fieldnames is None:
-            raise ValueError(f"Template has no header: {template_path}")
-        return list(reader.fieldnames)
 
 
 def parse_readme(readme_path: Path) -> Dict[str, object]:
@@ -406,13 +389,6 @@ def extract_sav_question_labels(
 def sanitize_slug(value: str) -> str:
     return re.sub(r"[^a-z0-9_]+", "_", value.lower()).strip("_")
 
-
-def infer_question_group(variable_name: str) -> str:
-    if variable_name.startswith("WEIGHT_"):
-        return "weight"
-    return variable_name.split("_", 1)[0].lower()
-
-
 def is_trump_related(variable_name: str, question_text: str) -> bool:
     hay = f"{variable_name} {question_text}".lower()
     keywords = [
@@ -454,47 +430,14 @@ def should_keep_variable(
     return True
 
 
-def make_legacy_row(
-    header: List[str],
-    wave_tag: str,
-    field_dates: str,
-    report_title: str,
-    dataset_file: str,
-    variable_name: str,
-    question_text_raw: str,
-    source_note: str,
-) -> Dict[str, str]:
-    row = {key: "" for key in header}
-    row["inventory_id"] = f"{sanitize_slug(wave_tag)}_{sanitize_slug(variable_name)}"
-    row["pew_wave"] = wave_tag
-    row["field_dates"] = field_dates
-    row["report_title"] = report_title
-    row["dataset_file"] = dataset_file
-    row["variable_name"] = variable_name
-    row["question_group"] = infer_question_group(variable_name)
-    row["question_text_raw"] = question_text_raw
-    row["question_text_rephrased"] = ""
-    row["issue_domain"] = ""
-    row["judgment_type"] = ""
-    row["compatible_with_anonymization"] = "review"
-    row["requires_role_context"] = ""
-    row["requires_time_window"] = "yes"
-    row["suggested_tweet_topic"] = ""
-    row["prompt_response_scale"] = ""
-    row["tweet_bundle_strategy"] = "3_to_5_posts_same_topic_same_role_same_window"
-    row["alignment_status"] = "needs_review"
-    row["notes"] = source_note
-    return row
-
-
-def make_rq4_minimal_row(
+def make_inventory_row(
     wave_tag: str,
     field_dates: str,
     dataset_file: str,
     variable_name: str,
     question_text_raw: str,
 ) -> Dict[str, str]:
-    row: Dict[str, str] = {key: "" for key in RQ4_MINIMAL_HEADER}
+    row: Dict[str, str] = {key: "" for key in INVENTORY_HEADER}
     row["inventory_id"] = f"{sanitize_slug(wave_tag)}_{sanitize_slug(variable_name)}"
     row["pew_wave"] = wave_tag
     row["field_dates"] = field_dates
@@ -507,12 +450,9 @@ def make_rq4_minimal_row(
 def main() -> None:
     args = parse_args()
     wave_folder = Path(args.wave_folder)
-    template_path = Path(args.template)
     codebook_path = Path(args.codebook_pdf)
     if not wave_folder.exists():
         raise FileNotFoundError(f"Wave folder not found: {wave_folder}")
-    if args.schema == "legacy" and not template_path.exists():
-        raise FileNotFoundError(f"Template file not found: {template_path}")
 
     output_path = (
         Path(args.output)
@@ -524,10 +464,7 @@ def main() -> None:
             f"Output already exists: {output_path}. Use --overwrite to replace it."
         )
 
-    if args.schema == "legacy":
-        header = read_template_header(template_path)
-    else:
-        header = list(RQ4_MINIMAL_HEADER)
+    header = list(INVENTORY_HEADER)
     readme_path = find_single(READ_ME_GLOB, wave_folder)
     sav_path = find_single(SAV_GLOB, wave_folder)
     profile_vars, profile_markers, codebook_status = extract_profile_metadata_from_codebook(
@@ -549,8 +486,6 @@ def main() -> None:
     wave_number = str(readme_meta.get("wave", "")).strip()
     wave_tag = f"ATP_{wave_number}" if wave_number else "ATP_UNKNOWN"
     field_dates = str(readme_meta.get("field_dates", "")).strip()
-    report_titles = readme_meta.get("report_titles", [])
-    report_title = " | ".join(report_titles) if isinstance(report_titles, list) else ""
     dataset_file = sav_path.name if sav_path else ""
 
     labels_from_sav: Dict[str, str] = {}
@@ -583,29 +518,13 @@ def main() -> None:
             continue
 
         q_text = labels_from_sav.get(var, "")
-        source_note = "auto_from_sav_strings"
-        if not q_text and var in vars_from_readme:
-            source_note = "auto_from_readme_var_only"
-
-        if args.schema == "legacy":
-            row = make_legacy_row(
-                header=header,
-                wave_tag=wave_tag,
-                field_dates=field_dates,
-                report_title=report_title,
-                dataset_file=dataset_file,
-                variable_name=var,
-                question_text_raw=q_text,
-                source_note=source_note,
-            )
-        else:
-            row = make_rq4_minimal_row(
-                wave_tag=wave_tag,
-                field_dates=field_dates,
-                dataset_file=dataset_file,
-                variable_name=var,
-                question_text_raw=q_text,
-            )
+        row = make_inventory_row(
+            wave_tag=wave_tag,
+            field_dates=field_dates,
+            dataset_file=dataset_file,
+            variable_name=var,
+            question_text_raw=q_text,
+        )
 
         if args.trump_only and not is_trump_related(var, q_text):
             continue
@@ -613,25 +532,13 @@ def main() -> None:
 
     # If no variables are discoverable, still write one wave-level placeholder row.
     if not rows:
-        if args.schema == "legacy":
-            row = make_legacy_row(
-                header=header,
-                wave_tag=wave_tag,
-                field_dates=field_dates,
-                report_title=report_title,
-                dataset_file=dataset_file,
-                variable_name="",
-                question_text_raw="",
-                source_note="wave_metadata_only_manual_fill_required",
-            )
-        else:
-            row = make_rq4_minimal_row(
-                wave_tag=wave_tag,
-                field_dates=field_dates,
-                dataset_file=dataset_file,
-                variable_name="",
-                question_text_raw="",
-            )
+        row = make_inventory_row(
+            wave_tag=wave_tag,
+            field_dates=field_dates,
+            dataset_file=dataset_file,
+            variable_name="",
+            question_text_raw="",
+        )
         row["inventory_id"] = f"{sanitize_slug(wave_tag)}_wave_metadata"
         rows.append(row)
 
@@ -644,7 +551,7 @@ def main() -> None:
     print(f"Wave folder: {wave_folder}")
     print(f"Readme found: {'yes' if readme_path else 'no'}")
     print(f"SAV found: {'yes' if sav_path else 'no'}")
-    print(f"Schema: {args.schema}")
+    print("Schema: minimal")
     print(
         f"Codebook loaded: {'yes' if codebook_status == 'loaded' else f'no ({codebook_status})'}"
     )

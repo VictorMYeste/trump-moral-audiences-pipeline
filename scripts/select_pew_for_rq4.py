@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 """Build a minimal, deterministic PEW inventory for RQ4 without manual columns."""
 
+# Simple explanation of this script (step by step):
+# 1) Read the master PEW inventory.
+# 2) Detect whether each question targets Trump and what judgment type it uses.
+# 3) Exclude formats that are not comparable (thermometer, traits, affective reactions, etc.).
+# 4) Assign an issue topic when there is a single clear match.
+# 5) Set `include_for_rq4` with deterministic rules and keep decision traces.
+
 from __future__ import annotations
 
 import argparse
