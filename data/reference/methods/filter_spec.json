@@ -1,0 +1,306 @@
+{
+  "metadata": {
+    "spec_name": "trump_moral_audiences_filter_spec",
+    "spec_version": "1.0.0",
+    "last_updated": "2026-03-26",
+    "scope": "Deterministic preprocessing and PEW selection rules used by this repository."
+  },
+  "preprocess_rules": [
+    {
+      "rule_order": 1,
+      "rule_id": "pp_not_morally_relevant",
+      "stage": "hard_drop",
+      "input_columns": [
+        "is_morally_relevant"
+      ],
+      "condition": "is_morally_relevant is false",
+      "action": "drop",
+      "output_code": "not_morally_relevant",
+      "rationale": "Keep only morally relevant rows."
+    },
+    {
+      "rule_order": 2,
+      "rule_id": "pp_retweet",
+      "stage": "hard_drop",
+      "input_columns": [
+        "isRetweet",
+        "text"
+      ],
+      "condition": "isRetweet is true OR text starts with RT @",
+      "action": "drop",
+      "output_code": "retweet",
+      "rationale": "Use only original posts."
+    },
+    {
+      "rule_order": 3,
+      "rule_id": "pp_min_chars",
+      "stage": "hard_drop",
+      "input_columns": [
+        "text_clean"
+      ],
+      "condition": "len(text_clean) < 40",
+      "action": "drop",
+      "output_code": "too_short_after_url_strip",
+      "rationale": "Remove rows too short for stable interpretation."
+    },
+    {
+      "rule_order": 4,
+      "rule_id": "pp_min_alpha_tokens",
+      "stage": "hard_drop",
+      "input_columns": [
+        "text_clean"
+      ],
+      "condition": "alphabetic token count < 7",
+      "action": "drop",
+      "output_code": "too_few_tokens",
+      "rationale": "Require minimum lexical content."
+    },
+    {
+      "rule_order": 5,
+      "rule_id": "pp_low_information_text",
+      "stage": "hard_drop",
+      "input_columns": [
+        "text_clean"
+      ],
+      "condition": "text_clean matches exact low-information patterns",
+      "action": "drop",
+      "output_code": "low_information_text",
+      "rationale": "Remove low-information formulaic rows."
+    },
+    {
+      "rule_order": 6,
+      "rule_id": "pp_truncated_flag",
+      "stage": "flag",
+      "input_columns": [
+        "text_clean"
+      ],
+      "condition": "text contains ... or unicode ellipsis",
+      "action": "set_review_flag",
+      "output_code": "truncated_text",
+      "rationale": "Mark potentially context-dependent text."
+    },
+    {
+      "rule_order": 7,
+      "rule_id": "pp_role_out_of_range",
+      "stage": "exclude_reason",
+      "input_columns": [
+        "date",
+        "role"
+      ],
+      "condition": "role == out_of_range",
+      "action": "add_exclude_reason",
+      "output_code": "role_out_of_range",
+      "rationale": "Keep rows in defined role windows."
+    },
+    {
+      "rule_order": 8,
+      "rule_id": "pp_topic_assignment_single",
+      "stage": "topic_assignment",
+      "input_columns": [
+        "text_clean"
+      ],
+      "condition": "exactly one topic regex hit",
+      "action": "set_topic_and_confidence",
+      "output_code": "topic=<matched>,topic_confidence=high",
+      "rationale": "Prefer unambiguous issue assignment."
+    },
+    {
+      "rule_order": 9,
+      "rule_id": "pp_topic_assignment_multi",
+      "stage": "topic_assignment",
+      "input_columns": [
+        "text_clean"
+      ],
+      "condition": "more than one topic regex hit",
+      "action": "set_topic_and_confidence",
+      "output_code": "topic=review_needed,topic_confidence=medium",
+      "rationale": "Flag multi-topic ambiguity."
+    },
+    {
+      "rule_order": 10,
+      "rule_id": "pp_topic_assignment_none",
+      "stage": "topic_assignment",
+      "input_columns": [
+        "text_clean"
+      ],
+      "condition": "no topic regex hits",
+      "action": "set_topic_and_confidence",
+      "output_code": "topic=other_campaign_generic,topic_confidence=low",
+      "rationale": "Separate non-issue rows from issue rows."
+    },
+    {
+      "rule_order": 11,
+      "rule_id": "pp_identity_leak",
+      "stage": "exclude_reason",
+      "input_columns": [
+        "text_anon"
+      ],
+      "condition": "identity leak pattern found after anonymization",
+      "action": "add_exclude_reason",
+      "output_code": "identity_leak_after_anonymization",
+      "rationale": "Prevent identity leakage in prompt text."
+    },
+    {
+      "rule_order": 12,
+      "rule_id": "pp_anonymization_degraded_text",
+      "stage": "exclude_reason",
+      "input_columns": [
+        "text_anon"
+      ],
+      "condition": "anon text too short/sparse after replacement thresholds",
+      "action": "add_exclude_reason",
+      "output_code": "anonymization_degraded_text",
+      "rationale": "Drop rows degraded by anonymization."
+    },
+    {
+      "rule_order": 13,
+      "rule_id": "pp_other_campaign_generic",
+      "stage": "exclude_reason",
+      "input_columns": [
+        "topic"
+      ],
+      "condition": "topic == other_campaign_generic",
+      "action": "add_exclude_reason",
+      "output_code": "other_campaign_generic",
+      "rationale": "Prompt pool focuses on issue-oriented content."
+    },
+    {
+      "rule_order": 14,
+      "rule_id": "pp_multi_topic_ambiguous",
+      "stage": "exclude_reason",
+      "input_columns": [
+        "topic"
+      ],
+      "condition": "topic == review_needed",
+      "action": "add_exclude_reason",
+      "output_code": "multi_topic_ambiguous",
+      "rationale": "Prompt pool prefers single-topic rows."
+    },
+    {
+      "rule_order": 15,
+      "rule_id": "pp_truncated_or_context_dependent",
+      "stage": "exclude_reason",
+      "input_columns": [
+        "review_flag"
+      ],
+      "condition": "review_flag not empty",
+      "action": "add_exclude_reason",
+      "output_code": "truncated_or_context_dependent",
+      "rationale": "Exclude context-dependent rows from first prompt pool."
+    },
+    {
+      "rule_order": 16,
+      "rule_id": "pp_moderation_status_excluded_from_prompt",
+      "stage": "exclude_reason",
+      "input_columns": [
+        "moderation_status"
+      ],
+      "condition": "moderation_status != not_deleted_not_flagged",
+      "action": "add_exclude_reason",
+      "output_code": "excluded_from_prompt_due_to_moderation_status",
+      "rationale": "Prompt-ready pool excludes deleted/flagged rows."
+    },
+    {
+      "rule_order": 17,
+      "rule_id": "pp_prompt_keep_flag",
+      "stage": "final_keep_decision",
+      "input_columns": [
+        "exclude_reason"
+      ],
+      "condition": "exclude_reason empty",
+      "action": "set_keep_for_prompt",
+      "output_code": "keep_for_prompt=yes else no",
+      "rationale": "Single deterministic keep gate."
+    },
+    {
+      "rule_order": 18,
+      "rule_id": "pp_duplicate_after_cleaning",
+      "stage": "deduplication",
+      "input_columns": [
+        "text_anon",
+        "date",
+        "id"
+      ],
+      "condition": "normalized text_anon duplicated in prompt candidates",
+      "action": "keep first and exclude later duplicates",
+      "output_code": "duplicate_after_cleaning",
+      "rationale": "Avoid duplicate prompt content."
+    }
+  ],
+  "pew_rules": [
+    {
+      "rule_order": 1,
+      "rule_id": "pew_trump_target_required",
+      "stage": "inclusion_gate",
+      "input_columns": [
+        "variable_name",
+        "question_text_raw"
+      ],
+      "condition": "must match direct Trump pattern OR constrained president context",
+      "action": "exclude when not matched",
+      "output_code": "exclude_not_trump_target",
+      "rationale": "Keep only Trump-targeted items."
+    },
+    {
+      "rule_order": 2,
+      "rule_id": "pew_excluded_forms",
+      "stage": "inclusion_gate",
+      "input_columns": [
+        "question_text_raw"
+      ],
+      "condition": "matches excluded form families",
+      "action": "exclude",
+      "output_code": "exclude_thermometer|exclude_trait|exclude_affective_reaction|exclude_knowledge_or_awareness|exclude_broad_favorability",
+      "rationale": "Remove non-comparable item forms."
+    },
+    {
+      "rule_order": 3,
+      "rule_id": "pew_judgment_family_supported",
+      "stage": "inclusion_gate",
+      "input_columns": [
+        "question_text_raw"
+      ],
+      "condition": "judgment_family in {approval, confidence, policy_support}",
+      "action": "exclude when not supported",
+      "output_code": "exclude_judgment_not_supported",
+      "rationale": "Only comparable judgment families are included."
+    },
+    {
+      "rule_order": 4,
+      "rule_id": "pew_response_scale_known",
+      "stage": "inclusion_gate",
+      "input_columns": [
+        "question_text_raw"
+      ],
+      "condition": "response scale is inferred and not unknown",
+      "action": "exclude when unknown",
+      "output_code": "exclude_unknown_response_scale",
+      "rationale": "Require interpretable response scale."
+    },
+    {
+      "rule_order": 5,
+      "rule_id": "pew_issue_topic_single_match",
+      "stage": "inclusion_gate",
+      "input_columns": [
+        "variable_name",
+        "question_text_raw"
+      ],
+      "condition": "exactly one issue topic hit",
+      "action": "exclude when none or multiple",
+      "output_code": "exclude_no_topic_match|exclude_multi_topic_ambiguous",
+      "rationale": "Require single deterministic topic assignment."
+    },
+    {
+      "rule_order": 6,
+      "rule_id": "pew_final_include",
+      "stage": "final_keep_decision",
+      "input_columns": [
+        "exclude_code"
+      ],
+      "condition": "no exclusion code",
+      "action": "set include_for_rq4",
+      "output_code": "include_for_rq4=yes else no",
+      "rationale": "Single deterministic include gate."
+    }
+  ]
+}

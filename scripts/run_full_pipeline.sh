@@ -6,7 +6,7 @@ set -euo pipefail
 # 2) Build PEW partial files per wave and then merge them.
 # 3) Select PEW rows valid for RQ4.
 # 4) Preprocess posts and compute topic overlap.
-# 5) Generate final PEW/post subsets and a final pipeline summary.
+# 5) Generate final PEW/post subsets, run summary, and export methods appendix artifacts.
 
 usage() {
   cat <<'EOF'
@@ -25,6 +25,7 @@ Options:
   --min-posts-per-topic N      Threshold for build_rq4_final_subsets.py (default: 1)
   --skip-preflight             Skip wave input preflight validation
   --skip-summary               Skip pipeline summary artifact generation
+  --skip-methods               Skip methods appendix artifact generation
   --no-overwrite               Do not pass --overwrite to scripts that support it
   -h, --help                   Show this help
 
@@ -46,6 +47,7 @@ MIN_POSTS_PER_TOPIC=1
 REFRESH_MANIFEST=1
 SKIP_PREFLIGHT=0
 SKIP_SUMMARY=0
+SKIP_METHODS=0
 OVERWRITE=1
 
 while [[ $# -gt 0 ]]; do
@@ -86,6 +88,10 @@ while [[ $# -gt 0 ]]; do
       SKIP_SUMMARY=1
       shift
       ;;
+    --skip-methods)
+      SKIP_METHODS=1
+      shift
+      ;;
     --no-overwrite)
       OVERWRITE=0
       shift
@@ -112,7 +118,7 @@ if [[ $REFRESH_MANIFEST -eq 1 ]]; then
 fi
 
 if [[ $SKIP_PREFLIGHT -eq 0 ]]; then
-  echo "[0/8] Running preflight validation..."
+  echo "[0/9] Running preflight validation..."
   PREFLIGHT_CMD=( "$PYTHON_BIN" scripts/validate_pew_wave_inputs.py --wave-glob "$WAVE_GLOB" )
   if [[ -n "$MANIFEST_PATH" ]]; then
     PREFLIGHT_CMD+=( --manifest "$MANIFEST_PATH" )
@@ -120,7 +126,7 @@ if [[ $SKIP_PREFLIGHT -eq 0 ]]; then
   "${PREFLIGHT_CMD[@]}"
 fi
 
-echo "[1/8] Building per-wave PEW partial inventories..."
+echo "[1/9] Building per-wave PEW partial inventories..."
 shopt -s nullglob
 wave_dirs=( $WAVE_GLOB )
 if [[ ${#wave_dirs[@]} -eq 0 ]]; then
@@ -139,31 +145,31 @@ for d in "${wave_dirs[@]}"; do
 done
 shopt -u nullglob
 
-echo "[2/8] Merging partial inventories..."
+echo "[2/9] Merging partial inventories..."
 if [[ $OVERWRITE -eq 1 ]]; then
   "$PYTHON_BIN" scripts/merge_pew_inventories.py --overwrite
 else
   "$PYTHON_BIN" scripts/merge_pew_inventories.py
 fi
 
-echo "[3/8] Selecting PEW rows for RQ4..."
+echo "[3/9] Selecting PEW rows for RQ4..."
 if [[ $OVERWRITE -eq 1 ]]; then
   "$PYTHON_BIN" scripts/select_pew_for_rq4.py --overwrite
 else
   "$PYTHON_BIN" scripts/select_pew_for_rq4.py
 fi
 
-echo "[4/8] Preprocessing posts..."
+echo "[4/9] Preprocessing posts..."
 POSTS_CMD=( "$PYTHON_BIN" scripts/preprocess_posts.py )
 if [[ -n "$MANUAL_REVIEW_CSV" ]]; then
   POSTS_CMD+=( --manual-review-csv "$MANUAL_REVIEW_CSV" )
 fi
 "${POSTS_CMD[@]}"
 
-echo "[5/8] Reporting topic overlap..."
+echo "[5/9] Reporting topic overlap..."
 "$PYTHON_BIN" scripts/report_topic_overlap.py
 
-echo "[6/8] Building final RQ4 topic list and subsets..."
+echo "[6/9] Building final RQ4 topic list and subsets..."
 if [[ $OVERWRITE -eq 1 ]]; then
   "$PYTHON_BIN" scripts/build_rq4_final_subsets.py \
     --min-pew-per-topic "$MIN_PEW_PER_TOPIC" \
@@ -176,8 +182,13 @@ else
 fi
 
 if [[ $SKIP_SUMMARY -eq 0 ]]; then
-  echo "[7/8] Building pipeline summary artifacts..."
+  echo "[7/9] Building pipeline summary artifacts..."
   "$PYTHON_BIN" scripts/build_pipeline_summary.py
+fi
+
+if [[ $SKIP_METHODS -eq 0 ]]; then
+  echo "[8/9] Exporting methods appendix artifacts..."
+  "$PYTHON_BIN" scripts/export_methods_appendix.py
 fi
 
 echo "Pipeline completed."

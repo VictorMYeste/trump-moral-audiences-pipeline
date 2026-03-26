@@ -4,6 +4,7 @@ This document defines the reproducible preprocessing pipeline for Trump archive 
 
 The implementation source of truth is:
 - `scripts/preprocess_posts.py`
+- `data/reference/methods/filter_spec.json` (machine-readable rule list used for appendix export)
 
 ## 1. Objective
 
@@ -129,6 +130,8 @@ The pipeline appends these columns:
 ## 5. Deterministic Processing Rules
 
 Rules are applied in fixed order.
+Canonical rule IDs and rationales are versioned in:
+- `data/reference/methods/filter_spec.json`
 
 ### 5.1 Hard filters before topic labeling
 
@@ -181,6 +184,7 @@ Assignment rules:
 
 Exact regex patterns are documented in code:
 - `scripts/preprocess_posts.py` (`TOPIC_PATTERNS`)
+- `reports/methods/topic_patterns.csv` (generated table for appendix use)
 
 ### 5.4 Optional manual override layer
 
@@ -244,3 +248,12 @@ python3 scripts/preprocess_posts.py --manual-review-csv path/to/manual_review_ov
 ```
 
 The script prints row counts, drop counts, topic counts, moderation counts, and prompt-keep counts for auditability.
+
+## 8. Methods Appendix Artifacts
+
+After running the full pipeline (or `scripts/export_methods_appendix.py`), the following appendix-ready files are generated:
+- `reports/methods/filter_table.csv`: ordered preprocessing and PEW selection rules with rule IDs.
+- `reports/methods/topic_patterns.csv`: full topic regex inventory used by both post and PEW selectors.
+- `reports/methods/anonymization_rules.csv`: ordered anonymization replacements and fallback patterns.
+- `reports/methods/pew_selection_rules.csv`: deterministic PEW inclusion/exclusion regexes.
+- `reports/methods/decision_audit.md`: stage counts and exclusion-count diagnostics.

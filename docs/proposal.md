@@ -110,3 +110,11 @@ The project is reproducible when:
 1. Script versions are fixed in the repository.
 2. Inputs are present in documented locations.
 3. Outputs can be regenerated from raw inputs with `scripts/run_full_pipeline.sh`.
+4. Methods appendix artifacts are regenerated from code/spec with `scripts/export_methods_appendix.py`.
+
+Appendix-ready methods artifacts:
+- `reports/methods/filter_table.csv`
+- `reports/methods/topic_patterns.csv`
+- `reports/methods/anonymization_rules.csv`
+- `reports/methods/pew_selection_rules.csv`
+- `reports/methods/decision_audit.md`

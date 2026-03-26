@@ -6,6 +6,7 @@ Implementation source of truth:
 - `scripts/select_pew_for_rq4.py`
 - `scripts/report_topic_overlap.py`
 - `scripts/build_rq4_final_subsets.py`
+- `data/reference/methods/filter_spec.json`
 
 ## 1. Alignment Objective
 
@@ -49,6 +50,8 @@ Current deterministic topic set:
 Important:
 - Topic regexes are intentionally conservative and auditable.
 - Exact patterns are defined in code and should be changed only via versioned edits.
+- Generated appendix table:
+  - `reports/methods/topic_patterns.csv`
 
 ## 4. Alignment Outputs
 
@@ -93,4 +96,5 @@ Examples:
 If topic regexes or inclusion logic are changed:
 1. rerun the full pipeline,
 2. regenerate all PEW and RQ4 outputs,
-3. document the change in commit history and release notes.
+3. regenerate `reports/methods/*.csv` and `reports/methods/decision_audit.md`,
+4. document the change in commit history and release notes.

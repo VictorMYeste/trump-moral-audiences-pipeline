@@ -26,7 +26,9 @@ Core design docs:
 - `scripts/report_topic_overlap.py`: print PEW vs prompt-ready topic overlap and coverage counts.
 - `scripts/build_rq4_final_subsets.py`: build final overlap topic list and subset both PEW rows and posts.
 - `scripts/build_pipeline_summary.py`: generate run-level Markdown/JSON summary artifacts.
+- `scripts/export_methods_appendix.py`: export appendix-ready rules/regex/audit artifacts for methods reporting.
 - `scripts/run_full_pipeline.sh`: run the full end-to-end sequence in one command.
+- `data/reference/methods/filter_spec.json`: machine-readable canonical filter/selection rule specification.
 - `data/interim/pew/pew_question_inventory.csv`: merged PEW inventory (generated).
 - `data/interim/pew/pew_rq4_inventory.csv`: RQ4 deterministic selection table (generated).
 
@@ -142,6 +144,7 @@ python3 -c "import pypdf; print(pypdf.__version__)"
 7. Run `report_topic_overlap.py` to inspect PEW-vs-post topic coverage.
 8. Run `build_rq4_final_subsets.py` to produce one final topic list and both final subsets.
 9. Run `build_pipeline_summary.py` to produce auditable run summaries in `reports/`.
+10. Run `export_methods_appendix.py` to generate appendix-ready rule/pattern/audit artifacts in `reports/methods/`.
 
 ## Script: preprocess_posts.py
 
@@ -383,6 +386,34 @@ Basic run:
 python3 scripts/build_pipeline_summary.py
 ```
 
+## Script: export_methods_appendix.py
+
+Purpose:
+- Exports appendix-ready methods artifacts directly from the implemented code and rule spec.
+- Produces rule tables, regex tables, anonymization tables, PEW selection-rule tables, and a decision-audit Markdown.
+
+Basic run:
+
+```bash
+python3 scripts/export_methods_appendix.py
+```
+
+Arguments:
+- `--spec` default `data/reference/methods/filter_spec.json`.
+- `--outdir` default `reports/methods`.
+- `--raw` default `data/raw/trump_archive_me2bert_filtered_2021.csv`.
+- `--posts-clean` default `data/interim/preprocessing/posts_clean.csv`.
+- `--posts-validated` default `data/interim/preprocessing/posts_topic_validated.csv`.
+- `--posts-prompt` default `data/interim/preprocessing/posts_prompt_ready.csv`.
+- `--pew-rq4` default `data/interim/pew/pew_rq4_inventory.csv`.
+
+Outputs in `reports/methods/`:
+1. `filter_table.csv`
+2. `topic_patterns.csv`
+3. `anonymization_rules.csv`
+4. `pew_selection_rules.csv`
+5. `decision_audit.md`
+
 ## Script: run_full_pipeline.sh
 
 Purpose:
@@ -402,6 +433,7 @@ Useful options:
 - `--min-posts-per-topic N` threshold for final topic selection.
 - `--skip-preflight` skip wave preflight validation.
 - `--skip-summary` skip summary artifact generation.
+- `--skip-methods` skip methods appendix artifact generation.
 - `--no-overwrite` do not pass overwrite flags to scripts that support them.
 
 ## Recommended Command Sequence
@@ -468,11 +500,37 @@ python3 scripts/build_rq4_final_subsets.py --overwrite
 python3 scripts/build_pipeline_summary.py
 ```
 
-10. Optionally rerun post preprocessing with manual overrides:
+10. Export methods appendix artifacts:
+
+```bash
+python3 scripts/export_methods_appendix.py
+```
+
+11. Optionally rerun post preprocessing with manual overrides:
 
 ```bash
 python3 scripts/preprocess_posts.py --manual-review-csv manual_review_overrides.csv
 ```
+
+## Methods Reproducibility
+
+Rule provenance and audit artifacts are fully script-generated:
+1. Canonical rule specification:
+   - `data/reference/methods/filter_spec.json`
+2. Code-level rule implementation:
+   - `scripts/preprocess_posts.py`
+   - `scripts/select_pew_for_rq4.py`
+3. Appendix-ready exports:
+   - `reports/methods/filter_table.csv`
+   - `reports/methods/topic_patterns.csv`
+   - `reports/methods/anonymization_rules.csv`
+   - `reports/methods/pew_selection_rules.csv`
+   - `reports/methods/decision_audit.md`
+
+Recommended for paper appendix generation:
+1. Run `scripts/run_full_pipeline.sh`.
+2. Use `reports/methods/*.csv` as table sources.
+3. Use `reports/methods/decision_audit.md` for count-level decision trace.
 
 ## Common Issues
 
