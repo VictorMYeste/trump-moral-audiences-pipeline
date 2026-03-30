@@ -18,6 +18,7 @@ Usage:
 
 Options:
   --python BIN                 Python executable to use (default: python3)
+  --raw-posts PATH             Raw post CSV path. Repeat to combine multiple raw files
   --wave-glob GLOB             Wave folder glob (default: data/pew_datasets/W*)
   --manifest PATH              Wave manifest CSV (default: data/reference/pew/waves_manifest.csv)
   --no-refresh-manifest        Do not auto-rebuild manifest from wave folders
@@ -43,6 +44,12 @@ EOF
 }
 
 PYTHON_BIN="python3"
+RAW_POSTS_DEFAULT=(
+  "data/raw/trump_archive_me2bert_filtered_2009_2021.csv"
+  "data/raw/trump_manual_me2bert_filtered_2022_2024.csv"
+)
+RAW_POSTS=( "${RAW_POSTS_DEFAULT[@]}" )
+RAW_POSTS_EXPLICIT=0
 WAVE_GLOB="data/pew_datasets/W*"
 MANIFEST_PATH="data/reference/pew/waves_manifest.csv"
 MANUAL_REVIEW_CSV=""
@@ -69,6 +76,14 @@ while [[ $# -gt 0 ]]; do
       ;;
     --wave-glob)
       WAVE_GLOB="$2"
+      shift 2
+      ;;
+    --raw-posts)
+      if [[ $RAW_POSTS_EXPLICIT -eq 0 ]]; then
+        RAW_POSTS=()
+        RAW_POSTS_EXPLICIT=1
+      fi
+      RAW_POSTS+=( "$2" )
       shift 2
       ;;
     --manifest)
@@ -150,6 +165,17 @@ if [[ "${PIPELINE_LOG_ACTIVE:-0}" != "1" && $AUTO_LOG -eq 1 ]]; then
   exit "${PIPESTATUS[0]}"
 fi
 
+ACTIVE_RAW_POSTS=()
+if [[ $RAW_POSTS_EXPLICIT -eq 1 ]]; then
+  ACTIVE_RAW_POSTS=( "${RAW_POSTS[@]}" )
+else
+  for raw_path in "${RAW_POSTS[@]}"; do
+    if [[ -f "$raw_path" ]]; then
+      ACTIVE_RAW_POSTS+=( "$raw_path" )
+    fi
+  done
+fi
+
 if [[ $REFRESH_MANIFEST -eq 1 ]]; then
   echo "[prep] Rebuilding wave manifest from folders..."
   "$PYTHON_BIN" scripts/build_waves_manifest.py --wave-glob "$WAVE_GLOB" --output "$MANIFEST_PATH"
@@ -202,6 +228,11 @@ fi
 
 echo "[5/12] Preprocessing posts..."
 POSTS_CMD=( "$PYTHON_BIN" scripts/preprocess_posts.py )
+if [[ ${#ACTIVE_RAW_POSTS[@]} -gt 0 ]]; then
+  for raw_path in "${ACTIVE_RAW_POSTS[@]}"; do
+    POSTS_CMD+=( --input "$raw_path" )
+  done
+fi
 if [[ -n "$MANUAL_REVIEW_CSV" ]]; then
   POSTS_CMD+=( --manual-review-csv "$MANUAL_REVIEW_CSV" )
 fi
@@ -223,10 +254,13 @@ else
 fi
 
 echo "[8/12] Writing run provenance artifact..."
-"$PYTHON_BIN" scripts/build_run_provenance.py \
-  --raw-posts "data/raw/trump_archive_me2bert_filtered_2021.csv" \
-  --wave-glob "$WAVE_GLOB" \
-  --manifest "$MANIFEST_PATH"
+PROVENANCE_CMD=( "$PYTHON_BIN" scripts/build_run_provenance.py --wave-glob "$WAVE_GLOB" --manifest "$MANIFEST_PATH" )
+if [[ ${#ACTIVE_RAW_POSTS[@]} -gt 0 ]]; then
+  for raw_path in "${ACTIVE_RAW_POSTS[@]}"; do
+    PROVENANCE_CMD+=( --raw-posts "$raw_path" )
+  done
+fi
+"${PROVENANCE_CMD[@]}"
 
 if [[ $SKIP_SUMMARY -eq 0 ]]; then
   echo "[9/12] Building pipeline summary artifacts..."
@@ -235,7 +269,13 @@ fi
 
 if [[ $SKIP_METHODS -eq 0 ]]; then
   echo "[10/12] Exporting methods appendix artifacts..."
-  "$PYTHON_BIN" scripts/export_methods_appendix.py
+  METHODS_CMD=( "$PYTHON_BIN" scripts/export_methods_appendix.py )
+  if [[ ${#ACTIVE_RAW_POSTS[@]} -gt 0 ]]; then
+    for raw_path in "${ACTIVE_RAW_POSTS[@]}"; do
+      METHODS_CMD+=( --raw "$raw_path" )
+    done
+  fi
+  "${METHODS_CMD[@]}"
 fi
 
 if [[ $SKIP_PUBLISHABLE -eq 0 ]]; then

@@ -24,7 +24,10 @@ import topic_rules as tr
 SPEC_DEFAULT = "data/reference/methods/filter_spec.json"
 TOPIC_SPEC_DEFAULT = "data/reference/methods/topic_keywords.json"
 OUTDIR_DEFAULT = "reports/methods"
-RAW_DEFAULT = "data/raw/trump_archive_me2bert_filtered_2021.csv"
+RAW_DEFAULTS = [
+    "data/raw/trump_archive_me2bert_filtered_2009_2021.csv",
+    "data/raw/trump_manual_me2bert_filtered_2022_2024.csv",
+]
 POSTS_CLEAN_DEFAULT = "data/interim/preprocessing/posts_clean.csv"
 POSTS_VALIDATED_DEFAULT = "data/interim/preprocessing/posts_topic_validated.csv"
 POSTS_PROMPT_DEFAULT = "data/interim/preprocessing/posts_prompt_ready.csv"
@@ -38,7 +41,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--spec", default=SPEC_DEFAULT)
     parser.add_argument("--topic-spec", default=TOPIC_SPEC_DEFAULT)
     parser.add_argument("--outdir", default=OUTDIR_DEFAULT)
-    parser.add_argument("--raw", default=RAW_DEFAULT)
+    parser.add_argument(
+        "--raw",
+        action="append",
+        default=[],
+        help="Raw post CSV path. Repeat to combine multiple raw files.",
+    )
     parser.add_argument("--posts-clean", default=POSTS_CLEAN_DEFAULT)
     parser.add_argument("--posts-validated", default=POSTS_VALIDATED_DEFAULT)
     parser.add_argument("--posts-prompt", default=POSTS_PROMPT_DEFAULT)
@@ -86,6 +94,14 @@ def read_csv_rows(path: Path) -> List[Dict[str, str]]:
         if reader.fieldnames is None:
             return []
         return list(reader)
+
+
+def read_many_csv_rows(paths: Sequence[str], default_paths: Sequence[str]) -> List[Dict[str, str]]:
+    selected_paths = list(paths) if paths else list(default_paths)
+    rows: List[Dict[str, str]] = []
+    for path_str in selected_paths:
+        rows.extend(read_csv_rows(Path(path_str)))
+    return rows
 
 
 def normalize_list_value(value: object) -> str:
@@ -486,7 +502,7 @@ def main() -> None:
 
     spec = load_spec(spec_path)
 
-    raw_rows = read_csv_rows(Path(args.raw))
+    raw_rows = read_many_csv_rows(args.raw, RAW_DEFAULTS)
     posts_clean_rows = read_csv_rows(Path(args.posts_clean))
     posts_validated_rows = read_csv_rows(Path(args.posts_validated))
     posts_prompt_rows = read_csv_rows(Path(args.posts_prompt))

@@ -2277,58 +2277,62 @@ Included topic counts:
   judiciary_courts: 4
 Output: data/interim/pew/pew_rq4_inventory.csv
 [5/12] Preprocessing posts...
-Input rows: 22822
-Rows after hard filters (posts_clean): 17497
-Rows in posts_topic_labeled: 17497
-Rows in posts_topic_validated: 17497
-Rows in posts_prompt_ready: 3718
-Rows in posts_moderation_analysis: 17497
+Input files: 2
+  - data/raw/trump_archive_me2bert_filtered_2009_2021.csv
+  - data/raw/trump_manual_me2bert_filtered_2022_2024.csv
+Input rows: 31366
+Rows after hard filters (posts_clean): 23230
+Rows in posts_topic_labeled: 23230
+Rows in posts_topic_validated: 23230
+Rows in posts_prompt_ready: 5270
+Rows in posts_moderation_analysis: 23230
 Hard-filter drops:
-  retweet: 3785
-  too_few_tokens: 261
-  too_short_after_url_strip: 1279
+  retweet: 5794
+  too_few_tokens: 302
+  too_short_after_url_strip: 2040
 Validated topic counts:
-  covid_public_health: 278
-  crime_policing_criminal_justice: 440
-  economy_jobs_trade: 1121
-  election_integrity_democracy: 1015
-  foreign_policy_national_security: 1123
-  immigration_border: 473
-  judiciary_courts: 182
-  other_campaign_generic: 11371
-  review_needed: 1494
+  covid_public_health: 298
+  crime_policing_criminal_justice: 655
+  economy_jobs_trade: 1356
+  election_integrity_democracy: 1828
+  foreign_policy_national_security: 1349
+  immigration_border: 642
+  judiciary_courts: 438
+  other_campaign_generic: 13621
+  review_needed: 3043
 Moderation status counts:
   deleted: 267
   flagged: 107
   not_deleted_not_flagged: 17123
+  unknown_missing_source_metadata: 5733
 keep_for_prompt counts:
-  no: 13779
-  yes: 3718
+  no: 17960
+  yes: 5270
 [6/12] Reporting topic overlap...
 PEW file: data/interim/pew/pew_rq4_inventory.csv
 Posts file: data/interim/preprocessing/posts_prompt_ready.csv
 PEW rows: 981
 PEW included rows (include_for_rq4=yes): 93
 PEW excluded rows: 888
-Prompt-ready posts rows: 3718
+Prompt-ready posts rows: 5270
 
 Included PEW topics: 5
 Prompt-ready post topics: 7
 Topic overlap (included PEW and posts): 5
 
 Overlap topics:
-  covid_public_health: pew_included=5, posts=232
-  economy_jobs_trade: pew_included=75, posts=922
-  foreign_policy_national_security: pew_included=5, posts=916
-  immigration_border: pew_included=4, posts=401
-  judiciary_courts: pew_included=4, posts=130
+  covid_public_health: pew_included=5, posts=251
+  economy_jobs_trade: pew_included=75, posts=1116
+  foreign_policy_national_security: pew_included=5, posts=1112
+  immigration_border: pew_included=4, posts=539
+  judiciary_courts: pew_included=4, posts=300
 
 Included PEW topics with no post coverage:
   (none)
 
 Post topics with no included PEW coverage:
-  crime_policing_criminal_justice: posts=343
-  election_integrity_democracy: posts=774
+  crime_policing_criminal_justice: posts=505
+  election_integrity_democracy: posts=1447
 
 Top PEW issue_topic counts (all rows, top 20):
   issue_topic                      | count
@@ -2357,13 +2361,13 @@ Top PEW exclude_code counts (top 20):
 Top prompt-ready post topic counts (top 20):
   topic                            | count
   ---------------------------------+------
-  economy_jobs_trade               | 922  
-  foreign_policy_national_security | 916  
-  election_integrity_democracy     | 774  
-  immigration_border               | 401  
-  crime_policing_criminal_justice  | 343  
-  covid_public_health              | 232  
-  judiciary_courts                 | 130  
+  election_integrity_democracy     | 1447 
+  economy_jobs_trade               | 1116 
+  foreign_policy_national_security | 1112 
+  immigration_border               | 539  
+  crime_policing_criminal_justice  | 505  
+  judiciary_courts                 | 300  
+  covid_public_health              | 251  
 [7/12] Building final RQ4 topic list and subsets...
 PEW file: data/interim/pew/pew_rq4_inventory.csv
 Posts file: data/interim/preprocessing/posts_prompt_ready.csv
@@ -2375,7 +2379,7 @@ Topics in prompt-ready posts: 7
 Overlap topics before thresholds: 5
 Final topics after thresholds: 5
 PEW subset rows written: 93
-Posts subset rows written: 2601
+Posts subset rows written: 3318
 Topics output: data/interim/rq4/rq4_topics_final.csv
 PEW subset output: data/interim/rq4/rq4_pew_subset.csv
 Posts subset output: data/interim/rq4/rq4_posts_subset.csv

@@ -11,7 +11,7 @@ preprocess,3,pp_min_chars,hard_drop,text_clean,len(text_clean) < 40,drop,too_sho
 preprocess,4,pp_min_alpha_tokens,hard_drop,text_clean,alphabetic token count < 7,drop,too_few_tokens,Require minimum lexical content.
 preprocess,5,pp_low_information_text,hard_drop,text_clean,text_clean matches exact low-information patterns,drop,low_information_text,Remove low-information formulaic rows.
 preprocess,6,pp_truncated_flag,flag,text_clean,text contains ... or unicode ellipsis,set_review_flag,truncated_text,Mark potentially context-dependent text.
-preprocess,7,pp_role_out_of_range,exclude_reason,date|role,role == out_of_range,add_exclude_reason,role_out_of_range,Keep rows in defined role windows.
+preprocess,7,pp_role_out_of_range,exclude_reason,date|role,role == out_of_range,add_exclude_reason,role_out_of_range,"Keep rows in defined role windows, including former-president and 2024-candidate periods."
 preprocess,8,pp_topic_assignment_single,topic_assignment,text_clean,exactly one topic regex hit,set_topic_and_confidence,"topic=<matched>,topic_confidence=high",Prefer unambiguous issue assignment.
 preprocess,9,pp_topic_assignment_multi,topic_assignment,text_clean,more than one topic regex hit,set_topic_and_confidence,"topic=review_needed,topic_confidence=medium",Flag multi-topic ambiguity.
 preprocess,10,pp_topic_assignment_none,topic_assignment,text_clean,no topic regex hits,set_topic_and_confidence,"topic=other_campaign_generic,topic_confidence=low",Separate non-issue rows from issue rows.
@@ -20,6 +20,6 @@ preprocess,12,pp_anonymization_degraded_text,exclude_reason,text_anon,anon text 
 preprocess,13,pp_other_campaign_generic,exclude_reason,topic,topic == other_campaign_generic,add_exclude_reason,other_campaign_generic,Prompt pool focuses on issue-oriented content.
 preprocess,14,pp_multi_topic_ambiguous,exclude_reason,topic,topic == review_needed,add_exclude_reason,multi_topic_ambiguous,Prompt pool prefers single-topic rows.
 preprocess,15,pp_truncated_or_context_dependent,exclude_reason,review_flag,review_flag not empty,add_exclude_reason,truncated_or_context_dependent,Exclude context-dependent rows from first prompt pool.
-preprocess,16,pp_moderation_status_excluded_from_prompt,exclude_reason,moderation_status,moderation_status != not_deleted_not_flagged,add_exclude_reason,excluded_from_prompt_due_to_moderation_status,Prompt-ready pool excludes deleted/flagged rows.
+preprocess,16,pp_moderation_status_excluded_from_prompt,exclude_reason,moderation_status,"moderation_status is one of deleted, flagged, deleted_and_flagged",add_exclude_reason,excluded_from_prompt_due_to_moderation_status,"Prompt-ready pool excludes rows explicitly marked deleted/flagged, while allowing rows with unknown moderation metadata from sources that do not provide those fields."
 preprocess,17,pp_prompt_keep_flag,final_keep_decision,exclude_reason,exclude_reason empty,set_keep_for_prompt,keep_for_prompt=yes else no,Single deterministic keep gate.
 preprocess,18,pp_duplicate_after_cleaning,deduplication,text_anon|date|id,normalized text_anon duplicated in prompt candidates,keep first and exclude later duplicates,duplicate_after_cleaning,Avoid duplicate prompt content.

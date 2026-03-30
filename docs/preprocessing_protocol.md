@@ -13,11 +13,9 @@ Produce a prompt-ready, anonymized, issue-topic subset for synthetic audience pr
 
 ## 2. Input Dataset
 
-Default input file:
-- `data/raw/trump_archive_me2bert_filtered_2021.csv`
-
-Planned extension input file:
-- `data/raw/trump_archive_me2bert_filtered_2024.csv` (not yet added)
+Default raw input files:
+- `data/raw/trump_archive_me2bert_filtered_2009_2021.csv`
+- `data/raw/trump_manual_me2bert_filtered_2022_2024.csv`
 
 Source provenance:
 - Current window source (up to 2021): Kaggle archive
@@ -26,21 +24,23 @@ Source provenance:
 - Planned extension source (2021-2024): The Trump Archive
   - <https://www.thetrumparchive.com/>
   - https://www.thetrumparchive.com/
-- Current protocol window: `2009-05-12` to `2021-01-08`
-
-Planned extension window:
-- `2021-01-09` to `2024-12-31` from The Trump Archive.
-- The extension input must follow the same raw schema defined below.
+- Current protocol windows:
+- `2009-05-12` to `2021-01-08` from the Kaggle archive file
+- `2022-04-29` to `2024-11-04` from the manually prepared Trump Archive file
+- Multiple raw inputs can be combined in one preprocessing run.
 
 Required source columns:
 - `id`
 - `text`
 - `isRetweet`
-- `isDeleted`
 - `date`
-- `isFlagged`
 - `dominant_moral_dimension`
 - `is_morally_relevant`
+
+Optional-but-supported source columns:
+- `isDeleted`
+- `isFlagged`
+- `device`
 
 ### 2.1 Expected Raw CSV Schema
 
@@ -71,12 +71,12 @@ Field format contract:
 | `id` | string/integer | unique tweet id (digits recommended) | yes |
 | `text` | string | UTF-8 text content | yes |
 | `isRetweet` | string bool | `t`/`f` (parser also accepts common boolean variants) | yes |
-| `isDeleted` | string bool | `t`/`f` | yes |
-| `device` | string | free text source label | no (pass-through) |
+| `isDeleted` | string bool | `t`/`f` | optional |
+| `device` | string | free text source label | optional pass-through |
 | `favorites` | integer | non-negative integer | no (pass-through) |
 | `retweets` | integer | non-negative integer | no (pass-through) |
 | `date` | datetime string | `YYYY-MM-DD HH:MM:SS` | yes |
-| `isFlagged` | string bool | `t`/`f` | yes |
+| `isFlagged` | string bool | `t`/`f` | optional |
 | `CH` | float | moral score in `[0, 1]` | no (pass-through) |
 | `FC` | float | moral score in `[0, 1]` | no (pass-through) |
 | `LB` | float | moral score in `[0, 1]` | no (pass-through) |
@@ -113,6 +113,7 @@ Generated files:
 ## 4. Derived Columns
 
 The pipeline appends these columns:
+- `source_file`
 - `year`
 - `month`
 - `role`
@@ -158,7 +159,9 @@ Canonical rule IDs and rationales are versioned in:
 - `public_figure`: 2009-05-12 to 2015-06-15
 - `candidate`: 2015-06-16 to 2016-11-08
 - `president_elect`: 2016-11-09 to 2017-01-19
-- `sitting_president`: 2017-01-20 to 2021-01-08
+- `sitting_president`: 2017-01-20 to 2021-01-20
+- `former_president`: 2021-01-21 to 2022-11-14
+- `candidate_2024`: 2022-11-15 to 2024-11-05
 - `out_of_range`: all others
 
 `moderation_status` from `isDeleted`, `isFlagged`:
@@ -166,6 +169,7 @@ Canonical rule IDs and rationales are versioned in:
 - `deleted`
 - `flagged`
 - `not_deleted_not_flagged`
+- `unknown_missing_source_metadata` when one or both moderation columns are absent/blank in the source file
 
 ### 5.3 Topic labeling
 
@@ -223,6 +227,10 @@ Rows are excluded from `posts_prompt_ready.csv` if any apply:
 - `excluded_from_prompt_due_to_moderation_status`
 - `duplicate_after_cleaning`
 
+Moderation note:
+- rows are excluded for moderation only when the source explicitly marks them as `deleted`, `flagged`, or `deleted_and_flagged`
+- rows with `moderation_status=unknown_missing_source_metadata` remain eligible for prompting
+
 `keep_for_prompt=yes` is assigned only when `exclude_reason` is empty.
 
 ### 5.7 Final deduplication
@@ -241,6 +249,14 @@ Run:
 
 ```bash
 python3 scripts/preprocess_posts.py
+```
+
+Equivalent explicit multi-input run:
+
+```bash
+python3 scripts/preprocess_posts.py \
+  --input data/raw/trump_archive_me2bert_filtered_2009_2021.csv \
+  --input data/raw/trump_manual_me2bert_filtered_2022_2024.csv
 ```
 
 Optional overrides:

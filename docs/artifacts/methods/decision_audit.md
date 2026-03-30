@@ -1,45 +1,46 @@
 # Decision Audit
 
-Generated (UTC): `2026-03-30T12:44:10.731847+00:00`
-Rule spec version: `1.0.0`
+Generated (UTC): `2026-03-30T13:26:56.402531+00:00`
+Rule spec version: `1.1.0`
 
 ## Stage Counts
 
 | metric | value |
 | --- | --- |
-| raw_input_rows | 22822 |
-| posts_clean_rows | 17497 |
-| posts_topic_validated_rows | 17497 |
-| posts_prompt_ready_rows | 3718 |
+| raw_input_rows | 31366 |
+| posts_clean_rows | 23230 |
+| posts_topic_validated_rows | 23230 |
+| posts_prompt_ready_rows | 5270 |
 | pew_rq4_rows | 981 |
 | pew_include_yes | 93 |
 | pew_include_no | 888 |
-| hard_drop_inferred | 5325 |
+| hard_drop_inferred | 8136 |
 
 ## Post Exclusion Reasons
 
 | exclude_reason | count |
 | --- | --- |
-| other_campaign_generic | 11371 |
-| truncated_or_context_dependent | 2395 |
-| multi_topic_ambiguous | 1494 |
+| other_campaign_generic | 13621 |
+| truncated_or_context_dependent | 3225 |
+| multi_topic_ambiguous | 3043 |
 | excluded_from_prompt_due_to_moderation_status | 374 |
-| identity_leak_after_anonymization | 156 |
+| identity_leak_after_anonymization | 162 |
+| duplicate_after_cleaning | 88 |
 | anonymization_degraded_text | 52 |
-| duplicate_after_cleaning | 20 |
 
 ## Post Keep and Moderation Counts
 
 | keep_for_prompt | count |
 | --- | --- |
-| no | 13779 |
-| yes | 3718 |
+| no | 17960 |
+| yes | 5270 |
 
 | moderation_status | count |
 | --- | --- |
 | deleted | 267 |
 | flagged | 107 |
 | not_deleted_not_flagged | 17123 |
+| unknown_missing_source_metadata | 5733 |
 
 ## PEW Exclusion Codes
 
@@ -59,8 +60,8 @@ Rule spec version: `1.0.0`
 
 | topic | pew_included_rows | prompt_ready_rows |
 | --- | --- | --- |
-| covid_public_health | 5 | 232 |
-| economy_jobs_trade | 75 | 922 |
-| foreign_policy_national_security | 5 | 916 |
-| immigration_border | 4 | 401 |
-| judiciary_courts | 4 | 130 |
+| covid_public_health | 5 | 251 |
+| economy_jobs_trade | 75 | 1116 |
+| foreign_policy_national_security | 5 | 1112 |
+| immigration_border | 4 | 539 |
+| judiciary_courts | 4 | 300 |

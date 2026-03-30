@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-03-30T12:44:09.714252+00:00",
+  "generated_utc": "2026-03-30T13:26:54.237307+00:00",
   "counts": {
     "wave_partial_files": 157,
     "wave_partial_rows_total": 981,
@@ -7,8 +7,8 @@
     "rq4_inventory_rows": 981,
     "rq4_include_yes": 93,
     "rq4_include_no": 888,
-    "posts_validated_rows": 17497,
-    "posts_prompt_ready_rows": 3718,
+    "posts_validated_rows": 23230,
+    "posts_prompt_ready_rows": 5270,
     "final_topics_rows": 5,
     "overlap_topic_count": 5
   },
@@ -818,18 +818,19 @@
     "foreign_policy_national_security": 5
   },
   "prompt_topic_counts": {
-    "election_integrity_democracy": 774,
-    "foreign_policy_national_security": 916,
-    "covid_public_health": 232,
-    "crime_policing_criminal_justice": 343,
-    "economy_jobs_trade": 922,
-    "judiciary_courts": 130,
-    "immigration_border": 401
+    "election_integrity_democracy": 1447,
+    "foreign_policy_national_security": 1112,
+    "covid_public_health": 251,
+    "crime_policing_criminal_justice": 505,
+    "economy_jobs_trade": 1116,
+    "judiciary_courts": 300,
+    "immigration_border": 539
   },
   "moderation_status_counts": {
     "not_deleted_not_flagged": 17123,
     "flagged": 107,
-    "deleted": 267
+    "deleted": 267,
+    "unknown_missing_source_metadata": 5733
   },
   "overlap_topics": [
     "covid_public_health",
@@ -842,27 +843,27 @@
     {
       "topic": "covid_public_health",
       "pew_rows": "5",
-      "post_rows": "232"
+      "post_rows": "251"
     },
     {
       "topic": "economy_jobs_trade",
       "pew_rows": "75",
-      "post_rows": "922"
+      "post_rows": "1116"
     },
     {
       "topic": "foreign_policy_national_security",
       "pew_rows": "5",
-      "post_rows": "916"
+      "post_rows": "1112"
     },
     {
       "topic": "immigration_border",
       "pew_rows": "4",
-      "post_rows": "401"
+      "post_rows": "539"
     },
     {
       "topic": "judiciary_courts",
       "pew_rows": "4",
-      "post_rows": "130"
+      "post_rows": "300"
     }
   ]
 }

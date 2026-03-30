@@ -16,7 +16,10 @@ from pathlib import Path
 from typing import Dict, List
 
 
-RAW_POSTS_DEFAULT = "data/raw/trump_archive_me2bert_filtered_2021.csv"
+RAW_POSTS_DEFAULT = [
+    "data/raw/trump_archive_me2bert_filtered_2009_2021.csv",
+    "data/raw/trump_manual_me2bert_filtered_2022_2024.csv",
+]
 WAVE_GLOB_DEFAULT = "data/pew_datasets/W*"
 MANIFEST_DEFAULT = "data/reference/pew/waves_manifest.csv"
 FILTER_SPEC_DEFAULT = "data/reference/methods/filter_spec.json"
@@ -29,7 +32,12 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Write a compact run-level provenance artifact."
     )
-    parser.add_argument("--raw-posts", default=RAW_POSTS_DEFAULT)
+    parser.add_argument(
+        "--raw-posts",
+        action="append",
+        default=[],
+        help="Raw post CSV path. Repeat to record multiple input files.",
+    )
     parser.add_argument("--wave-glob", default=WAVE_GLOB_DEFAULT)
     parser.add_argument("--manifest", default=MANIFEST_DEFAULT)
     parser.add_argument("--filter-spec", default=FILTER_SPEC_DEFAULT)
@@ -58,14 +66,21 @@ def describe_path(path_str: str) -> Dict[str, str]:
     }
 
 
+def resolve_raw_posts(values: List[str]) -> List[str]:
+    if values:
+        return values
+    return list(RAW_POSTS_DEFAULT)
+
+
 def main() -> None:
     args = parse_args()
 
     wave_paths = [p for p in sorted(Path(".").glob(args.wave_glob)) if p.is_dir()]
     generated_utc = datetime.now(timezone.utc).isoformat()
 
+    raw_posts = resolve_raw_posts(args.raw_posts)
     inputs = {
-        "raw_posts": describe_path(args.raw_posts),
+        "raw_posts": [describe_path(path) for path in raw_posts],
         "manifest": describe_path(args.manifest),
         "filter_spec": describe_path(args.filter_spec),
         "topic_spec": describe_path(args.topic_spec),
@@ -106,8 +121,13 @@ def main() -> None:
         markdown_table(
             ["input_name", "file_name", "path", "exists"],
             [
-                [name, meta["name"], meta["path"], meta["exists"]]
-                for name, meta in inputs.items()
+                *[
+                    [f"raw_posts_{idx + 1}", meta["name"], meta["path"], meta["exists"]]
+                    for idx, meta in enumerate(inputs["raw_posts"])
+                ],
+                ["manifest", inputs["manifest"]["name"], inputs["manifest"]["path"], inputs["manifest"]["exists"]],
+                ["filter_spec", inputs["filter_spec"]["name"], inputs["filter_spec"]["path"], inputs["filter_spec"]["exists"]],
+                ["topic_spec", inputs["topic_spec"]["name"], inputs["topic_spec"]["path"], inputs["topic_spec"]["exists"]],
             ],
         )
     )

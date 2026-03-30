@@ -1,12 +1,19 @@
 {
-  "generated_utc": "2026-03-30T12:44:09.104098+00:00",
+  "generated_utc": "2026-03-30T13:26:53.282636+00:00",
   "wave_glob": "data/pew_datasets/W*",
   "inputs": {
-    "raw_posts": {
-      "path": "data/raw/trump_archive_me2bert_filtered_2021.csv",
-      "name": "trump_archive_me2bert_filtered_2021.csv",
-      "exists": "yes"
-    },
+    "raw_posts": [
+      {
+        "path": "data/raw/trump_archive_me2bert_filtered_2009_2021.csv",
+        "name": "trump_archive_me2bert_filtered_2009_2021.csv",
+        "exists": "yes"
+      },
+      {
+        "path": "data/raw/trump_manual_me2bert_filtered_2022_2024.csv",
+        "name": "trump_manual_me2bert_filtered_2022_2024.csv",
+        "exists": "yes"
+      }
+    ],
     "manifest": {
       "path": "data/reference/pew/waves_manifest.csv",
       "name": "waves_manifest.csv",

@@ -17,20 +17,58 @@ import re
 from collections import Counter
 from datetime import date
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Sequence, Tuple
 
 import topic_rules as tr
 
+
+DEFAULT_INPUT_PATHS = [
+    "data/raw/trump_archive_me2bert_filtered_2009_2021.csv",
+    "data/raw/trump_manual_me2bert_filtered_2022_2024.csv",
+]
 
 REQUIRED_SOURCE_COLUMNS = [
     "id",
     "text",
     "isRetweet",
-    "isDeleted",
     "date",
-    "isFlagged",
     "dominant_moral_dimension",
     "is_morally_relevant",
+]
+
+OPTIONAL_SOURCE_COLUMNS = [
+    "isDeleted",
+    "isFlagged",
+    "device",
+    "favorites",
+    "retweets",
+    "CH",
+    "FC",
+    "LB",
+    "AS",
+    "PD",
+    "moral_max",
+]
+
+CANONICAL_SOURCE_FIELDS = [
+    "id",
+    "text",
+    "isRetweet",
+    "isDeleted",
+    "device",
+    "favorites",
+    "retweets",
+    "date",
+    "isFlagged",
+    "CH",
+    "FC",
+    "LB",
+    "AS",
+    "PD",
+    "moral_max",
+    "dominant_moral_dimension",
+    "is_morally_relevant",
+    "source_file",
 ]
 
 URL_RE = re.compile(r"https?://\S+", re.IGNORECASE)
@@ -98,8 +136,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--input",
-        default="data/raw/trump_archive_me2bert_filtered_2021.csv",
-        help="Input CSV path",
+        action="append",
+        default=[],
+        help=(
+            "Input CSV path. Repeat --input to combine multiple raw files. "
+            "Default: standard local raw files if present."
+        ),
     )
     parser.add_argument(
         "--outdir",
@@ -121,6 +163,13 @@ def csv_bool(value: str) -> bool:
     return value.strip().lower() in {"true", "t", "1", "yes"}
 
 
+def csv_bool_or_none(value: str) -> Optional[bool]:
+    text = (value or "").strip()
+    if not text:
+        return None
+    return csv_bool(text)
+
+
 def parse_yyyy_mm_dd(date_value: str) -> date:
     return date.fromisoformat(date_value[:10])
 
@@ -132,12 +181,20 @@ def derive_role(row_date: date) -> str:
         return "candidate"
     if date(2016, 11, 9) <= row_date <= date(2017, 1, 19):
         return "president_elect"
-    if date(2017, 1, 20) <= row_date <= date(2021, 1, 8):
+    if date(2017, 1, 20) <= row_date <= date(2021, 1, 20):
         return "sitting_president"
+    if date(2021, 1, 21) <= row_date <= date(2022, 11, 14):
+        return "former_president"
+    if date(2022, 11, 15) <= row_date <= date(2024, 11, 5):
+        return "candidate_2024"
     return "out_of_range"
 
 
-def derive_moderation_status(is_deleted: bool, is_flagged: bool) -> str:
+def derive_moderation_status(
+    is_deleted: Optional[bool], is_flagged: Optional[bool]
+) -> str:
+    if is_deleted is None or is_flagged is None:
+        return "unknown_missing_source_metadata"
     if is_deleted and is_flagged:
         return "deleted_and_flagged"
     if is_deleted:
@@ -220,6 +277,50 @@ def row_fieldnames(base_fields: List[str]) -> List[str]:
     return base_fields + [field for field in derived if field not in base_fields]
 
 
+def resolve_input_paths(raw_inputs: Sequence[str]) -> List[Path]:
+    if raw_inputs:
+        return [Path(path) for path in raw_inputs]
+    return [Path(path) for path in DEFAULT_INPUT_PATHS if Path(path).exists()]
+
+
+def load_source_rows(input_paths: Sequence[Path]) -> Tuple[List[str], List[Dict[str, str]]]:
+    if not input_paths:
+        raise FileNotFoundError(
+            "No raw input files found. Pass --input or place standard raw files under data/raw/."
+        )
+
+    extras: List[str] = []
+    rows: List[Dict[str, str]] = []
+
+    for input_path in input_paths:
+        if not input_path.exists():
+            raise FileNotFoundError(f"Input CSV not found: {input_path}")
+
+        with input_path.open(newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            if reader.fieldnames is None:
+                raise ValueError(f"Input CSV has no header: {input_path}")
+            missing = [col for col in REQUIRED_SOURCE_COLUMNS if col not in reader.fieldnames]
+            if missing:
+                raise ValueError(
+                    f"Input CSV missing required columns ({input_path}): {', '.join(missing)}"
+                )
+
+            for field in reader.fieldnames:
+                if field not in CANONICAL_SOURCE_FIELDS and field not in extras:
+                    extras.append(field)
+
+            for raw in reader:
+                row = {field: raw.get(field, "") for field in CANONICAL_SOURCE_FIELDS if field != "source_file"}
+                for field in extras:
+                    row[field] = raw.get(field, "")
+                row["source_file"] = input_path.name
+                rows.append(row)
+
+    base_fields = list(CANONICAL_SOURCE_FIELDS) + extras
+    return base_fields, rows
+
+
 def write_csv(path: Path, rows: List[Dict[str, str]], fieldnames: List[str]) -> None:
     with path.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
@@ -246,20 +347,12 @@ def load_manual_overrides(path_value: str) -> Dict[str, Dict[str, str]]:
 
 def main() -> None:
     args = parse_args()
-    input_path = Path(args.input)
+    input_paths = resolve_input_paths(args.input)
     outdir = Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
 
-    with input_path.open(newline="", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        if reader.fieldnames is None:
-            raise ValueError("Input CSV has no header")
-        missing = [col for col in REQUIRED_SOURCE_COLUMNS if col not in reader.fieldnames]
-        if missing:
-            raise ValueError(f"Input CSV missing required columns: {', '.join(missing)}")
-        base_fields = list(reader.fieldnames)
-        out_fields = row_fieldnames(base_fields)
-        source_rows = list(reader)
+    base_fields, source_rows = load_source_rows(input_paths)
+    out_fields = row_fieldnames(base_fields)
     manual_overrides = load_manual_overrides(args.manual_review_csv)
 
     hard_drop_counts: Counter[str] = Counter()
@@ -270,8 +363,8 @@ def main() -> None:
         row_date = parse_yyyy_mm_dd(row["date"])
         is_morally_relevant = csv_bool(row["is_morally_relevant"])
         is_retweet = csv_bool(row["isRetweet"])
-        is_deleted = csv_bool(row["isDeleted"])
-        is_flagged = csv_bool(row["isFlagged"])
+        is_deleted = csv_bool_or_none(row.get("isDeleted", ""))
+        is_flagged = csv_bool_or_none(row.get("isFlagged", ""))
         raw_text = row.get("text", "")
 
         row["year"] = str(row_date.year)
@@ -385,7 +478,7 @@ def main() -> None:
         if row["review_flag"]:
             add_exclude_reason(row, "truncated_or_context_dependent")
 
-        if row["moderation_status"] != "not_deleted_not_flagged":
+        if row["moderation_status"] in {"deleted", "flagged", "deleted_and_flagged"}:
             add_exclude_reason(row, "excluded_from_prompt_due_to_moderation_status")
 
         if row["exclude_reason"] == "":
@@ -427,6 +520,9 @@ def main() -> None:
         out_fields,
     )
 
+    print(f"Input files: {len(input_paths)}")
+    for input_path in input_paths:
+        print(f"  - {input_path}")
     print(f"Input rows: {len(source_rows)}")
     print(f"Rows after hard filters (posts_clean): {len(posts_clean)}")
     print(f"Rows in posts_topic_labeled: {len(posts_topic_labeled)}")

@@ -69,10 +69,11 @@ The following columns are shared by:
 | `moral_max` | float-like string | Max of moral dimensions (upstream field). | numeric-like |
 | `dominant_moral_dimension` | string | Dominant moral dimension (upstream field). | e.g., `CH`, `FC`, `LB`, `AS`, `PD` |
 | `is_morally_relevant` | bool-like string | Upstream moral relevance flag. | bool-like string |
+| `source_file` | string | Raw input file name used for this row. | e.g., `trump_archive_me2bert_filtered_2009_2021.csv` |
 | `year` | string | Year extracted from `date`. | 4-digit year |
 | `month` | string | Month extracted from `date`. | `01`-`12` |
-| `role` | enum string | Date-window role. | `public_figure`, `candidate`, `president_elect`, `sitting_president`, `out_of_range` |
-| `moderation_status` | enum string | Combined moderation state from `isDeleted` + `isFlagged`. | `not_deleted_not_flagged`, `deleted`, `flagged`, `deleted_and_flagged` |
+| `role` | enum string | Date-window role. | `public_figure`, `candidate`, `president_elect`, `sitting_president`, `former_president`, `candidate_2024`, `out_of_range` |
+| `moderation_status` | enum string | Combined moderation state from `isDeleted` + `isFlagged`, with an explicit unknown state when source metadata is missing. | `not_deleted_not_flagged`, `deleted`, `flagged`, `deleted_and_flagged`, `unknown_missing_source_metadata` |
 | `text_html_decoded` | string | `text` with HTML entities decoded. | free text |
 | `text_no_url` | string | URL-stripped decoded text. | free text |
 | `text_clean` | string | Whitespace-normalized version of `text_no_url`. | free text |
@@ -149,7 +150,7 @@ Purpose:
 
 Current observed properties:
 - `keep_for_prompt=yes` for all rows by construction.
-- `moderation_status` is expected to be `not_deleted_not_flagged` due to exclusion rules.
+- `moderation_status` is expected to be either `not_deleted_not_flagged` or `unknown_missing_source_metadata`.
 
 ### `data/interim/pew/pew_question_inventory.csv`
 
@@ -194,7 +195,7 @@ Purpose:
 - Final prompt-ready post rows restricted to final overlap topics.
 
 Schema:
-- Same 31 columns as post-level shared schema.
+- Same post-level shared schema.
 
 Current observed properties:
 - `keep_for_prompt=yes` for all rows.

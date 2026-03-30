@@ -1,6 +1,6 @@
 # Pipeline Summary
 
-Generated (UTC): `2026-03-30T12:44:09.714252+00:00`
+Generated (UTC): `2026-03-30T13:26:54.237307+00:00`
 
 ## Headline Counts
 
@@ -12,8 +12,8 @@ Generated (UTC): `2026-03-30T12:44:09.714252+00:00`
 | rq4_inventory_rows | 981 |
 | rq4_include_yes | 93 |
 | rq4_include_no | 888 |
-| posts_validated_rows | 17497 |
-| posts_prompt_ready_rows | 3718 |
+| posts_validated_rows | 23230 |
+| posts_prompt_ready_rows | 5270 |
 | final_topics_rows | 5 |
 | overlap_topic_count | 5 |
 
@@ -207,13 +207,13 @@ Generated (UTC): `2026-03-30T12:44:09.714252+00:00`
 
 | topic | count |
 | --- | --- |
-| economy_jobs_trade | 922 |
-| foreign_policy_national_security | 916 |
-| election_integrity_democracy | 774 |
-| immigration_border | 401 |
-| crime_policing_criminal_justice | 343 |
-| covid_public_health | 232 |
-| judiciary_courts | 130 |
+| election_integrity_democracy | 1447 |
+| economy_jobs_trade | 1116 |
+| foreign_policy_national_security | 1112 |
+| immigration_border | 539 |
+| crime_policing_criminal_justice | 505 |
+| judiciary_courts | 300 |
+| covid_public_health | 251 |
 
 ## Moderation Status Counts
 
@@ -222,26 +222,27 @@ Generated (UTC): `2026-03-30T12:44:09.714252+00:00`
 | deleted | 267 |
 | flagged | 107 |
 | not_deleted_not_flagged | 17123 |
+| unknown_missing_source_metadata | 5733 |
 
 ## Overlap Topics
 
 | topic | pew_included_rows | prompt_ready_rows |
 | --- | --- | --- |
-| covid_public_health | 5 | 232 |
-| economy_jobs_trade | 75 | 922 |
-| foreign_policy_national_security | 5 | 916 |
-| immigration_border | 4 | 401 |
-| judiciary_courts | 4 | 130 |
+| covid_public_health | 5 | 251 |
+| economy_jobs_trade | 75 | 1116 |
+| foreign_policy_national_security | 5 | 1112 |
+| immigration_border | 4 | 539 |
+| judiciary_courts | 4 | 300 |
 
 ## Final Topics File
 
 | topic | pew_rows | post_rows |
 | --- | --- | --- |
-| covid_public_health | 5 | 232 |
-| economy_jobs_trade | 75 | 922 |
-| foreign_policy_national_security | 5 | 916 |
-| immigration_border | 4 | 401 |
-| judiciary_courts | 4 | 130 |
+| covid_public_health | 5 | 251 |
+| economy_jobs_trade | 75 | 1116 |
+| foreign_policy_national_security | 5 | 1112 |
+| immigration_border | 4 | 539 |
+| judiciary_courts | 4 | 300 |
 
 ## Artifacts
 

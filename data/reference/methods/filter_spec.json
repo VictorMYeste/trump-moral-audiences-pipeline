@@ -1,8 +1,8 @@
 {
   "metadata": {
     "spec_name": "trump_moral_audiences_filter_spec",
-    "spec_version": "1.0.0",
-    "last_updated": "2026-03-26",
+    "spec_version": "1.1.0",
+    "last_updated": "2026-03-30",
     "scope": "Deterministic preprocessing and PEW selection rules used by this repository."
   },
   "preprocess_rules": [
@@ -90,7 +90,7 @@
       "condition": "role == out_of_range",
       "action": "add_exclude_reason",
       "output_code": "role_out_of_range",
-      "rationale": "Keep rows in defined role windows."
+      "rationale": "Keep rows in defined role windows, including former-president and 2024-candidate periods."
     },
     {
       "rule_order": 8,
@@ -195,10 +195,10 @@
       "input_columns": [
         "moderation_status"
       ],
-      "condition": "moderation_status != not_deleted_not_flagged",
+      "condition": "moderation_status is one of deleted, flagged, deleted_and_flagged",
       "action": "add_exclude_reason",
       "output_code": "excluded_from_prompt_due_to_moderation_status",
-      "rationale": "Prompt-ready pool excludes deleted/flagged rows."
+      "rationale": "Prompt-ready pool excludes rows explicitly marked deleted/flagged, while allowing rows with unknown moderation metadata from sources that do not provide those fields."
     },
     {
       "rule_order": 17,

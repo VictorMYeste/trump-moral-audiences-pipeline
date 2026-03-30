@@ -13,8 +13,8 @@ Design principle:
 ## 2. Data Assets
 
 Post corpus input:
-- `data/raw/trump_archive_me2bert_filtered_2021.csv`
-- `data/raw/trump_archive_me2bert_filtered_2024.csv` (planned extension input, not yet added)
+- `data/raw/trump_archive_me2bert_filtered_2009_2021.csv`
+- `data/raw/trump_manual_me2bert_filtered_2022_2024.csv`
 
 Post corpus source:
 - Current window source: Kaggle dataset `headsortails/trump-twitter-archive`
@@ -23,8 +23,9 @@ Post corpus source:
 - Planned extension source: The Trump Archive
   - URL: <https://www.thetrumparchive.com/>
   - URL (plain): https://www.thetrumparchive.com/
-- Current implemented window: `2009-05-12` to `2021-01-08`
-- Planned extension window: `2021-01-09` to `2024-12-31`
+- Current implemented windows:
+- `2009-05-12` to `2021-01-08`
+- `2022-04-29` to `2024-11-04`
 
 PEW wave inputs:
 - `data/pew_datasets/W*/` (per-wave folders containing `.sav`, readme, and optional PDFs)

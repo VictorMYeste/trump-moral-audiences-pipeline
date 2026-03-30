@@ -1,13 +1,14 @@
 # Run Provenance
 
-Generated (UTC): `2026-03-30T12:44:09.104098+00:00`
+Generated (UTC): `2026-03-30T13:26:53.282636+00:00`
 Wave glob: `data/pew_datasets/W*`
 
 ## Input Files
 
 | input_name | file_name | path | exists |
 | --- | --- | --- | --- |
-| raw_posts | trump_archive_me2bert_filtered_2021.csv | data/raw/trump_archive_me2bert_filtered_2021.csv | yes |
+| raw_posts_1 | trump_archive_me2bert_filtered_2009_2021.csv | data/raw/trump_archive_me2bert_filtered_2009_2021.csv | yes |
+| raw_posts_2 | trump_manual_me2bert_filtered_2022_2024.csv | data/raw/trump_manual_me2bert_filtered_2022_2024.csv | yes |
 | manifest | waves_manifest.csv | data/reference/pew/waves_manifest.csv | yes |
 | filter_spec | filter_spec.json | data/reference/methods/filter_spec.json | yes |
 | topic_spec | topic_keywords.json | data/reference/methods/topic_keywords.json | yes |

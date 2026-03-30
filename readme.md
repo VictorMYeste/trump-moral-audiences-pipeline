@@ -13,8 +13,8 @@ Core design docs:
 
 ## Repository Layout
 
-- `data/raw/trump_archive_me2bert_filtered_2021.csv`: source Trump posts dataset (local, not committed).
-- `data/raw/trump_archive_me2bert_filtered_2024.csv`: planned extension dataset (local, not committed; not yet added).
+- `data/raw/trump_archive_me2bert_filtered_2009_2021.csv`: Kaggle-based source Trump posts dataset (local, not committed).
+- `data/raw/trump_manual_me2bert_filtered_2022_2024.csv`: manually prepared 2022-2024 source dataset (local, not committed).
 - `data/interim/preprocessing/`: staged post preprocessing outputs.
 - `data/pew_datasets/W*/`: one folder per ATP wave (`.sav`, `readme`, optional PDFs, partial inventory).
 - `data/reference/pew/waves_manifest.csv`: manifest of wave folders to validate before running.
@@ -51,13 +51,13 @@ Post corpus sources:
 
 Project windows:
 1. Current phase dataset (up to 2021):
-   - local file: `data/raw/trump_archive_me2bert_filtered_2021.csv`
+   - local file: `data/raw/trump_archive_me2bert_filtered_2009_2021.csv`
    - source: Kaggle `headsortails/trump-twitter-archive`
    - post date window used in current preprocessing protocol: `2009-05-12` to `2021-01-08`
 2. Planned extension dataset (2021-2024):
-   - local file: `data/raw/trump_archive_me2bert_filtered_2024.csv`
+   - local file: `data/raw/trump_manual_me2bert_filtered_2022_2024.csv`
    - source: The Trump Archive (`https://www.thetrumparchive.com/`)
-   - target window for extension analyses: `2021-01-09` to `2024-12-31`
+   - target window for extension analyses: `2022-04-29` to `2024-11-04`
 
 When publishing, cite both data sources used for each window and include access/download dates.
 
@@ -95,8 +95,8 @@ Publicly distributed in this repository:
 
 How to reproduce results with your own data access:
 1. Download source data and prepare local raw CSV files under `data/raw/` using the expected schema:
-   - from Kaggle (`headsortails/trump-twitter-archive`) for `trump_archive_me2bert_filtered_2021.csv`
-   - from The Trump Archive (`https://www.thetrumparchive.com/`) for `trump_archive_me2bert_filtered_2024.csv`
+   - from Kaggle (`headsortails/trump-twitter-archive`) for `trump_archive_me2bert_filtered_2009_2021.csv`
+   - from The Trump Archive (`https://www.thetrumparchive.com/`) for `trump_manual_me2bert_filtered_2022_2024.csv`
 2. Obtain PEW ATP wave files and place each wave under `data/pew_datasets/W*/`.
 3. Run `scripts/run_full_pipeline.sh`.
 4. Use outputs in `data/interim/` (local) and run reports in `reports/` (local).
@@ -105,11 +105,19 @@ Access and redistribution of PEW ATP files and raw post data must follow their o
 
 ## Raw Input Format
 
-Expected raw CSV header (17 columns):
+Expected full raw CSV header (17 columns):
 - `id,text,isRetweet,isDeleted,device,favorites,retweets,date,isFlagged,CH,FC,LB,AS,PD,moral_max,dominant_moral_dimension,is_morally_relevant`
 
 Minimum fields required by `preprocess_posts.py`:
-- `id`, `text`, `isRetweet`, `isDeleted`, `date`, `isFlagged`, `dominant_moral_dimension`, `is_morally_relevant`
+- `id`, `text`, `isRetweet`, `date`, `dominant_moral_dimension`, `is_morally_relevant`
+
+Optional-but-supported source columns:
+- `isDeleted`, `isFlagged`, `device`
+
+Behavior when moderation columns are missing:
+- missing `isDeleted` / `isFlagged` do not break preprocessing
+- rows are assigned `moderation_status=unknown_missing_source_metadata`
+- these rows are not excluded from the prompt-ready pool solely for missing moderation metadata
 
 Date format:
 - `YYYY-MM-DD HH:MM:SS`
@@ -173,7 +181,9 @@ python3 scripts/preprocess_posts.py
 ```
 
 Arguments:
-- `--input` (default `data/raw/trump_archive_me2bert_filtered_2021.csv`)
+- `--input` repeatable raw input path. If omitted, the script uses the standard local raw files if present:
+  - `data/raw/trump_archive_me2bert_filtered_2009_2021.csv`
+  - `data/raw/trump_manual_me2bert_filtered_2022_2024.csv`
 - `--outdir` (default `data/interim/preprocessing`)
 - `--manual-review-csv` optional overrides file with columns:
   - `id` (required)
@@ -434,7 +444,7 @@ Arguments:
 - `--spec` default `data/reference/methods/filter_spec.json`.
 - `--topic-spec` default `data/reference/methods/topic_keywords.json`.
 - `--outdir` default `reports/methods`.
-- `--raw` default `data/raw/trump_archive_me2bert_filtered_2021.csv`.
+- `--raw` repeatable raw input path. If omitted, the script uses the standard local raw files if present.
 - `--posts-clean` default `data/interim/preprocessing/posts_clean.csv`.
 - `--posts-validated` default `data/interim/preprocessing/posts_topic_validated.csv`.
 - `--posts-prompt` default `data/interim/preprocessing/posts_prompt_ready.csv`.
@@ -653,3 +663,10 @@ Recommended for paper appendix generation:
   - confirm each wave folder has `pew_question_inventory_partial.csv`.
 - Manual overrides error:
   - the override CSV must include an `id` column.
+Multi-file run:
+
+```bash
+python3 scripts/preprocess_posts.py \
+  --input data/raw/trump_archive_me2bert_filtered_2009_2021.csv \
+  --input data/raw/trump_manual_me2bert_filtered_2022_2024.csv
+```
