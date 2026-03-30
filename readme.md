@@ -9,6 +9,7 @@ Core design docs:
 - `docs/preprocessing_protocol.md`
 - `docs/topic_pew_alignment.md`
 - `docs/topic_keyword_registry.md`
+- `docs/data_dictionary.md`
 
 ## Repository Layout
 
@@ -22,7 +23,7 @@ Core design docs:
 - `scripts/topic_rules.py`: shared topic-registry loader/validator used by post and PEW selectors.
 - `scripts/validate_topic_rules.py`: preflight validation of the shared topic keyword registry.
 - `scripts/build_waves_manifest.py`: auto-build wave manifest by scanning wave folders.
-- `scripts/validate_pew_wave_inputs.py`: preflight validation of wave folders (`readme` and `.sav` checks).
+- `scripts/validate_pew_wave_inputs.py`: preflight validation of wave folders (`.sav` required, `readme` recommended).
 - `scripts/build_pew_inventory.py`: generate one wave-level PEW inventory partial.
 - `scripts/merge_pew_inventories.py`: merge all wave partials into one master inventory.
 - `scripts/select_pew_for_rq4.py`: create a minimal, deterministic PEW selection table for RQ4.
@@ -248,7 +249,7 @@ done
 
 Purpose:
 - Preflight validation for wave folders before running extraction.
-- Checks each wave for required files (`*readme*.txt` and `*.sav`).
+- Checks each wave for required `.sav` and recommended `*readme*.txt`.
 - Writes `reports/wave_preflight_report.csv`.
 
 Basic run:
@@ -261,7 +262,7 @@ Arguments:
 - `--wave-glob` default `data/pew_datasets/W*`.
 - `--manifest` default `data/reference/pew/waves_manifest.csv`.
 - `--output` default `reports/wave_preflight_report.csv`.
-- `--strict/--no-strict` fail or not on missing required files.
+- `--strict/--no-strict` fail or not on missing required `.sav` files (missing readme is warning-only).
 
 ## Script: build_waves_manifest.py
 
@@ -384,6 +385,9 @@ Outputs in `data/interim/rq4/`:
 2. `rq4_pew_subset.csv` (only included PEW rows in final topics)
 3. `rq4_posts_subset.csv` (only prompt-ready posts in final topics)
 
+Column reference:
+- `docs/data_dictionary.md` (includes a full dictionary for `rq4_posts_subset.csv`)
+
 ## Script: build_pipeline_summary.py
 
 Purpose:
@@ -504,6 +508,8 @@ Useful options:
 - `--skip-summary` skip summary artifact generation.
 - `--skip-methods` skip methods appendix artifact generation.
 - `--skip-publishable` skip export of sanitized publishable artifacts.
+- `--no-log` disable automatic tee logging to `logs/`.
+- `--log-file PATH` custom log file path (default timestamped file under `logs/`).
 - `--no-overwrite` do not pass overwrite flags to scripts that support them.
 
 ## Recommended Command Sequence
@@ -638,7 +644,7 @@ Recommended for paper appendix generation:
 ## Common Issues
 
 - `Preflight failed: at least one wave row is missing required files`:
-  - check `reports/wave_preflight_report.csv` for missing `readme` or `.sav` files.
+  - check `reports/wave_preflight_report.csv`; current rule is `.sav` required and `readme` warning-only.
 - `Codebook loaded: no (pypdf_unavailable)`:
   - install `pypdf` in the same Python environment used by `python3`.
 - `Output already exists ...`:

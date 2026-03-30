@@ -1,31 +1,822 @@
 {
-  "generated_utc": "2026-03-25T16:42:08.794900+00:00",
+  "generated_utc": "2026-03-30T12:44:09.714252+00:00",
   "counts": {
-    "wave_partial_files": 1,
-    "wave_partial_rows_total": 6,
-    "merged_inventory_rows": 6,
-    "rq4_inventory_rows": 6,
-    "rq4_include_yes": 0,
-    "rq4_include_no": 6,
+    "wave_partial_files": 157,
+    "wave_partial_rows_total": 981,
+    "merged_inventory_rows": 981,
+    "rq4_inventory_rows": 981,
+    "rq4_include_yes": 93,
+    "rq4_include_no": 888,
     "posts_validated_rows": 17497,
     "posts_prompt_ready_rows": 3718,
-    "final_topics_rows": 0,
-    "overlap_topic_count": 0
+    "final_topics_rows": 5,
+    "overlap_topic_count": 5
   },
   "wave_partial_rows": [
+    {
+      "wave_folder": "W100_Dec21",
+      "path": "data/pew_datasets/W100_Dec21/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W101_Jan22",
+      "path": "data/pew_datasets/W101_Jan22/pew_question_inventory_partial.csv",
+      "rows": "16"
+    },
+    {
+      "wave_folder": "W102_Jan22",
+      "path": "data/pew_datasets/W102_Jan22/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W103_Feb22",
+      "path": "data/pew_datasets/W103_Feb22/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W104_Mar22",
+      "path": "data/pew_datasets/W104_Mar22/pew_question_inventory_partial.csv",
+      "rows": "3"
+    },
+    {
+      "wave_folder": "W105_Mar22",
+      "path": "data/pew_datasets/W105_Mar22/pew_question_inventory_partial.csv",
+      "rows": "3"
+    },
+    {
+      "wave_folder": "W106_Aprl22",
+      "path": "data/pew_datasets/W106_Aprl22/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W107_Aprl22",
+      "path": "data/pew_datasets/W107_Aprl22/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W108_May22",
+      "path": "data/pew_datasets/W108_May22/pew_question_inventory_partial.csv",
+      "rows": "3"
+    },
+    {
+      "wave_folder": "W109_May22",
+      "path": "data/pew_datasets/W109_May22/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W10_Mar15",
+      "path": "data/pew_datasets/W10_Mar15/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W110_Jun22",
+      "path": "data/pew_datasets/W110_Jun22/pew_question_inventory_partial.csv",
+      "rows": "21"
+    },
+    {
+      "wave_folder": "W111_Jul22",
+      "path": "data/pew_datasets/W111_Jul22/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W112_Jul22",
+      "path": "data/pew_datasets/W112_Jul22/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W113_Aug22",
+      "path": "data/pew_datasets/W113_Aug22/pew_question_inventory_partial.csv",
+      "rows": "9"
+    },
+    {
+      "wave_folder": "W114_Sept22",
+      "path": "data/pew_datasets/W114_Sept22/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W115_Sept22",
+      "path": "data/pew_datasets/W115_Sept22/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W116_Oct22",
+      "path": "data/pew_datasets/W116_Oct22/pew_question_inventory_partial.csv",
+      "rows": "11"
+    },
+    {
+      "wave_folder": "W117_Nov22",
+      "path": "data/pew_datasets/W117_Nov22/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W118_Dec22",
+      "path": "data/pew_datasets/W118_Dec22/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W119_Dec22",
+      "path": "data/pew_datasets/W119_Dec22/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W11_Jun15",
+      "path": "data/pew_datasets/W11_Jun15/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W120_Jan23",
+      "path": "data/pew_datasets/W120_Jan23/pew_question_inventory_partial.csv",
+      "rows": "6"
+    },
+    {
+      "wave_folder": "W121_Feb23",
+      "path": "data/pew_datasets/W121_Feb23/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W122_Feb23",
+      "path": "data/pew_datasets/W122_Feb23/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W123_Mar23",
+      "path": "data/pew_datasets/W123_Mar23/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W124_Mar23",
+      "path": "data/pew_datasets/W124_Mar23/pew_question_inventory_partial.csv",
+      "rows": "2"
+    },
+    {
+      "wave_folder": "W125_Mar23",
+      "path": "data/pew_datasets/W125_Mar23/pew_question_inventory_partial.csv",
+      "rows": "20"
+    },
+    {
+      "wave_folder": "W126_Apr23",
+      "path": "data/pew_datasets/W126_Apr23/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W127_May23",
+      "path": "data/pew_datasets/W127_May23/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W128_May23",
+      "path": "data/pew_datasets/W128_May23/pew_question_inventory_partial.csv",
+      "rows": "4"
+    },
+    {
+      "wave_folder": "W129_June23",
+      "path": "data/pew_datasets/W129_June23/pew_question_inventory_partial.csv",
+      "rows": "3"
+    },
+    {
+      "wave_folder": "W12_Aug15",
+      "path": "data/pew_datasets/W12_Aug15/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W130_July23",
+      "path": "data/pew_datasets/W130_July23/pew_question_inventory_partial.csv",
+      "rows": "3"
+    },
+    {
+      "wave_folder": "W131_July23",
+      "path": "data/pew_datasets/W131_July23/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W132_Aug23",
+      "path": "data/pew_datasets/W132_Aug23/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W133_Aug23",
+      "path": "data/pew_datasets/W133_Aug23/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W134_Sept23",
+      "path": "data/pew_datasets/W134_Sept23/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W135_Oct23",
+      "path": "data/pew_datasets/W135_Oct23/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W137_Nov23",
+      "path": "data/pew_datasets/W137_Nov23/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W138_Nov23",
+      "path": "data/pew_datasets/W138_Nov23/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W139_Dec23",
+      "path": "data/pew_datasets/W139_Dec23/pew_question_inventory_partial.csv",
+      "rows": "12"
+    },
+    {
+      "wave_folder": "W13_Dec15",
+      "path": "data/pew_datasets/W13_Dec15/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W140_Jan24",
+      "path": "data/pew_datasets/W140_Jan24/pew_question_inventory_partial.csv",
+      "rows": "17"
+    },
+    {
+      "wave_folder": "W141_Jan24",
+      "path": "data/pew_datasets/W141_Jan24/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W142_Feb24",
+      "path": "data/pew_datasets/W142_Feb24/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W143_Feb24",
+      "path": "data/pew_datasets/W143_Feb24/pew_question_inventory_partial.csv",
+      "rows": "8"
+    },
+    {
+      "wave_folder": "W144_Mar24",
+      "path": "data/pew_datasets/W144_Mar24/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W145_Apr24",
+      "path": "data/pew_datasets/W145_Apr24/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W146_Apr24",
+      "path": "data/pew_datasets/W146_Apr24/pew_question_inventory_partial.csv",
+      "rows": "19"
+    },
+    {
+      "wave_folder": "W147_May24",
+      "path": "data/pew_datasets/W147_May24/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W148_May24",
+      "path": "data/pew_datasets/W148_May24/pew_question_inventory_partial.csv",
+      "rows": "3"
+    },
+    {
+      "wave_folder": "W149_Jul24",
+      "path": "data/pew_datasets/W149_Jul24/pew_question_inventory_partial.csv",
+      "rows": "33"
+    },
+    {
+      "wave_folder": "W14_Jan16",
+      "path": "data/pew_datasets/W14_Jan16/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W15",
+      "path": "data/pew_datasets/W15/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W150_Jul24",
+      "path": "data/pew_datasets/W150_Jul24/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W151_Aug24",
+      "path": "data/pew_datasets/W151_Aug24/pew_question_inventory_partial.csv",
+      "rows": "5"
+    },
+    {
+      "wave_folder": "W152_Aug24",
+      "path": "data/pew_datasets/W152_Aug24/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W153_Sept24",
+      "path": "data/pew_datasets/W153_Sept24/pew_question_inventory_partial.csv",
+      "rows": "95"
+    },
+    {
+      "wave_folder": "W154_Sept24",
+      "path": "data/pew_datasets/W154_Sept24/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W155_Sept24",
+      "path": "data/pew_datasets/W155_Sept24/pew_question_inventory_partial.csv",
+      "rows": "5"
+    },
+    {
+      "wave_folder": "W156_Oct24",
+      "path": "data/pew_datasets/W156_Oct24/pew_question_inventory_partial.csv",
+      "rows": "40"
+    },
+    {
+      "wave_folder": "W157_Oct24",
+      "path": "data/pew_datasets/W157_Oct24/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W158_Oct24",
+      "path": "data/pew_datasets/W158_Oct24/pew_question_inventory_partial.csv",
+      "rows": "4"
+    },
+    {
+      "wave_folder": "W159_Nov24",
+      "path": "data/pew_datasets/W159_Nov24/pew_question_inventory_partial.csv",
+      "rows": "29"
+    },
+    {
+      "wave_folder": "W16",
+      "path": "data/pew_datasets/W16/pew_question_inventory_partial.csv",
+      "rows": "2"
+    },
+    {
+      "wave_folder": "W17_May16",
+      "path": "data/pew_datasets/W17_May16/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W18_Jun16",
+      "path": "data/pew_datasets/W18_Jun16/pew_question_inventory_partial.csv",
+      "rows": "11"
+    },
+    {
+      "wave_folder": "W19_Jul16",
+      "path": "data/pew_datasets/W19_Jul16/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W1_Mar14",
+      "path": "data/pew_datasets/W1_Mar14/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W20_Aug16",
+      "path": "data/pew_datasets/W20_Aug16/pew_question_inventory_partial.csv",
+      "rows": "15"
+    },
+    {
+      "wave_folder": "W21",
+      "path": "data/pew_datasets/W21/pew_question_inventory_partial.csv",
+      "rows": "8"
+    },
+    {
+      "wave_folder": "W22",
+      "path": "data/pew_datasets/W22/pew_question_inventory_partial.csv",
+      "rows": "12"
+    },
+    {
+      "wave_folder": "W23",
+      "path": "data/pew_datasets/W23/pew_question_inventory_partial.csv",
+      "rows": "12"
+    },
+    {
+      "wave_folder": "W24_Jan17",
+      "path": "data/pew_datasets/W24_Jan17/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W25_Mar17",
+      "path": "data/pew_datasets/W25_Mar17/pew_question_inventory_partial.csv",
+      "rows": "2"
+    },
+    {
+      "wave_folder": "W26_Apr17",
+      "path": "data/pew_datasets/W26_Apr17/pew_question_inventory_partial.csv",
+      "rows": "2"
+    },
+    {
+      "wave_folder": "W27_May17",
+      "path": "data/pew_datasets/W27_May17/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W28_Aug17",
+      "path": "data/pew_datasets/W28_Aug17/pew_question_inventory_partial.csv",
+      "rows": "2"
+    },
+    {
+      "wave_folder": "W29_Sep17",
+      "path": "data/pew_datasets/W29_Sep17/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W30_Dec17",
+      "path": "data/pew_datasets/W30_Dec17/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W31_Feb18-1",
+      "path": "data/pew_datasets/W31_Feb18-1/pew_question_inventory_partial.csv",
+      "rows": "2"
+    },
+    {
+      "wave_folder": "W32_Feb18",
+      "path": "data/pew_datasets/W32_Feb18/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W33_Mar18",
+      "path": "data/pew_datasets/W33_Mar18/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W34_Apr18",
+      "path": "data/pew_datasets/W34_Apr18/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W35_May18",
+      "path": "data/pew_datasets/W35_May18/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W36_Jun-18-1",
+      "path": "data/pew_datasets/W36_Jun-18-1/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W37_Jul18",
+      "path": "data/pew_datasets/W37_Jul18/pew_question_inventory_partial.csv",
+      "rows": "8"
+    },
+    {
+      "wave_folder": "W38_Sep18",
+      "path": "data/pew_datasets/W38_Sep18/pew_question_inventory_partial.csv",
+      "rows": "3"
+    },
+    {
+      "wave_folder": "W39_Nov18",
+      "path": "data/pew_datasets/W39_Nov18/pew_question_inventory_partial.csv",
+      "rows": "6"
+    },
+    {
+      "wave_folder": "W3_May14",
+      "path": "data/pew_datasets/W3_May14/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W40_Nov18",
+      "path": "data/pew_datasets/W40_Nov18/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W41_Dec18",
+      "path": "data/pew_datasets/W41_Dec18/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W42_Jan19",
+      "path": "data/pew_datasets/W42_Jan19/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W43_Jan19",
+      "path": "data/pew_datasets/W43_Jan19/pew_question_inventory_partial.csv",
+      "rows": "3"
+    },
+    {
+      "wave_folder": "W44_Feb19",
+      "path": "data/pew_datasets/W44_Feb19/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W45_Feb19",
+      "path": "data/pew_datasets/W45_Feb19/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W46_Mar19-1",
+      "path": "data/pew_datasets/W46_Mar19-1/pew_question_inventory_partial.csv",
+      "rows": "4"
+    },
+    {
+      "wave_folder": "W47_Apr19",
+      "path": "data/pew_datasets/W47_Apr19/pew_question_inventory_partial.csv",
+      "rows": "2"
+    },
+    {
+      "wave_folder": "W48_Apr19",
+      "path": "data/pew_datasets/W48_Apr19/pew_question_inventory_partial.csv",
+      "rows": "20"
+    },
+    {
+      "wave_folder": "W49_Jun19",
+      "path": "data/pew_datasets/W49_Jun19/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W4_Jun14",
+      "path": "data/pew_datasets/W4_Jun14/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W50_Jun19",
+      "path": "data/pew_datasets/W50_Jun19/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W51_Jul19",
+      "path": "data/pew_datasets/W51_Jul19/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W52_Jul19",
+      "path": "data/pew_datasets/W52_Jul19/pew_question_inventory_partial.csv",
+      "rows": "10"
+    },
+    {
+      "wave_folder": "W53_Sep19",
+      "path": "data/pew_datasets/W53_Sep19/pew_question_inventory_partial.csv",
+      "rows": "5"
+    },
+    {
+      "wave_folder": "W54_Sep19-1",
+      "path": "data/pew_datasets/W54_Sep19-1/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
     {
       "wave_folder": "W55_Oct19",
       "path": "data/pew_datasets/W55_Oct19/pew_question_inventory_partial.csv",
       "rows": "6"
+    },
+    {
+      "wave_folder": "W56_Oct19",
+      "path": "data/pew_datasets/W56_Oct19/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W57_Nov19",
+      "path": "data/pew_datasets/W57_Nov19/pew_question_inventory_partial.csv",
+      "rows": "13"
+    },
+    {
+      "wave_folder": "W58_Dec19-1",
+      "path": "data/pew_datasets/W58_Dec19-1/pew_question_inventory_partial.csv",
+      "rows": "4"
+    },
+    {
+      "wave_folder": "W59_Jan20",
+      "path": "data/pew_datasets/W59_Jan20/pew_question_inventory_partial.csv",
+      "rows": "21"
+    },
+    {
+      "wave_folder": "W5_Jul14",
+      "path": "data/pew_datasets/W5_Jul14/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W60_Black_faith_dataset",
+      "path": "data/pew_datasets/W60_Black_faith_dataset/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W61_Feb20",
+      "path": "data/pew_datasets/W61_Feb20/pew_question_inventory_partial.csv",
+      "rows": "18"
+    },
+    {
+      "wave_folder": "W62_Feb20",
+      "path": "data/pew_datasets/W62_Feb20/pew_question_inventory_partial.csv",
+      "rows": "19"
+    },
+    {
+      "wave_folder": "W63_Mar20",
+      "path": "data/pew_datasets/W63_Mar20/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W64_Apr20",
+      "path": "data/pew_datasets/W64_Apr20/pew_question_inventory_partial.csv",
+      "rows": "3"
+    },
+    {
+      "wave_folder": "W65_Apr20",
+      "path": "data/pew_datasets/W65_Apr20/pew_question_inventory_partial.csv",
+      "rows": "13"
+    },
+    {
+      "wave_folder": "W66_Apr20",
+      "path": "data/pew_datasets/W66_Apr20/pew_question_inventory_partial.csv",
+      "rows": "10"
+    },
+    {
+      "wave_folder": "W67_May20",
+      "path": "data/pew_datasets/W67_May20/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W68_Jun20-1",
+      "path": "data/pew_datasets/W68_Jun20-1/pew_question_inventory_partial.csv",
+      "rows": "10"
+    },
+    {
+      "wave_folder": "W69_Jun20",
+      "path": "data/pew_datasets/W69_Jun20/pew_question_inventory_partial.csv",
+      "rows": "33"
+    },
+    {
+      "wave_folder": "W6_Aug14",
+      "path": "data/pew_datasets/W6_Aug14/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W70_Jul20",
+      "path": "data/pew_datasets/W70_Jul20/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W71_Jul20",
+      "path": "data/pew_datasets/W71_Jul20/pew_question_inventory_partial.csv",
+      "rows": "7"
+    },
+    {
+      "wave_folder": "W72_Aug20",
+      "path": "data/pew_datasets/W72_Aug20/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W73_Sep20",
+      "path": "data/pew_datasets/W73_Sep20/pew_question_inventory_partial.csv",
+      "rows": "11"
+    },
+    {
+      "wave_folder": "W74_Sep20",
+      "path": "data/pew_datasets/W74_Sep20/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W75_Sep20",
+      "path": "data/pew_datasets/W75_Sep20/pew_question_inventory_partial.csv",
+      "rows": "39"
+    },
+    {
+      "wave_folder": "W76_Oct20",
+      "path": "data/pew_datasets/W76_Oct20/pew_question_inventory_partial.csv",
+      "rows": "3"
+    },
+    {
+      "wave_folder": "W77_Oct20",
+      "path": "data/pew_datasets/W77_Oct20/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W78_Nov20-2",
+      "path": "data/pew_datasets/W78_Nov20-2/pew_question_inventory_partial.csv",
+      "rows": "16"
+    },
+    {
+      "wave_folder": "W79_Nov20",
+      "path": "data/pew_datasets/W79_Nov20/pew_question_inventory_partial.csv",
+      "rows": "6"
+    },
+    {
+      "wave_folder": "W7_Sep14",
+      "path": "data/pew_datasets/W7_Sep14/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W80_Jan21",
+      "path": "data/pew_datasets/W80_Jan21/pew_question_inventory_partial.csv",
+      "rows": "45"
+    },
+    {
+      "wave_folder": "W81_Jan21",
+      "path": "data/pew_datasets/W81_Jan21/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W82_Feb21",
+      "path": "data/pew_datasets/W82_Feb21/pew_question_inventory_partial.csv",
+      "rows": "8"
+    },
+    {
+      "wave_folder": "W83_Feb21",
+      "path": "data/pew_datasets/W83_Feb21/pew_question_inventory_partial.csv",
+      "rows": "3"
+    },
+    {
+      "wave_folder": "W84_Mar21",
+      "path": "data/pew_datasets/W84_Mar21/pew_question_inventory_partial.csv",
+      "rows": "34"
+    },
+    {
+      "wave_folder": "W85_Mar21",
+      "path": "data/pew_datasets/W85_Mar21/pew_question_inventory_partial.csv",
+      "rows": "30"
+    },
+    {
+      "wave_folder": "W86_Mar21",
+      "path": "data/pew_datasets/W86_Mar21/pew_question_inventory_partial.csv",
+      "rows": "2"
+    },
+    {
+      "wave_folder": "W87_Apr21",
+      "path": "data/pew_datasets/W87_Apr21/pew_question_inventory_partial.csv",
+      "rows": "10"
+    },
+    {
+      "wave_folder": "W88_Apr21",
+      "path": "data/pew_datasets/W88_Apr21/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W89_Apr21",
+      "path": "data/pew_datasets/W89_Apr21/pew_question_inventory_partial.csv",
+      "rows": "2"
+    },
+    {
+      "wave_folder": "W8_Oct14",
+      "path": "data/pew_datasets/W8_Oct14/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W90_May21",
+      "path": "data/pew_datasets/W90_May21/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W91_Jun21",
+      "path": "data/pew_datasets/W91_Jun21/pew_question_inventory_partial.csv",
+      "rows": "3"
+    },
+    {
+      "wave_folder": "W92_Jul21",
+      "path": "data/pew_datasets/W92_Jul21/pew_question_inventory_partial.csv",
+      "rows": "3"
+    },
+    {
+      "wave_folder": "W93_Jul21",
+      "path": "data/pew_datasets/W93_Jul21/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W94_Aug21",
+      "path": "data/pew_datasets/W94_Aug21/pew_question_inventory_partial.csv",
+      "rows": "2"
+    },
+    {
+      "wave_folder": "W95_Sept21",
+      "path": "data/pew_datasets/W95_Sept21/pew_question_inventory_partial.csv",
+      "rows": "20"
+    },
+    {
+      "wave_folder": "W96_Sept21",
+      "path": "data/pew_datasets/W96_Sept21/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W97_Oct21",
+      "path": "data/pew_datasets/W97_Oct21/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W98_Oct21",
+      "path": "data/pew_datasets/W98_Oct21/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W99_Nov21-1",
+      "path": "data/pew_datasets/W99_Nov21-1/pew_question_inventory_partial.csv",
+      "rows": "1"
+    },
+    {
+      "wave_folder": "W9_Nov14",
+      "path": "data/pew_datasets/W9_Nov14/pew_question_inventory_partial.csv",
+      "rows": "1"
     }
   ],
   "rq4_exclude_counts": {
-    "exclude_not_trump_target": 3,
-    "exclude_no_topic_match": 1,
-    "exclude_judgment_not_supported": 1,
-    "exclude_knowledge_or_awareness": 1
+    "exclude_not_trump_target": 466,
+    "exclude_affective_reaction": 47,
+    "exclude_judgment_not_supported": 304,
+    "exclude_multi_topic_ambiguous": 5,
+    "exclude_no_topic_match": 19,
+    "exclude_knowledge_or_awareness": 5,
+    "exclude_broad_favorability": 1,
+    "exclude_trait": 39,
+    "exclude_thermometer": 2
   },
-  "rq4_included_topic_counts": {},
+  "rq4_included_topic_counts": {
+    "economy_jobs_trade": 75,
+    "judiciary_courts": 4,
+    "immigration_border": 4,
+    "covid_public_health": 5,
+    "foreign_policy_national_security": 5
+  },
   "prompt_topic_counts": {
     "election_integrity_democracy": 774,
     "foreign_policy_national_security": 916,
@@ -40,6 +831,38 @@
     "flagged": 107,
     "deleted": 267
   },
-  "overlap_topics": [],
-  "final_topics": []
+  "overlap_topics": [
+    "covid_public_health",
+    "economy_jobs_trade",
+    "foreign_policy_national_security",
+    "immigration_border",
+    "judiciary_courts"
+  ],
+  "final_topics": [
+    {
+      "topic": "covid_public_health",
+      "pew_rows": "5",
+      "post_rows": "232"
+    },
+    {
+      "topic": "economy_jobs_trade",
+      "pew_rows": "75",
+      "post_rows": "922"
+    },
+    {
+      "topic": "foreign_policy_national_security",
+      "pew_rows": "5",
+      "post_rows": "916"
+    },
+    {
+      "topic": "immigration_border",
+      "pew_rows": "4",
+      "post_rows": "401"
+    },
+    {
+      "topic": "judiciary_courts",
+      "pew_rows": "4",
+      "post_rows": "130"
+    }
+  ]
 }

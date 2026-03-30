@@ -3,7 +3,7 @@
 
 # Simple explanation of this script (step by step):
 # 1) Read wave folders from the manifest or from a folder pattern.
-# 2) Check whether each wave has required files (readme and .sav).
+# 2) Check whether each wave has required files (.sav) and recommended files (readme).
 # 3) Report optional files as well (pdfs, generated partial inventory).
 # 4) Write a preflight CSV report with one status per wave.
 # 5) In strict mode, fail if required files are missing.
@@ -24,7 +24,7 @@ OUTPUT_DEFAULT = "reports/wave_preflight_report.csv"
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Validate wave folder inputs (readme/sav presence) and optionally check "
+            "Validate wave folder inputs (sav required, readme recommended) and optionally check "
             "against a manifest."
         )
     )
@@ -85,19 +85,42 @@ def list_wave_dirs_from_glob(pattern: str) -> List[Path]:
     return [p for p in sorted(Path(".").glob(pattern)) if p.is_dir()]
 
 
+def list_wave_files(wave_folder: Path) -> List[Path]:
+    if not wave_folder.exists() or not wave_folder.is_dir():
+        return []
+    return [p for p in sorted(wave_folder.iterdir()) if p.is_file()]
+
+
+def has_readme_txt(path: Path) -> bool:
+    return path.suffix.lower() == ".txt" and "readme" in path.name.lower()
+
+
+def has_suffix(path: Path, suffix: str) -> bool:
+    return path.suffix.lower() == suffix.lower()
+
+
 def wave_checks(wave_id: str, wave_folder: Path, notes: str, source: str) -> Dict[str, str]:
     exists = wave_folder.exists() and wave_folder.is_dir()
-    readmes = sorted(wave_folder.glob("*readme*.txt")) if exists else []
-    savs = sorted(wave_folder.glob("*.sav")) if exists else []
-    pdfs = sorted(wave_folder.glob("*.pdf")) if exists else []
+    files = list_wave_files(wave_folder) if exists else []
+    readmes = [p for p in files if has_readme_txt(p)]
+    savs = [p for p in files if has_suffix(p, ".sav")]
+    pdfs = [p for p in files if has_suffix(p, ".pdf")]
+    docs = [p for p in files if p.suffix.lower() in {".doc", ".docx"}]
 
     has_questionnaire = any("questionnaire" in p.name.lower() for p in pdfs)
     has_topline = any("topline" in p.name.lower() for p in pdfs)
     has_methodology = any("methodology" in p.name.lower() for p in pdfs)
     has_partial = (wave_folder / "pew_question_inventory_partial.csv").exists() if exists else False
 
-    required_ok = exists and len(readmes) >= 1 and len(savs) >= 1
-    status = "pass" if required_ok else "fail"
+    has_sav = exists and len(savs) >= 1
+    has_readme = exists and len(readmes) >= 1
+    if not has_sav:
+        status = "fail"
+    elif has_readme:
+        status = "pass"
+    else:
+        # Missing readme is warning-only; extraction can proceed using .sav metadata.
+        status = "warn"
 
     return {
         "wave_id": wave_id,
@@ -108,6 +131,7 @@ def wave_checks(wave_id: str, wave_folder: Path, notes: str, source: str) -> Dic
         "readme_count": str(len(readmes)),
         "sav_count": str(len(savs)),
         "pdf_count": str(len(pdfs)),
+        "doc_count": str(len(docs)),
         "has_questionnaire_pdf": "yes" if has_questionnaire else "no",
         "has_topline_pdf": "yes" if has_topline else "no",
         "has_methodology_pdf": "yes" if has_methodology else "no",
@@ -175,6 +199,7 @@ def write_csv(path: Path, rows: List[Dict[str, str]]) -> None:
         "readme_count",
         "sav_count",
         "pdf_count",
+        "doc_count",
         "has_questionnaire_pdf",
         "has_topline_pdf",
         "has_methodology_pdf",

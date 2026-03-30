@@ -1,6 +1,6 @@
 # Decision Audit
 
-Generated (UTC): `2026-03-26T08:52:07.818579+00:00`
+Generated (UTC): `2026-03-30T12:44:10.731847+00:00`
 Rule spec version: `1.0.0`
 
 ## Stage Counts
@@ -11,9 +11,9 @@ Rule spec version: `1.0.0`
 | posts_clean_rows | 17497 |
 | posts_topic_validated_rows | 17497 |
 | posts_prompt_ready_rows | 3718 |
-| pew_rq4_rows | 6 |
-| pew_include_yes | 0 |
-| pew_include_no | 6 |
+| pew_rq4_rows | 981 |
+| pew_include_yes | 93 |
+| pew_include_no | 888 |
 | hard_drop_inferred | 5325 |
 
 ## Post Exclusion Reasons
@@ -45,11 +45,22 @@ Rule spec version: `1.0.0`
 
 | exclude_code | count |
 | --- | --- |
-| exclude_not_trump_target | 3 |
-| exclude_no_topic_match | 1 |
-| exclude_judgment_not_supported | 1 |
-| exclude_knowledge_or_awareness | 1 |
+| exclude_not_trump_target | 466 |
+| exclude_judgment_not_supported | 304 |
+| exclude_affective_reaction | 47 |
+| exclude_trait | 39 |
+| exclude_no_topic_match | 19 |
+| exclude_multi_topic_ambiguous | 5 |
+| exclude_knowledge_or_awareness | 5 |
+| exclude_thermometer | 2 |
+| exclude_broad_favorability | 1 |
 
 ## Topic Overlap
 
-No overlap topics.
+| topic | pew_included_rows | prompt_ready_rows |
+| --- | --- | --- |
+| covid_public_health | 5 | 232 |
+| economy_jobs_trade | 75 | 922 |
+| foreign_policy_national_security | 5 | 916 |
+| immigration_border | 4 | 401 |
+| judiciary_courts | 4 | 130 |

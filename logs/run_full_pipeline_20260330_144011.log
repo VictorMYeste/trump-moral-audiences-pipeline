@@ -1,0 +1,2402 @@
+[prep] Rebuilding wave manifest from folders...
+Wave folders scanned: 157
+Output: data/reference/pew/waves_manifest.csv
+[0/12] Running preflight validation...
+Manifest used: yes
+Wave rows checked: 157
+Status counts:
+  pass: 156
+  warn: 1
+Report: reports/wave_preflight_report.csv
+[1/12] Validating shared topic registry...
+Spec: /Users/victormyeste/Desktop/paper-trump-moral-audiences/data/reference/methods/topic_keywords.json
+Spec version: 1.0.0
+Topic count: 7
+Topics:
+  - immigration_border: applies_to=posts|pew
+  - economy_jobs_trade: applies_to=posts|pew
+  - election_integrity_democracy: applies_to=posts|pew
+  - foreign_policy_national_security: applies_to=posts|pew
+  - crime_policing_criminal_justice: applies_to=posts|pew
+  - covid_public_health: applies_to=posts|pew
+  - judiciary_courts: applies_to=posts|pew
+Validation: OK
+[2/12] Building per-wave PEW partial inventories...
+  - data/pew_datasets/W1_Mar14
+Wave folder: data/pew_datasets/W1_Mar14
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_1
+Field dates: Mar 19, 2014-Apr 29, 2014
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W1_Mar14/pew_question_inventory_partial.csv
+  - data/pew_datasets/W10_Mar15
+Wave folder: data/pew_datasets/W10_Mar15
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_10
+Field dates: March 16-April 6, 2015
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W10_Mar15/pew_question_inventory_partial.csv
+  - data/pew_datasets/W100_Dec21
+Wave folder: data/pew_datasets/W100_Dec21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_100
+Field dates: Nov. 30 - Dec. 12, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W100_Dec21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W101_Jan22
+Wave folder: data/pew_datasets/W101_Jan22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_101
+Field dates: Jan. 10-17, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 16
+Output: data/pew_datasets/W101_Jan22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W102_Jan22
+Wave folder: data/pew_datasets/W102_Jan22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_102
+Field dates: Jan. 24-30, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W102_Jan22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W103_Feb22
+Wave folder: data/pew_datasets/W103_Feb22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_103
+Field dates: Feb. 7-13, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W103_Feb22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W104_Mar22
+Wave folder: data/pew_datasets/W104_Mar22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_104
+Field dates: March 7 - March 13, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 3
+Output: data/pew_datasets/W104_Mar22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W105_Mar22
+Wave folder: data/pew_datasets/W105_Mar22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_105
+Field dates: March 21-27, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 3
+Rows written: 3
+Output: data/pew_datasets/W105_Mar22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W106_Aprl22
+Wave folder: data/pew_datasets/W106_Aprl22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_106
+Field dates: April 11-April 17, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W106_Aprl22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W107_Aprl22
+Wave folder: data/pew_datasets/W107_Aprl22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_107
+Field dates: April 25-May 1, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W107_Aprl22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W108_May22
+Wave folder: data/pew_datasets/W108_May22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_108
+Field dates: May 2-May 8, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 3
+Output: data/pew_datasets/W108_May22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W109_May22
+Wave folder: data/pew_datasets/W109_May22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_109
+Field dates: May 16-22, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W109_May22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W11_Jun15
+Wave folder: data/pew_datasets/W11_Jun15
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_11
+Field dates: June 2, 2015-June 29, 2015
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W11_Jun15/pew_question_inventory_partial.csv
+  - data/pew_datasets/W110_Jun22
+Wave folder: data/pew_datasets/W110_Jun22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_110
+Field dates: June 27-July 4, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 21
+Output: data/pew_datasets/W110_Jun22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W111_Jul22
+Wave folder: data/pew_datasets/W111_Jul22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_111
+Field dates: July 5-17, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W111_Jul22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W112_Jul22
+Wave folder: data/pew_datasets/W112_Jul22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_112
+Field dates: July 18-August 21, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W112_Jul22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W113_Aug22
+Wave folder: data/pew_datasets/W113_Aug22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_113
+Field dates: August 1 - August 14, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 9
+Output: data/pew_datasets/W113_Aug22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W114_Sept22
+Wave folder: data/pew_datasets/W114_Sept22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_114
+Field dates: Sept. 13 - 18, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 3
+Rows written: 1
+Output: data/pew_datasets/W114_Sept22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W115_Sept22
+Wave folder: data/pew_datasets/W115_Sept22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_115
+Field dates: Sept 20, 2022 - Oct. 2, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 5
+Rows written: 1
+Output: data/pew_datasets/W115_Sept22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W116_Oct22
+Wave folder: data/pew_datasets/W116_Oct22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_116
+Field dates: Oct. 10, 2022- Oct. 16, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Skipped cross-wave-only variables: 1
+Rows written: 11
+Output: data/pew_datasets/W116_Oct22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W117_Nov22
+Wave folder: data/pew_datasets/W117_Nov22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_117
+Field dates: Nov. 16, 2022 - Nov. 27, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W117_Nov22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W118_Dec22
+Wave folder: data/pew_datasets/W118_Dec22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_118
+Field dates: Dec. 5 - Dec. 11, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W118_Dec22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W119_Dec22
+Wave folder: data/pew_datasets/W119_Dec22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_119
+Field dates: Dec. 12, 2022 - Dec. 18, 2022
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W119_Dec22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W12_Aug15
+Wave folder: data/pew_datasets/W12_Aug15
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_12
+Field dates: August 11-September 8, 2015
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Rows written: 1
+Output: data/pew_datasets/W12_Aug15/pew_question_inventory_partial.csv
+  - data/pew_datasets/W120_Jan23
+Wave folder: data/pew_datasets/W120_Jan23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_120
+Field dates: Jan. 18 - 24, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 6
+Output: data/pew_datasets/W120_Jan23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W121_Feb23
+Wave folder: data/pew_datasets/W121_Feb23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_121
+Field dates: Feb. 6 - 12, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W121_Feb23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W122_Feb23
+Wave folder: data/pew_datasets/W122_Feb23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_122
+Field dates: Feb. 22 - March 5, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W122_Feb23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W123_Mar23
+Wave folder: data/pew_datasets/W123_Mar23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_123
+Field dates: March 13-March 19, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W123_Mar23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W124_Mar23
+Wave folder: data/pew_datasets/W124_Mar23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_124
+Field dates: March 20-March 26, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 2
+Output: data/pew_datasets/W124_Mar23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W125_Mar23
+Wave folder: data/pew_datasets/W125_Mar23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_125
+Field dates: March 27 - April 2, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 20
+Output: data/pew_datasets/W125_Mar23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W126_Apr23
+Wave folder: data/pew_datasets/W126_Apr23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_126
+Field dates: April 10 - 16, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W126_Apr23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W127_May23
+Wave folder: data/pew_datasets/W127_May23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_127
+Field dates: May 15 - May 21, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W127_May23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W128_May23
+Wave folder: data/pew_datasets/W128_May23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_128
+Field dates: May 30-June 4, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 4
+Output: data/pew_datasets/W128_May23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W129_June23
+Wave folder: data/pew_datasets/W129_June23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_129
+Field dates: June 5 - June 11, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 3
+Output: data/pew_datasets/W129_June23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W13_Dec15
+Wave folder: data/pew_datasets/W13_Dec15
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_13
+Field dates: Nov 24-Dec 21, 2015
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W13_Dec15/pew_question_inventory_partial.csv
+  - data/pew_datasets/W130_July23
+Wave folder: data/pew_datasets/W130_July23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_130
+Field dates: July 10-16, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 3
+Output: data/pew_datasets/W130_July23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W131_July23
+Wave folder: data/pew_datasets/W131_July23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_131
+Field dates: July 17-July 23, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W131_July23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W132_Aug23
+Wave folder: data/pew_datasets/W132_Aug23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_132
+Field dates: July 31 - Aug. 6, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W132_Aug23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W133_Aug23
+Wave folder: data/pew_datasets/W133_Aug23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_133
+Field dates: August 7-August 27, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W133_Aug23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W134_Sept23
+Wave folder: data/pew_datasets/W134_Sept23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_134
+Field dates: Sept. 12 - Sept. 24, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W134_Sept23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W135_Oct23
+Wave folder: data/pew_datasets/W135_Oct23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_135
+Field dates: Sept. 25, 2023 - Oct. 1, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W135_Oct23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W137_Nov23
+Wave folder: data/pew_datasets/W137_Nov23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_137
+Field dates: Oct. 24 - Nov. 5, 2023
+Field dates source: readme
+Rows written: 1
+Output: data/pew_datasets/W137_Nov23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W138_Nov23
+Wave folder: data/pew_datasets/W138_Nov23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_138
+Field dates: Nov. 6 - Nov. 19, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W138_Nov23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W139_Dec23
+Wave folder: data/pew_datasets/W139_Dec23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_139
+Field dates: Nov. 27 - Dec. 3, 2023
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 12
+Output: data/pew_datasets/W139_Dec23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W14_Jan16
+Wave folder: data/pew_datasets/W14_Jan16
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_14
+Field dates: Jan 12-Feb 8, 2016
+Field dates source: readme
+Rows written: 1
+Output: data/pew_datasets/W14_Jan16/pew_question_inventory_partial.csv
+  - data/pew_datasets/W140_Jan24
+Wave folder: data/pew_datasets/W140_Jan24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_140
+Field dates: Jan. 16-21, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 17
+Output: data/pew_datasets/W140_Jan24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W141_Jan24
+Wave folder: data/pew_datasets/W141_Jan24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_141
+Field dates: Jan 22 - 28, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W141_Jan24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W142_Feb24
+Wave folder: data/pew_datasets/W142_Feb24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_142
+Field dates: Feb. 7 - Feb. 11, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W142_Feb24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W143_Feb24
+Wave folder: data/pew_datasets/W143_Feb24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_143
+Field dates: Feb. 13 - Feb. 25, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 8
+Output: data/pew_datasets/W143_Feb24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W144_Mar24
+Wave folder: data/pew_datasets/W144_Mar24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_144
+Field dates: Mar. 18 - Mar. 24, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W144_Mar24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W145_Apr24
+Wave folder: data/pew_datasets/W145_Apr24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_145
+Field dates: Apr. 1 - Apr. 7, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W145_Apr24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W146_Apr24
+Wave folder: data/pew_datasets/W146_Apr24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_146
+Field dates: April 8 - April 14, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Skipped cross-wave-only variables: 1
+Rows written: 19
+Output: data/pew_datasets/W146_Apr24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W147_May24
+Wave folder: data/pew_datasets/W147_May24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_147
+Field dates: April 29 to May 19, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W147_May24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W148_May24
+Wave folder: data/pew_datasets/W148_May24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_148
+Field dates: May 13 - May 19, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 3
+Output: data/pew_datasets/W148_May24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W149_Jul24
+Wave folder: data/pew_datasets/W149_Jul24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_149
+Field dates: July 1 - 7, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 33
+Output: data/pew_datasets/W149_Jul24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W15
+Wave folder: data/pew_datasets/W15
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_15
+Field dates: Mar 2 - Mar 28, 2016
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W15/pew_question_inventory_partial.csv
+  - data/pew_datasets/W150_Jul24
+Wave folder: data/pew_datasets/W150_Jul24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_150
+Field dates: July 15 to Aug. 4, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W150_Jul24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W151_Aug24
+Wave folder: data/pew_datasets/W151_Aug24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_151
+Field dates: Aug. 5 to Aug. 11, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Skipped cross-wave-only variables: 1
+Rows written: 5
+Output: data/pew_datasets/W151_Aug24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W152_Aug24
+Wave folder: data/pew_datasets/W152_Aug24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_152
+Field dates: Aug. 12 to Aug. 18, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W152_Aug24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W153_Sept24
+Wave folder: data/pew_datasets/W153_Sept24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_153
+Field dates: Aug. 26 - Sept. 2, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Skipped cross-wave-only variables: 3
+Rows written: 95
+Output: data/pew_datasets/W153_Sept24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W154_Sept24
+Wave folder: data/pew_datasets/W154_Sept24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_154
+Field dates: Sept. 3-15, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W154_Sept24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W155_Sept24
+Wave folder: data/pew_datasets/W155_Sept24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_155
+Field dates: Sept. 16 - Sept. 22, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 5
+Output: data/pew_datasets/W155_Sept24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W156_Oct24
+Wave folder: data/pew_datasets/W156_Oct24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_156
+Field dates: Sept. 30 - Oct. 6, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Skipped cross-wave-only variables: 5
+Rows written: 40
+Output: data/pew_datasets/W156_Oct24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W157_Oct24
+Wave folder: data/pew_datasets/W157_Oct24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_157
+Field dates: Oct. 7 - Oct. 13, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W157_Oct24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W158_Oct24
+Wave folder: data/pew_datasets/W158_Oct24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_158
+Field dates: Oct. 21-27, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 4
+Output: data/pew_datasets/W158_Oct24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W159_Nov24
+Wave folder: data/pew_datasets/W159_Nov24
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_159
+Field dates: Nov. 12 - Nov. 17, 2024
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Rows written: 29
+Output: data/pew_datasets/W159_Nov24/pew_question_inventory_partial.csv
+  - data/pew_datasets/W16
+Wave folder: data/pew_datasets/W16
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_16
+Field dates: April 5-May 2, 2016
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 2
+Output: data/pew_datasets/W16/pew_question_inventory_partial.csv
+  - data/pew_datasets/W17_May16
+Wave folder: data/pew_datasets/W17_May16
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_17
+Field dates: May 10-June 6, 2016
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W17_May16/pew_question_inventory_partial.csv
+  - data/pew_datasets/W18_Jun16
+Wave folder: data/pew_datasets/W18_Jun16
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_18
+Field dates: June 7-July 5, 2016
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 11
+Output: data/pew_datasets/W18_Jun16/pew_question_inventory_partial.csv
+  - data/pew_datasets/W19_Jul16
+Wave folder: data/pew_datasets/W19_Jul16
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_19
+Field dates: July 12-August 8, 2016
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W19_Jul16/pew_question_inventory_partial.csv
+  - data/pew_datasets/W20_Aug16
+Wave folder: data/pew_datasets/W20_Aug16
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_20
+Field dates: August 16-September 12, 2016
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 15
+Output: data/pew_datasets/W20_Aug16/pew_question_inventory_partial.csv
+  - data/pew_datasets/W21
+Wave folder: data/pew_datasets/W21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_21
+Field dates: September 27-October 10, 2016
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 8
+Output: data/pew_datasets/W21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W22
+Wave folder: data/pew_datasets/W22
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_22
+Field dates: October 25-November 8, 2016
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 12
+Output: data/pew_datasets/W22/pew_question_inventory_partial.csv
+  - data/pew_datasets/W23
+Wave folder: data/pew_datasets/W23
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_23
+Field dates: November 29-December 12, 2016
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 12
+Output: data/pew_datasets/W23/pew_question_inventory_partial.csv
+  - data/pew_datasets/W24_Jan17
+Wave folder: data/pew_datasets/W24_Jan17
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_24
+Field dates: January 9-January 23, 2017
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W24_Jan17/pew_question_inventory_partial.csv
+  - data/pew_datasets/W25_Mar17
+Wave folder: data/pew_datasets/W25_Mar17
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_25
+Field dates: March 13-March 27, 2017
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 2
+Output: data/pew_datasets/W25_Mar17/pew_question_inventory_partial.csv
+  - data/pew_datasets/W26_Apr17
+Wave folder: data/pew_datasets/W26_Apr17
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_26
+Field dates: April 4-April 18, 2017
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 2
+Output: data/pew_datasets/W26_Apr17/pew_question_inventory_partial.csv
+  - data/pew_datasets/W27_May17
+Wave folder: data/pew_datasets/W27_May17
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_27
+Field dates: May 1 - May 15, 2017
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W27_May17/pew_question_inventory_partial.csv
+  - data/pew_datasets/W28_Aug17
+Wave folder: data/pew_datasets/W28_Aug17
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_28
+Field dates: August 8-21, 2017
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 2
+Output: data/pew_datasets/W28_Aug17/pew_question_inventory_partial.csv
+  - data/pew_datasets/W29_Sep17
+Wave folder: data/pew_datasets/W29_Sep17
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_29
+Field dates: September 14-September 28, 2017
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W29_Sep17/pew_question_inventory_partial.csv
+  - data/pew_datasets/W3_May14
+Wave folder: data/pew_datasets/W3_May14
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_3
+Field dates: May 5-27, 2014
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W3_May14/pew_question_inventory_partial.csv
+  - data/pew_datasets/W30_Dec17
+Wave folder: data/pew_datasets/W30_Dec17
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_30
+Field dates: December 4-December 18, 2017
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Skipped cross-wave-only variables: 13
+Rows written: 1
+Output: data/pew_datasets/W30_Dec17/pew_question_inventory_partial.csv
+  - data/pew_datasets/W31_Feb18-1
+Wave folder: data/pew_datasets/W31_Feb18-1
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_31
+Field dates: January 29-February 13, 2018
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 2
+Output: data/pew_datasets/W31_Feb18-1/pew_question_inventory_partial.csv
+  - data/pew_datasets/W32_Feb18
+Wave folder: data/pew_datasets/W32_Feb18
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_32
+Field dates: February 26-March 11, 2018
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W32_Feb18/pew_question_inventory_partial.csv
+  - data/pew_datasets/W33_Mar18
+Wave folder: data/pew_datasets/W33_Mar18
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_33
+Field dates: March 27-April 9, 2018
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W33_Mar18/pew_question_inventory_partial.csv
+  - data/pew_datasets/W34_Apr18
+Wave folder: data/pew_datasets/W34_Apr18
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_34
+Field dates: April 23-May 6, 2018
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W34_Apr18/pew_question_inventory_partial.csv
+  - data/pew_datasets/W35_May18
+Wave folder: data/pew_datasets/W35_May18
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_35
+Field dates: May 29-June 11, 2018
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W35_May18/pew_question_inventory_partial.csv
+  - data/pew_datasets/W36_Jun-18-1
+Wave folder: data/pew_datasets/W36_Jun-18-1
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_36
+Field dates: June 19-July 2, 2018
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W36_Jun-18-1/pew_question_inventory_partial.csv
+  - data/pew_datasets/W37_Jul18
+Wave folder: data/pew_datasets/W37_Jul18
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_37
+Field dates: July 30-August 12, 2018
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 8
+Output: data/pew_datasets/W37_Jul18/pew_question_inventory_partial.csv
+  - data/pew_datasets/W38_Sep18
+Wave folder: data/pew_datasets/W38_Sep18
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_38
+Field dates: September 24-October 7,2018
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 3
+Output: data/pew_datasets/W38_Sep18/pew_question_inventory_partial.csv
+  - data/pew_datasets/W39_Nov18
+Wave folder: data/pew_datasets/W39_Nov18
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_39
+Field dates: November 7-November 16, 2018
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 6
+Output: data/pew_datasets/W39_Nov18/pew_question_inventory_partial.csv
+  - data/pew_datasets/W4_Jun14
+Wave folder: data/pew_datasets/W4_Jun14
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_4
+Field dates: May 30, 2014-June 30, 2014
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W4_Jun14/pew_question_inventory_partial.csv
+  - data/pew_datasets/W40_Nov18
+Wave folder: data/pew_datasets/W40_Nov18
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_40
+Field dates: November 27-December 10, 2018
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W40_Nov18/pew_question_inventory_partial.csv
+  - data/pew_datasets/W41_Dec18
+Wave folder: data/pew_datasets/W41_Dec18
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_41
+Field dates: December 11-December 23, 2018
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W41_Dec18/pew_question_inventory_partial.csv
+  - data/pew_datasets/W42_Jan19
+Wave folder: data/pew_datasets/W42_Jan19
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_42
+Field dates: January 7-January 21, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W42_Jan19/pew_question_inventory_partial.csv
+  - data/pew_datasets/W43_Jan19
+Wave folder: data/pew_datasets/W43_Jan19
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_43
+Field dates: January 22 - February 5, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 3
+Output: data/pew_datasets/W43_Jan19/pew_question_inventory_partial.csv
+  - data/pew_datasets/W44_Feb19
+Wave folder: data/pew_datasets/W44_Feb19
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_44
+Field dates: February 4-February 19, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W44_Feb19/pew_question_inventory_partial.csv
+  - data/pew_datasets/W45_Feb19
+Wave folder: data/pew_datasets/W45_Feb19
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_45
+Field dates: February 19 - March 4, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W45_Feb19/pew_question_inventory_partial.csv
+  - data/pew_datasets/W46_Mar19-1
+Wave folder: data/pew_datasets/W46_Mar19-1
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_46
+Field dates: March 18 - April 1, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 4
+Output: data/pew_datasets/W46_Mar19-1/pew_question_inventory_partial.csv
+  - data/pew_datasets/W47_Apr19
+Wave folder: data/pew_datasets/W47_Apr19
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_47
+Field dates: April 1-April 15, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 2
+Output: data/pew_datasets/W47_Apr19/pew_question_inventory_partial.csv
+  - data/pew_datasets/W48_Apr19
+Wave folder: data/pew_datasets/W48_Apr19
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_48
+Field dates: April 29-May 13, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 20
+Output: data/pew_datasets/W48_Apr19/pew_question_inventory_partial.csv
+  - data/pew_datasets/W49_Jun19
+Wave folder: data/pew_datasets/W49_Jun19
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_49
+Field dates: June 3-June 17, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W49_Jun19/pew_question_inventory_partial.csv
+  - data/pew_datasets/W5_Jul14
+Wave folder: data/pew_datasets/W5_Jul14
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_5
+Field dates: Jul 7, 2014-Aug 4, 2014
+Field dates source: readme
+Skipped WEIGHT_* variables: 3
+Rows written: 1
+Output: data/pew_datasets/W5_Jul14/pew_question_inventory_partial.csv
+  - data/pew_datasets/W50_Jun19
+Wave folder: data/pew_datasets/W50_Jun19
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_50
+Field dates: June 25 - July 8, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W50_Jun19/pew_question_inventory_partial.csv
+  - data/pew_datasets/W51_Jul19
+Wave folder: data/pew_datasets/W51_Jul19
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_51
+Field dates: July 8-July 21, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W51_Jul19/pew_question_inventory_partial.csv
+  - data/pew_datasets/W52_Jul19
+Wave folder: data/pew_datasets/W52_Jul19
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_52
+Field dates: July 22 - August 4, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 10
+Output: data/pew_datasets/W52_Jul19/pew_question_inventory_partial.csv
+  - data/pew_datasets/W53_Sep19
+Wave folder: data/pew_datasets/W53_Sep19
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_53
+Field dates: September 3 - September 15, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Skipped cross-wave-only variables: 2
+Rows written: 5
+Output: data/pew_datasets/W53_Sep19/pew_question_inventory_partial.csv
+  - data/pew_datasets/W54_Sep19-1
+Wave folder: data/pew_datasets/W54_Sep19-1
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_54
+Field dates: September 16 - September 29, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Skipped cross-wave-only variables: 14
+Rows written: 1
+Output: data/pew_datasets/W54_Sep19-1/pew_question_inventory_partial.csv
+  - data/pew_datasets/W55_Oct19
+Wave folder: data/pew_datasets/W55_Oct19
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_55
+Field dates: October 1 - October 13, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Skipped cross-wave-only variables: 1
+Rows written: 6
+Output: data/pew_datasets/W55_Oct19/pew_question_inventory_partial.csv
+  - data/pew_datasets/W56_Oct19
+Wave folder: data/pew_datasets/W56_Oct19
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_56
+Field dates: October 16 - October 28, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W56_Oct19/pew_question_inventory_partial.csv
+  - data/pew_datasets/W57_Nov19
+Wave folder: data/pew_datasets/W57_Nov19
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_57
+Field dates: October 29-November 11, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 13
+Output: data/pew_datasets/W57_Nov19/pew_question_inventory_partial.csv
+  - data/pew_datasets/W58_Dec19-1
+Wave folder: data/pew_datasets/W58_Dec19-1
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_58
+Field dates: December 3 - December 23, 2019
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 4
+Output: data/pew_datasets/W58_Dec19-1/pew_question_inventory_partial.csv
+  - data/pew_datasets/W59_Jan20
+Wave folder: data/pew_datasets/W59_Jan20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_59
+Field dates: January 6-20, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Skipped cross-wave-only variables: 75
+Rows written: 21
+Output: data/pew_datasets/W59_Jan20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W6_Aug14
+Wave folder: data/pew_datasets/W6_Aug14
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_6
+Field dates: Aug 11-Sept 3, 2014
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Skipped cross-wave-only variables: 1
+Rows written: 1
+Output: data/pew_datasets/W6_Aug14/pew_question_inventory_partial.csv
+  - data/pew_datasets/W60_Black_faith_dataset
+Wave folder: data/pew_datasets/W60_Black_faith_dataset
+Readme found: no
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_60
+Field dates: Jan. 21, 2020 - Feb. 10, 2020
+Field dates source: docx_fallback
+Rows written: 1
+Output: data/pew_datasets/W60_Black_faith_dataset/pew_question_inventory_partial.csv
+  - data/pew_datasets/W61_Feb20
+Wave folder: data/pew_datasets/W61_Feb20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_61
+Field dates: February 4-15, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 18
+Output: data/pew_datasets/W61_Feb20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W62_Feb20
+Wave folder: data/pew_datasets/W62_Feb20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_62
+Field dates: February 18 - March 2, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Skipped cross-wave-only variables: 9
+Rows written: 19
+Output: data/pew_datasets/W62_Feb20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W63_Mar20
+Wave folder: data/pew_datasets/W63_Mar20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_63
+Field dates: March 2 - March 15, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W63_Mar20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W64_Apr20
+Wave folder: data/pew_datasets/W64_Apr20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_64
+Field dates: March 19 - March 24,2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 3
+Output: data/pew_datasets/W64_Apr20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W65_Apr20
+Wave folder: data/pew_datasets/W65_Apr20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_65
+Field dates: April 7 - April 12, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Skipped cross-wave-only variables: 1
+Rows written: 13
+Output: data/pew_datasets/W65_Apr20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W66_Apr20
+Wave folder: data/pew_datasets/W66_Apr20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_66
+Field dates: April 20-April 26, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 4
+Skipped cross-wave-only variables: 42
+Rows written: 10
+Output: data/pew_datasets/W66_Apr20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W67_May20
+Wave folder: data/pew_datasets/W67_May20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_67
+Field dates: April 29 - May 5, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Skipped cross-wave-only variables: 1
+Rows written: 1
+Output: data/pew_datasets/W67_May20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W68_Jun20-1
+Wave folder: data/pew_datasets/W68_Jun20-1
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_68
+Field dates: June 4-June 10, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Skipped cross-wave-only variables: 10
+Rows written: 10
+Output: data/pew_datasets/W68_Jun20-1/pew_question_inventory_partial.csv
+  - data/pew_datasets/W69_Jun20
+Wave folder: data/pew_datasets/W69_Jun20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_69
+Field dates: June 16-June 22,2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 3
+Skipped cross-wave-only variables: 7
+Rows written: 33
+Output: data/pew_datasets/W69_Jun20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W7_Sep14
+Wave folder: data/pew_datasets/W7_Sep14
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_7
+Field dates: Sept 9, 2014-Oct 3, 2014
+Field dates source: readme
+Rows written: 1
+Output: data/pew_datasets/W7_Sep14/pew_question_inventory_partial.csv
+  - data/pew_datasets/W70_Jul20
+Wave folder: data/pew_datasets/W70_Jul20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_70
+Field dates: July 13-19, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W70_Jul20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W71_Jul20
+Wave folder: data/pew_datasets/W71_Jul20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_71
+Field dates: July 27 - Aug. 2, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Rows written: 7
+Output: data/pew_datasets/W71_Jul20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W72_Aug20
+Wave folder: data/pew_datasets/W72_Aug20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_72
+Field dates: August 3-16, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W72_Aug20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W73_Sep20
+Wave folder: data/pew_datasets/W73_Sep20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_73
+Field dates: August 31 to September 7, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Skipped cross-wave-only variables: 8
+Rows written: 11
+Output: data/pew_datasets/W73_Sep20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W74_Sep20
+Wave folder: data/pew_datasets/W74_Sep20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_74
+Field dates: Sept. 8-13, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 3
+Rows written: 1
+Output: data/pew_datasets/W74_Sep20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W75_Sep20
+Wave folder: data/pew_datasets/W75_Sep20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_75
+Field dates: September 30 - October 5, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Rows written: 39
+Output: data/pew_datasets/W75_Sep20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W76_Oct20
+Wave folder: data/pew_datasets/W76_Oct20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_76
+Field dates: Oct. 6 - Oct. 12, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Skipped cross-wave-only variables: 10
+Rows written: 3
+Output: data/pew_datasets/W76_Oct20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W77_Oct20
+Wave folder: data/pew_datasets/W77_Oct20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_77
+Field dates: Oct. 13-19, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W77_Oct20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W78_Nov20-2
+Wave folder: data/pew_datasets/W78_Nov20-2
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_78
+Field dates: Nov. 12 - Nov. 17, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 16
+Output: data/pew_datasets/W78_Nov20-2/pew_question_inventory_partial.csv
+  - data/pew_datasets/W79_Nov20
+Wave folder: data/pew_datasets/W79_Nov20
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_79
+Field dates: Nov. 18 - Nov. 29, 2020
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Skipped cross-wave-only variables: 10
+Rows written: 6
+Output: data/pew_datasets/W79_Nov20/pew_question_inventory_partial.csv
+  - data/pew_datasets/W8_Oct14
+Wave folder: data/pew_datasets/W8_Oct14
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_8
+Field dates: Oct 3, 2014-Oct 27, 2014
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W8_Oct14/pew_question_inventory_partial.csv
+  - data/pew_datasets/W80_Jan21
+Wave folder: data/pew_datasets/W80_Jan21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_80
+Field dates: January 8 - January 12, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Skipped cross-wave-only variables: 2
+Rows written: 45
+Output: data/pew_datasets/W80_Jan21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W81_Jan21
+Wave folder: data/pew_datasets/W81_Jan21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_81
+Field dates: January 19-24, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W81_Jan21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W82_Feb21
+Wave folder: data/pew_datasets/W82_Feb21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_82
+Field dates: February 1-7, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Rows written: 8
+Output: data/pew_datasets/W82_Feb21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W83_Feb21
+Wave folder: data/pew_datasets/W83_Feb21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_83
+Field dates: Feb. 16 - Feb. 21, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 3
+Output: data/pew_datasets/W83_Feb21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W84_Mar21
+Wave folder: data/pew_datasets/W84_Mar21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_84
+Field dates: March 1-March 7, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 3
+Rows written: 34
+Output: data/pew_datasets/W84_Mar21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W85_Mar21
+Wave folder: data/pew_datasets/W85_Mar21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_85
+Field dates: March 8-March 14, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 30
+Output: data/pew_datasets/W85_Mar21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W86_Mar21
+Wave folder: data/pew_datasets/W86_Mar21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_86
+Field dates: March 15-March 28, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 2
+Output: data/pew_datasets/W86_Mar21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W87_Apr21
+Wave folder: data/pew_datasets/W87_Apr21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_87
+Field dates: April 5-April 11, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 10
+Output: data/pew_datasets/W87_Apr21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W88_Apr21
+Wave folder: data/pew_datasets/W88_Apr21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_88
+Field dates: April 12-April 18, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Skipped cross-wave-only variables: 3
+Rows written: 1
+Output: data/pew_datasets/W88_Apr21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W89_Apr21
+Wave folder: data/pew_datasets/W89_Apr21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_89
+Field dates: April 20-April 29, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 2
+Output: data/pew_datasets/W89_Apr21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W9_Nov14
+Wave folder: data/pew_datasets/W9_Nov14
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_9
+Field dates: Nov 17-Dec 15, 2014
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W9_Nov14/pew_question_inventory_partial.csv
+  - data/pew_datasets/W90_May21
+Wave folder: data/pew_datasets/W90_May21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_90
+Field dates: May 17-May 31, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Skipped cross-wave-only variables: 1
+Rows written: 1
+Output: data/pew_datasets/W90_May21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W91_Jun21
+Wave folder: data/pew_datasets/W91_Jun21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_91
+Field dates: June 14-June 27, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 3
+Skipped cross-wave-only variables: 2
+Rows written: 3
+Output: data/pew_datasets/W91_Jun21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W92_Jul21
+Wave folder: data/pew_datasets/W92_Jul21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_92
+Field dates: July 8-18, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Skipped cross-wave-only variables: 6
+Rows written: 3
+Output: data/pew_datasets/W92_Jul21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W93_Jul21
+Wave folder: data/pew_datasets/W93_Jul21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_93
+Field dates: July 26-August 8, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W93_Jul21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W94_Aug21
+Wave folder: data/pew_datasets/W94_Aug21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_94
+Field dates: Aug. 23 - Aug. 29, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 2
+Output: data/pew_datasets/W94_Aug21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W95_Sept21
+Wave folder: data/pew_datasets/W95_Sept21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_95
+Field dates: Sept. 13-Sept. 19, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 2
+Rows written: 20
+Output: data/pew_datasets/W95_Sept21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W96_Sept21
+Wave folder: data/pew_datasets/W96_Sept21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_96
+Field dates: Sept. 20-Sept. 26, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W96_Sept21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W97_Oct21
+Wave folder: data/pew_datasets/W97_Oct21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_97
+Field dates: Oct. 4 - Oct. 17, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W97_Oct21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W98_Oct21
+Wave folder: data/pew_datasets/W98_Oct21
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_98
+Field dates: Oct. 18 - Oct. 24, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W98_Oct21/pew_question_inventory_partial.csv
+  - data/pew_datasets/W99_Nov21-1
+Wave folder: data/pew_datasets/W99_Nov21-1
+Readme found: yes
+SAV found: yes
+Schema: minimal
+Codebook loaded: yes
+Profile vars from codebook: 41
+Profile markers in cleanup regex: 44
+Wave tag: ATP_99
+Field dates: Nov. 1-Nov. 7, 2021
+Field dates source: readme
+Skipped WEIGHT_* variables: 1
+Rows written: 1
+Output: data/pew_datasets/W99_Nov21-1/pew_question_inventory_partial.csv
+[3/12] Merging partial inventories...
+Input files: 157
+Schema: minimal
+Rows read: 981
+Duplicate rows dropped (pew_wave + variable_name): 0
+Rows written: 981
+Output: data/interim/pew/pew_question_inventory.csv
+[4/12] Selecting PEW rows for RQ4...
+Input rows: 981
+Output rows: 981
+include_for_rq4 counts:
+  no: 888
+  yes: 93
+Top exclude_code counts:
+  exclude_not_trump_target: 466
+  exclude_judgment_not_supported: 304
+  exclude_affective_reaction: 47
+  exclude_trait: 39
+  exclude_no_topic_match: 19
+  exclude_multi_topic_ambiguous: 5
+  exclude_knowledge_or_awareness: 5
+  exclude_thermometer: 2
+  exclude_broad_favorability: 1
+Judgment family counts:
+  approval: 77
+  confidence: 138
+  other: 765
+  policy_support: 1
+Included topic counts:
+  covid_public_health: 5
+  economy_jobs_trade: 75
+  foreign_policy_national_security: 5
+  immigration_border: 4
+  judiciary_courts: 4
+Output: data/interim/pew/pew_rq4_inventory.csv
+[5/12] Preprocessing posts...
+Input rows: 22822
+Rows after hard filters (posts_clean): 17497
+Rows in posts_topic_labeled: 17497
+Rows in posts_topic_validated: 17497
+Rows in posts_prompt_ready: 3718
+Rows in posts_moderation_analysis: 17497
+Hard-filter drops:
+  retweet: 3785
+  too_few_tokens: 261
+  too_short_after_url_strip: 1279
+Validated topic counts:
+  covid_public_health: 278
+  crime_policing_criminal_justice: 440
+  economy_jobs_trade: 1121
+  election_integrity_democracy: 1015
+  foreign_policy_national_security: 1123
+  immigration_border: 473
+  judiciary_courts: 182
+  other_campaign_generic: 11371
+  review_needed: 1494
+Moderation status counts:
+  deleted: 267
+  flagged: 107
+  not_deleted_not_flagged: 17123
+keep_for_prompt counts:
+  no: 13779
+  yes: 3718
+[6/12] Reporting topic overlap...
+PEW file: data/interim/pew/pew_rq4_inventory.csv
+Posts file: data/interim/preprocessing/posts_prompt_ready.csv
+PEW rows: 981
+PEW included rows (include_for_rq4=yes): 93
+PEW excluded rows: 888
+Prompt-ready posts rows: 3718
+
+Included PEW topics: 5
+Prompt-ready post topics: 7
+Topic overlap (included PEW and posts): 5
+
+Overlap topics:
+  covid_public_health: pew_included=5, posts=232
+  economy_jobs_trade: pew_included=75, posts=922
+  foreign_policy_national_security: pew_included=5, posts=916
+  immigration_border: pew_included=4, posts=401
+  judiciary_courts: pew_included=4, posts=130
+
+Included PEW topics with no post coverage:
+  (none)
+
+Post topics with no included PEW coverage:
+  crime_policing_criminal_justice: posts=343
+  election_integrity_democracy: posts=774
+
+Top PEW issue_topic counts (all rows, top 20):
+  issue_topic                      | count
+  ---------------------------------+------
+  economy_jobs_trade               | 116  
+  election_integrity_democracy     | 99   
+  covid_public_health              | 34   
+  foreign_policy_national_security | 33   
+  immigration_border               | 20   
+  judiciary_courts                 | 8    
+  crime_policing_criminal_justice  | 2    
+
+Top PEW exclude_code counts (top 20):
+  exclude_code                   | count
+  -------------------------------+------
+  exclude_not_trump_target       | 466  
+  exclude_judgment_not_supported | 304  
+  exclude_affective_reaction     | 47   
+  exclude_trait                  | 39   
+  exclude_no_topic_match         | 19   
+  exclude_multi_topic_ambiguous  | 5    
+  exclude_knowledge_or_awareness | 5    
+  exclude_thermometer            | 2    
+  exclude_broad_favorability     | 1    
+
+Top prompt-ready post topic counts (top 20):
+  topic                            | count
+  ---------------------------------+------
+  economy_jobs_trade               | 922  
+  foreign_policy_national_security | 916  
+  election_integrity_democracy     | 774  
+  immigration_border               | 401  
+  crime_policing_criminal_justice  | 343  
+  covid_public_health              | 232  
+  judiciary_courts                 | 130  
+[7/12] Building final RQ4 topic list and subsets...
+PEW file: data/interim/pew/pew_rq4_inventory.csv
+Posts file: data/interim/preprocessing/posts_prompt_ready.csv
+min_pew_per_topic: 1
+min_posts_per_topic: 1
+Included PEW rows before overlap filtering: 93
+Topics in included PEW rows: 5
+Topics in prompt-ready posts: 7
+Overlap topics before thresholds: 5
+Final topics after thresholds: 5
+PEW subset rows written: 93
+Posts subset rows written: 2601
+Topics output: data/interim/rq4/rq4_topics_final.csv
+PEW subset output: data/interim/rq4/rq4_pew_subset.csv
+Posts subset output: data/interim/rq4/rq4_posts_subset.csv
+[8/12] Writing run provenance artifact...
+Run provenance written: reports/run_provenance.md
+Run provenance JSON: reports/run_provenance.json
+[9/12] Building pipeline summary artifacts...
+Summary written: reports/pipeline_summary.md
+Summary JSON: reports/pipeline_summary.json
+[10/12] Exporting methods appendix artifacts...
+Spec: data/reference/methods/filter_spec.json
+Topic spec: data/reference/methods/topic_keywords.json
+Output directory: reports/methods
+Wrote: reports/methods/filter_table.csv
+Wrote: reports/methods/topic_patterns.csv
+Wrote: reports/methods/anonymization_rules.csv
+Wrote: reports/methods/pew_selection_rules.csv
+Wrote: reports/methods/decision_audit.md
+[11/12] Exporting publishable sanitized artifacts...
+Exported publishable artifacts: 9
+Missing source artifacts: 0
+Output directory: docs/artifacts
+Manifest: docs/artifacts/artifact_manifest.json
+Pipeline completed.

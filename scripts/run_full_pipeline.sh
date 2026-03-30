@@ -28,6 +28,8 @@ Options:
   --skip-summary               Skip pipeline summary artifact generation
   --skip-methods               Skip methods appendix artifact generation
   --skip-publishable           Skip export of sanitized publishable artifacts
+  --no-log                     Disable automatic tee logging to logs/
+  --log-file PATH              Custom log file path (default: logs/run_full_pipeline_YYYYmmdd_HHMMSS.log)
   --no-overwrite               Do not pass --overwrite to scripts that support it
   -h, --help                   Show this help
 
@@ -51,7 +53,13 @@ SKIP_PREFLIGHT=0
 SKIP_SUMMARY=0
 SKIP_METHODS=0
 SKIP_PUBLISHABLE=0
+AUTO_LOG=1
+LOG_FILE=""
 OVERWRITE=1
+ORIGINAL_ARGC=$#
+if (( ORIGINAL_ARGC > 0 )); then
+  ORIGINAL_ARGS=( "$@" )
+fi
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -99,6 +107,14 @@ while [[ $# -gt 0 ]]; do
       SKIP_PUBLISHABLE=1
       shift
       ;;
+    --no-log)
+      AUTO_LOG=0
+      shift
+      ;;
+    --log-file)
+      LOG_FILE="$2"
+      shift 2
+      ;;
     --no-overwrite)
       OVERWRITE=0
       shift
@@ -118,6 +134,21 @@ done
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 cd "$REPO_ROOT"
+
+if [[ "${PIPELINE_LOG_ACTIVE:-0}" != "1" && $AUTO_LOG -eq 1 ]]; then
+  if [[ -z "$LOG_FILE" ]]; then
+    ts="$(date +%Y%m%d_%H%M%S)"
+    LOG_FILE="logs/run_full_pipeline_${ts}.log"
+  fi
+  mkdir -p "$(dirname "$LOG_FILE")"
+  echo "[log] Writing run log to: $LOG_FILE"
+  if (( ORIGINAL_ARGC > 0 )); then
+    PIPELINE_LOG_ACTIVE=1 "$0" "${ORIGINAL_ARGS[@]}" 2>&1 | tee "$LOG_FILE"
+  else
+    PIPELINE_LOG_ACTIVE=1 "$0" 2>&1 | tee "$LOG_FILE"
+  fi
+  exit "${PIPESTATUS[0]}"
+fi
 
 if [[ $REFRESH_MANIFEST -eq 1 ]]; then
   echo "[prep] Rebuilding wave manifest from folders..."
