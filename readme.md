@@ -398,6 +398,98 @@ Outputs in `data/interim/rq4/`:
 Column reference:
 - `docs/data_dictionary.md` (includes a full dictionary for `rq4_posts_subset.csv`)
 
+## Script: analyze_rq1_labels.py
+
+Purpose:
+- Reads low-temperature RQ1 generation outputs (`gpt-oss-20b_low_*.json`).
+- Flattens tweet-level and bundle-level labels.
+- Skips records with `parse_error`.
+- Exports reusable summaries for:
+  - `stance` (and numeric `stance_score`)
+  - `agreement`
+  - `legitimacy`
+  - `offensiveness`
+  - `endorsement`
+
+Basic run:
+
+```bash
+python3 scripts/analyze_rq1_labels.py --overwrite
+```
+
+Defaults:
+- `--input-root docs/private/RQ1/RQ1_all_outputs`
+- `--output-dir docs/private/RQ1/RQ1_all_label_analysis`
+- IW neighbor variant (`_neigh_`) excluded by default
+
+Optional:
+- add `--include-neigh` to include IW neighbor low files
+
+Outputs:
+- `rq1_tweet_labels_flat.csv`
+- `rq1_bundle_labels_flat.csv`
+- `rq1_label_summary_by_polarity.csv`
+- `rq1_label_summary_overall.csv`
+- `rq1_stance_distribution.csv`
+- `rq1_ingest_report.csv`
+- `rq1_analysis_manifest.json`
+
+## Script: build_rq1_label_plots.py
+
+Purpose:
+- Builds paper-ready tables and plots from `analyze_rq1_labels.py` summaries.
+- Covers all main labels:
+  - `stance_score`
+  - `agreement`
+  - `legitimacy`
+  - `offensiveness`
+  - `endorsement`
+
+Basic run:
+
+```bash
+python3 scripts/build_rq1_label_plots.py --overwrite
+```
+
+Defaults:
+- `--input-dir docs/private/RQ1/RQ1_all_label_analysis`
+- `--output-dir docs/private/RQ1/RQ1_all_label_results`
+
+Outputs:
+- `tables/rq1_label_table_by_topic_polarity.csv`
+- `tables/rq1_label_table_overall.csv`
+- `tables/rq1_label_topic_contrast_ranking.csv`
+- `plots/heatmaps/*.png` (20 plots: 2 modes x 2 levels x 5 metrics)
+- `plots/contrasts/*.png` (20 plots: 2 modes x 2 levels x 5 metrics)
+- `manifest.json`
+
+## Script: validate_rq1_label_results.py
+
+Purpose:
+- Validates consistency of generated RQ1 label tables.
+- Checks numeric ranges and weighted-mean agreement across summary tables.
+- Verifies `stance_score` consistency against stance distributions.
+- Exports key contrast extremes and tweet-vs-bundle direction consistency.
+
+Basic run:
+
+```bash
+python3 scripts/validate_rq1_label_results.py --overwrite
+```
+
+Defaults:
+- `--results-dir docs/private/RQ1/RQ1_all_label_results`
+- `--analysis-dir docs/private/RQ1/RQ1_all_label_analysis`
+- outputs under `docs/private/RQ1/RQ1_all_label_results/validation`
+
+Outputs:
+- `rq1_validation_checks.csv`
+- `rq1_key_patterns.csv`
+- `rq1_direction_consistency.csv`
+- `rq1_parse_error_breakdown.csv`
+- `rq1_validation_summary.json`
+- `rq1_validation_report.md`
+
 ## Script: build_pipeline_summary.py
 
 Purpose:
