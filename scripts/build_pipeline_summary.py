@@ -2,7 +2,7 @@
 """Build a compact, reproducible pipeline summary artifact."""
 
 # Simple explanation of this script (step by step):
-# 1) Read the main output files from the pipeline (PEW, RQ4, and posts).
+# 1) Read the main output files from the pipeline (PEW, RQ3, and posts).
 # 2) Compute key counts (included/excluded, topics, overlaps, etc.).
 # 3) Summarize results by wave and by processing stage.
 # 4) Generate two reports: one readable (`.md`) and one structured (`.json`).
@@ -20,10 +20,10 @@ from typing import Dict, List
 
 PARTIAL_GLOB_DEFAULT = "data/pew_datasets/W*/pew_question_inventory_partial.csv"
 MERGED_DEFAULT = "data/interim/pew/pew_question_inventory.csv"
-RQ4_DEFAULT = "data/interim/pew/pew_rq4_inventory.csv"
+RQ3_DEFAULT = "data/interim/pew/pew_rq3_inventory.csv"
 POSTS_VALIDATED_DEFAULT = "data/interim/preprocessing/posts_topic_validated.csv"
 POSTS_PROMPT_DEFAULT = "data/interim/preprocessing/posts_prompt_ready.csv"
-FINAL_TOPICS_DEFAULT = "data/interim/rq4/rq4_topics_final.csv"
+FINAL_TOPICS_DEFAULT = "data/interim/rq3/rq3_topics_final.csv"
 OUTPUT_MD_DEFAULT = "reports/pipeline_summary.md"
 OUTPUT_JSON_DEFAULT = "reports/pipeline_summary.json"
 
@@ -34,7 +34,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--partial-glob", default=PARTIAL_GLOB_DEFAULT)
     parser.add_argument("--merged", default=MERGED_DEFAULT)
-    parser.add_argument("--rq4", default=RQ4_DEFAULT)
+    parser.add_argument("--rq3", default=RQ3_DEFAULT)
     parser.add_argument("--posts-validated", default=POSTS_VALIDATED_DEFAULT)
     parser.add_argument("--posts-prompt", default=POSTS_PROMPT_DEFAULT)
     parser.add_argument("--final-topics", default=FINAL_TOPICS_DEFAULT)
@@ -75,7 +75,7 @@ def main() -> None:
 
     partial_paths = [p for p in sorted(Path(".").glob(args.partial_glob)) if p.is_file()]
     merged_rows = read_csv_rows(Path(args.merged))
-    rq4_rows = read_csv_rows(Path(args.rq4))
+    rq3_rows = read_csv_rows(Path(args.rq3))
     posts_validated_rows = read_csv_rows(Path(args.posts_validated))
     posts_prompt_rows = read_csv_rows(Path(args.posts_prompt))
     final_topic_rows = read_optional_csv_rows(Path(args.final_topics))
@@ -92,13 +92,13 @@ def main() -> None:
             }
         )
 
-    include_counts = Counter((r.get("include_for_rq4") or "").strip() for r in rq4_rows)
-    exclude_counts = Counter((r.get("exclude_code") or "").strip() for r in rq4_rows if (r.get("exclude_code") or "").strip())
+    include_counts = Counter((r.get("include_for_rq3") or "").strip() for r in rq3_rows)
+    exclude_counts = Counter((r.get("exclude_code") or "").strip() for r in rq3_rows if (r.get("exclude_code") or "").strip())
 
     included_topic_counts = Counter(
         (r.get("issue_topic") or "").strip()
-        for r in rq4_rows
-        if (r.get("include_for_rq4") or "").strip().lower() == "yes" and (r.get("issue_topic") or "").strip()
+        for r in rq3_rows
+        if (r.get("include_for_rq3") or "").strip().lower() == "yes" and (r.get("issue_topic") or "").strip()
     )
 
     post_topic_counts = Counter((r.get("topic") or "").strip() for r in posts_prompt_rows if (r.get("topic") or "").strip())
@@ -112,17 +112,17 @@ def main() -> None:
             "wave_partial_files": len(partial_paths),
             "wave_partial_rows_total": sum(int(r["rows"]) for r in partial_by_wave),
             "merged_inventory_rows": len(merged_rows),
-            "rq4_inventory_rows": len(rq4_rows),
-            "rq4_include_yes": include_counts.get("yes", 0),
-            "rq4_include_no": include_counts.get("no", 0),
+            "rq3_inventory_rows": len(rq3_rows),
+            "rq3_include_yes": include_counts.get("yes", 0),
+            "rq3_include_no": include_counts.get("no", 0),
             "posts_validated_rows": len(posts_validated_rows),
             "posts_prompt_ready_rows": len(posts_prompt_rows),
             "final_topics_rows": len(final_topic_rows),
             "overlap_topic_count": len(overlap_topics),
         },
         "wave_partial_rows": partial_by_wave,
-        "rq4_exclude_counts": dict(exclude_counts),
-        "rq4_included_topic_counts": dict(included_topic_counts),
+        "rq3_exclude_counts": dict(exclude_counts),
+        "rq3_included_topic_counts": dict(included_topic_counts),
         "prompt_topic_counts": dict(post_topic_counts),
         "moderation_status_counts": dict(moderation_counts),
         "overlap_topics": overlap_topics,
@@ -158,7 +158,7 @@ def main() -> None:
         lines.append("No partial inventory files found.")
     lines.append("")
 
-    lines.append("## RQ4 Exclude Codes")
+    lines.append("## RQ3 Exclude Codes")
     lines.append("")
     if exclude_counts:
         rows = [[k, str(v)] for k, v in exclude_counts.most_common()]

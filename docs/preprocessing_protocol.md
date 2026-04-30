@@ -243,6 +243,11 @@ First occurrence is kept; subsequent duplicates are excluded with `duplicate_aft
 - `posts_prompt_ready.csv`: strict prompting pool.
 - `posts_moderation_analysis.csv`: full post-filter pool including deleted/flagged statuses for comparative analysis.
 
+PEW alignment note:
+- Broad Trump job-approval items are not used for topic-specific public-opinion comparison.
+- These rows remain in `pew_rq3_inventory.csv` with `exclude_code=exclude_general_presidential_approval`.
+- `rule_trace` keeps diagnostic topic hits, but `issue_topic` remains empty for these excluded rows.
+
 ## 7. Reproducible Execution
 
 Run:

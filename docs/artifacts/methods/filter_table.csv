@@ -1,10 +1,11 @@
 rule_set,rule_order,rule_id,stage,input_columns,condition,action,output_code,rationale
 pew,1,pew_trump_target_required,inclusion_gate,variable_name|question_text_raw,must match direct Trump pattern OR constrained president context,exclude when not matched,exclude_not_trump_target,Keep only Trump-targeted items.
 pew,2,pew_excluded_forms,inclusion_gate,question_text_raw,matches excluded form families,exclude,exclude_thermometer|exclude_trait|exclude_affective_reaction|exclude_knowledge_or_awareness|exclude_broad_favorability,Remove non-comparable item forms.
-pew,3,pew_judgment_family_supported,inclusion_gate,question_text_raw,"judgment_family in {approval, confidence, policy_support}",exclude when not supported,exclude_judgment_not_supported,Only comparable judgment families are included.
-pew,4,pew_response_scale_known,inclusion_gate,question_text_raw,response scale is inferred and not unknown,exclude when unknown,exclude_unknown_response_scale,Require interpretable response scale.
-pew,5,pew_issue_topic_single_match,inclusion_gate,variable_name|question_text_raw,exactly one issue topic hit,exclude when none or multiple,exclude_no_topic_match|exclude_multi_topic_ambiguous,Require single deterministic topic assignment.
-pew,6,pew_final_include,final_keep_decision,exclude_code,no exclusion code,set include_for_rq4,include_for_rq4=yes else no,Single deterministic include gate.
+pew,3,pew_general_presidential_approval_excluded,inclusion_gate,question_text_raw,matches broad presidential job-approval wording rather than an issue-specific Trump item,exclude,exclude_general_presidential_approval,Avoid mislabeling broad Trump job approval as an issue-specific topic such as economy/jobs/trade.
+pew,4,pew_judgment_family_supported,inclusion_gate,question_text_raw,"judgment_family in {approval, confidence, policy_support}",exclude when not supported,exclude_judgment_not_supported,Only comparable judgment families are included.
+pew,5,pew_response_scale_known,inclusion_gate,question_text_raw,response scale is inferred and not unknown,exclude when unknown,exclude_unknown_response_scale,Require interpretable response scale.
+pew,6,pew_issue_topic_single_match,inclusion_gate,variable_name|question_text_raw,exactly one issue topic hit,exclude when none or multiple,exclude_no_topic_match|exclude_multi_topic_ambiguous,Require single deterministic topic assignment.
+pew,7,pew_final_include,final_keep_decision,exclude_code,no exclusion code,set include_for_rq3,include_for_rq3=yes else no,Single deterministic include gate.
 preprocess,1,pp_not_morally_relevant,hard_drop,is_morally_relevant,is_morally_relevant is false,drop,not_morally_relevant,Keep only morally relevant rows.
 preprocess,2,pp_retweet,hard_drop,isRetweet|text,isRetweet is true OR text starts with RT @,drop,retweet,Use only original posts.
 preprocess,3,pp_min_chars,hard_drop,text_clean,len(text_clean) < 40,drop,too_short_after_url_strip,Remove rows too short for stable interpretation.

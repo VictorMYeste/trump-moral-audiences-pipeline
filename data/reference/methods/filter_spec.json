@@ -1,8 +1,8 @@
 {
   "metadata": {
     "spec_name": "trump_moral_audiences_filter_spec",
-    "spec_version": "1.1.0",
-    "last_updated": "2026-03-30",
+    "spec_version": "1.2.0",
+    "last_updated": "2026-04-30",
     "scope": "Deterministic preprocessing and PEW selection rules used by this repository."
   },
   "preprocess_rules": [
@@ -255,6 +255,18 @@
     },
     {
       "rule_order": 3,
+      "rule_id": "pew_general_presidential_approval_excluded",
+      "stage": "inclusion_gate",
+      "input_columns": [
+        "question_text_raw"
+      ],
+      "condition": "matches broad presidential job-approval wording rather than an issue-specific Trump item",
+      "action": "exclude",
+      "output_code": "exclude_general_presidential_approval",
+      "rationale": "Avoid mislabeling broad Trump job approval as an issue-specific topic such as economy/jobs/trade."
+    },
+    {
+      "rule_order": 4,
       "rule_id": "pew_judgment_family_supported",
       "stage": "inclusion_gate",
       "input_columns": [
@@ -266,7 +278,7 @@
       "rationale": "Only comparable judgment families are included."
     },
     {
-      "rule_order": 4,
+      "rule_order": 5,
       "rule_id": "pew_response_scale_known",
       "stage": "inclusion_gate",
       "input_columns": [
@@ -278,7 +290,7 @@
       "rationale": "Require interpretable response scale."
     },
     {
-      "rule_order": 5,
+      "rule_order": 6,
       "rule_id": "pew_issue_topic_single_match",
       "stage": "inclusion_gate",
       "input_columns": [
@@ -291,15 +303,15 @@
       "rationale": "Require single deterministic topic assignment."
     },
     {
-      "rule_order": 6,
+      "rule_order": 7,
       "rule_id": "pew_final_include",
       "stage": "final_keep_decision",
       "input_columns": [
         "exclude_code"
       ],
       "condition": "no exclusion code",
-      "action": "set include_for_rq4",
-      "output_code": "include_for_rq4=yes else no",
+      "action": "set include_for_rq3",
+      "output_code": "include_for_rq3=yes else no",
       "rationale": "Single deterministic include gate."
     }
   ]

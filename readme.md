@@ -26,9 +26,11 @@ Core design docs:
 - `scripts/validate_pew_wave_inputs.py`: preflight validation of wave folders (`.sav` required, `readme` recommended).
 - `scripts/build_pew_inventory.py`: generate one wave-level PEW inventory partial.
 - `scripts/merge_pew_inventories.py`: merge all wave partials into one master inventory.
-- `scripts/select_pew_for_rq4.py`: create a minimal, deterministic PEW selection table for RQ4.
+- `scripts/select_pew_for_rq3.py`: create a minimal, deterministic PEW selection table for RQ3.
 - `scripts/report_topic_overlap.py`: print PEW vs prompt-ready topic overlap and coverage counts.
-- `scripts/build_rq4_final_subsets.py`: build final overlap topic list and subset both PEW rows and posts.
+- `scripts/build_rq3_final_subsets.py`: build final overlap topic list and subset both PEW rows and posts.
+- `scripts/extract_pew_weighted_distributions.py`: extract weighted PEW response distributions from `.sav` for included RQ3 rows.
+- `scripts/compute_rq3_alignment.py`: compute synthetic topic distributions and PEW-vs-synthetic alignment metrics.
 - `scripts/build_run_provenance.py`: write a compact run-level provenance artifact under `reports/`.
 - `scripts/build_pipeline_summary.py`: generate run-level Markdown/JSON summary artifacts.
 - `scripts/export_methods_appendix.py`: export appendix-ready rules/regex/audit artifacts for methods reporting.
@@ -37,7 +39,7 @@ Core design docs:
 - `data/reference/methods/filter_spec.json`: machine-readable canonical filter/selection rule specification.
 - `data/reference/methods/topic_keywords.json`: canonical reusable topic-keyword registry (regex + rationale).
 - `data/interim/pew/pew_question_inventory.csv`: merged PEW inventory (generated).
-- `data/interim/pew/pew_rq4_inventory.csv`: RQ4 deterministic selection table (generated).
+- `data/interim/pew/pew_rq3_inventory.csv`: RQ3 deterministic selection table (generated).
 
 ## External Data Sources
 
@@ -156,10 +158,10 @@ python3 -c "import pypdf; print(pypdf.__version__)"
 3. Run `validate_topic_rules.py` to validate the shared topic-keyword registry.
 4. Run `build_pew_inventory.py` for each wave to create `pew_question_inventory_partial.csv`.
 5. Run `merge_pew_inventories.py` to produce `data/interim/pew/pew_question_inventory.csv`.
-6. Run `select_pew_for_rq4.py` to auto-select rows compatible with current RQ4 constraints.
+6. Run `select_pew_for_rq3.py` to auto-select rows compatible with current RQ3 constraints.
 7. Run `preprocess_posts.py` to generate prompt-ready post bundles.
 8. Run `report_topic_overlap.py` to inspect PEW-vs-post topic coverage.
-9. Run `build_rq4_final_subsets.py` to produce one final topic list and both final subsets.
+9. Run `build_rq3_final_subsets.py` to produce one final topic list and both final subsets.
 10. Run `build_run_provenance.py` to record run date, input files, and detected wave folders in `reports/`.
 11. Run `build_pipeline_summary.py` to produce auditable run summaries in `reports/`.
 12. Run `export_methods_appendix.py` to generate appendix-ready rule/pattern/audit artifacts in `reports/methods/`.
@@ -314,10 +316,10 @@ Arguments:
 Output:
 - `data/interim/pew/pew_question_inventory.csv`
 
-## Script: select_pew_for_rq4.py
+## Script: select_pew_for_rq3.py
 
 Purpose:
-- Applies deterministic RQ4 inclusion/exclusion rules.
+- Applies deterministic RQ3 inclusion/exclusion rules.
 - Produces a minimal selection table with deterministic include/exclude logic.
 - Provides auditability via `exclude_code` and `rule_trace`.
 - Uses the same shared topic regex registry as post preprocessing.
@@ -325,13 +327,13 @@ Purpose:
 Basic run:
 
 ```bash
-python3 scripts/select_pew_for_rq4.py --overwrite
+python3 scripts/select_pew_for_rq3.py --overwrite
 ```
 
 Arguments:
 - `--input` default `data/interim/pew/pew_question_inventory.csv`.
-- `--output` default `data/interim/pew/pew_rq4_inventory.csv`.
-- `--only-included` write only rows with `include_for_rq4=yes`.
+- `--output` default `data/interim/pew/pew_rq3_inventory.csv`.
+- `--only-included` write only rows with `include_for_rq3=yes`.
 - `--overwrite` replace existing output.
 
 Output columns:
@@ -340,7 +342,7 @@ Output columns:
   - `response_scale_raw`
   - `judgment_family`
   - `issue_topic`
-  - `include_for_rq4`
+  - `include_for_rq3`
   - `exclude_code`
   - `rule_trace`
 
@@ -348,14 +350,15 @@ Important:
 - This selector is intentionally high-precision and conservative.
 - Some waves can yield zero included rows if they do not match allowed topics/judgment forms.
 - `judgment_family` and `response_scale_raw` are computed for all rows (including excluded rows).
-- `issue_topic` is filled only when there is exactly one deterministic topic match; otherwise it remains empty.
+- `issue_topic` is filled only for included issue-specific rows with exactly one deterministic topic match; otherwise it remains empty.
 - `rule_trace` always records topic diagnostics (`topic_hits:...`) even when a row is excluded.
-- Console section `Included topic counts` counts only `include_for_rq4=yes` rows.
+- Broad Trump job-approval items are excluded with `exclude_general_presidential_approval` because they are not issue-specific enough for topic-level PEW comparison.
+- Console section `Included topic counts` counts only `include_for_rq3=yes` rows.
 
 ## Script: report_topic_overlap.py
 
 Purpose:
-- Prints topic coverage overlap between `data/interim/pew/pew_rq4_inventory.csv` and `data/interim/preprocessing/posts_prompt_ready.csv`.
+- Prints topic coverage overlap between `data/interim/pew/pew_rq3_inventory.csv` and `data/interim/preprocessing/posts_prompt_ready.csv`.
 - Shows overlap topics, PEW-only topics, post-only topics, and top counts.
 
 Basic run:
@@ -365,11 +368,11 @@ python3 scripts/report_topic_overlap.py
 ```
 
 Arguments:
-- `--pew` default `data/interim/pew/pew_rq4_inventory.csv`.
+- `--pew` default `data/interim/pew/pew_rq3_inventory.csv`.
 - `--posts` default `data/interim/preprocessing/posts_prompt_ready.csv`.
 - `--top-n` default `20`.
 
-## Script: build_rq4_final_subsets.py
+## Script: build_rq3_final_subsets.py
 
 Purpose:
 - Converts overlap analysis into concrete outputs for downstream prompting/analysis.
@@ -379,24 +382,81 @@ Purpose:
 Basic run:
 
 ```bash
-python3 scripts/build_rq4_final_subsets.py --overwrite
+python3 scripts/build_rq3_final_subsets.py --overwrite
 ```
 
 Arguments:
-- `--pew` default `data/interim/pew/pew_rq4_inventory.csv`.
+- `--pew` default `data/interim/pew/pew_rq3_inventory.csv`.
 - `--posts` default `data/interim/preprocessing/posts_prompt_ready.csv`.
-- `--outdir` default `data/interim/rq4`.
+- `--outdir` default `data/interim/rq3`.
 - `--min-pew-per-topic` default `1`.
 - `--min-posts-per-topic` default `1`.
 - `--overwrite` replace existing outputs.
 
-Outputs in `data/interim/rq4/`:
-1. `rq4_topics_final.csv` (`topic`, `pew_rows`, `post_rows`)
-2. `rq4_pew_subset.csv` (only included PEW rows in final topics)
-3. `rq4_posts_subset.csv` (only prompt-ready posts in final topics)
+Outputs in `data/interim/rq3/`:
+1. `rq3_topics_final.csv` (`topic`, `pew_rows`, `post_rows`)
+2. `rq3_pew_subset.csv` (only included PEW rows in final topics)
+3. `rq3_posts_subset.csv` (only prompt-ready posts in final topics)
 
 Column reference:
-- `docs/data_dictionary.md` (includes a full dictionary for `rq4_posts_subset.csv`)
+- `docs/data_dictionary.md` (includes a full dictionary for `rq3_posts_subset.csv`)
+
+## Script: extract_pew_weighted_distributions.py
+
+Purpose:
+- Reads included PEW rows from `rq3_pew_subset.csv`.
+- Resolves each row to its source wave `.sav` file.
+- Applies wave-level survey weights (`WEIGHT_*`) and computes weighted response distributions.
+- Writes question-level and topic-level PEW summaries for RQ3 alignment.
+
+Basic run:
+
+```bash
+python3 scripts/extract_pew_weighted_distributions.py --overwrite
+```
+
+Arguments:
+- `--pew-subset` default `data/interim/rq3/rq3_pew_subset.csv`.
+- `--waves-root` default `data/pew_datasets`.
+- `--output-dir` default `data/interim/rq3`.
+- `--overwrite` replace existing outputs.
+
+Outputs in `data/interim/rq3/`:
+1. `pew_weighted_question_summary.csv`
+2. `pew_weighted_question_distribution.csv`
+3. `pew_weighted_raw_value_distribution.csv`
+4. `pew_weighted_topic_summary.csv`
+5. `pew_weighted_extraction_issues.csv`
+6. `pew_weighted_manifest.json`
+
+## Script: compute_rq3_alignment.py
+
+Purpose:
+- Builds synthetic topic-level stance distributions from low-temperature RQ1 flat outputs.
+- Merges synthetic topic distributions with PEW weighted topic summaries.
+- Computes RQ3 alignment metrics per synthetic configuration:
+  - correlation (Pearson + Spearman)
+  - absolute error (MAE)
+  - rank agreement diagnostics
+
+Basic run:
+
+```bash
+python3 scripts/compute_rq3_alignment.py --overwrite
+```
+
+Arguments:
+- `--pew-topic-summary` default `data/interim/rq3/pew_weighted_topic_summary.csv`.
+- `--synthetic-bundle` default `docs/private/RQ1/RQ1_all_label_analysis/rq1_bundle_labels_flat.csv`.
+- `--synthetic-tweet` default `docs/private/RQ1/RQ1_all_label_analysis/rq1_tweet_labels_flat.csv`.
+- `--output-dir` default `data/interim/rq3`.
+- `--overwrite` replace existing outputs.
+
+Outputs in `data/interim/rq3/`:
+1. `synthetic_topic_summary.csv`
+2. `pew_synthetic_topic_comparison.csv`
+3. `pew_synthetic_alignment_metrics.csv`
+4. `rq3_alignment_manifest.json`
 
 ## Script: analyze_rq1_labels.py
 
@@ -540,7 +600,7 @@ Arguments:
 - `--posts-clean` default `data/interim/preprocessing/posts_clean.csv`.
 - `--posts-validated` default `data/interim/preprocessing/posts_topic_validated.csv`.
 - `--posts-prompt` default `data/interim/preprocessing/posts_prompt_ready.csv`.
-- `--pew-rq4` default `data/interim/pew/pew_rq4_inventory.csv`.
+- `--pew-rq3` default `data/interim/pew/pew_rq3_inventory.csv`.
 
 Outputs in `reports/methods/`:
 1. `filter_table.csv`
@@ -593,6 +653,7 @@ Arguments:
 
 Purpose:
 - Runs the full workflow in one command, in the same order as the recommended sequence.
+- Includes RQ3 subset generation and RQ3 PEW-vs-synthetic alignment outputs by default.
 
 Basic run:
 
@@ -654,10 +715,10 @@ done
 python3 scripts/merge_pew_inventories.py --overwrite
 ```
 
-6. Build deterministic RQ4 selection table:
+6. Build deterministic RQ3 selection table:
 
 ```bash
-python3 scripts/select_pew_for_rq4.py --overwrite
+python3 scripts/select_pew_for_rq3.py --overwrite
 ```
 
 7. Preprocess posts:
@@ -675,34 +736,46 @@ python3 scripts/report_topic_overlap.py
 9. Build final topics plus both final subsets:
 
 ```bash
-python3 scripts/build_rq4_final_subsets.py --overwrite
+python3 scripts/build_rq3_final_subsets.py --overwrite
 ```
 
-10. Build run provenance artifact:
+10. Extract weighted PEW response distributions for RQ3:
+
+```bash
+python3 scripts/extract_pew_weighted_distributions.py --overwrite
+```
+
+11. Compute PEW-vs-synthetic alignment metrics for RQ3:
+
+```bash
+python3 scripts/compute_rq3_alignment.py --overwrite
+```
+
+12. Build run provenance artifact:
 
 ```bash
 python3 scripts/build_run_provenance.py
 ```
 
-11. Build summary artifacts:
+13. Build summary artifacts:
 
 ```bash
 python3 scripts/build_pipeline_summary.py
 ```
 
-12. Export methods appendix artifacts:
+14. Export methods appendix artifacts:
 
 ```bash
 python3 scripts/export_methods_appendix.py
 ```
 
-13. Export sanitized publishable artifacts:
+15. Export sanitized publishable artifacts:
 
 ```bash
 python3 scripts/export_publishable_reports.py --overwrite
 ```
 
-14. Optionally rerun post preprocessing with manual overrides:
+16. Optionally rerun post preprocessing with manual overrides:
 
 ```bash
 python3 scripts/preprocess_posts.py --manual-review-csv manual_review_overrides.csv
@@ -717,7 +790,7 @@ Rule provenance and audit artifacts are fully script-generated:
    - `data/reference/methods/topic_keywords.json`
 3. Code-level rule implementation:
    - `scripts/preprocess_posts.py`
-   - `scripts/select_pew_for_rq4.py`
+   - `scripts/select_pew_for_rq3.py`
    - `scripts/topic_rules.py`
 4. Appendix-ready exports:
     - `reports/methods/filter_table.csv`

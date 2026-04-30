@@ -34,10 +34,10 @@ Key generated assets:
 - `data/interim/preprocessing/posts_prompt_ready.csv`
 - `data/interim/preprocessing/posts_moderation_analysis.csv`
 - `data/interim/pew/pew_question_inventory.csv`
-- `data/interim/pew/pew_rq4_inventory.csv`
-- `data/interim/rq4/rq4_topics_final.csv`
-- `data/interim/rq4/rq4_pew_subset.csv`
-- `data/interim/rq4/rq4_posts_subset.csv`
+- `data/interim/pew/pew_rq3_inventory.csv`
+- `data/interim/rq3/rq3_topics_final.csv`
+- `data/interim/rq3/rq3_pew_subset.csv`
+- `data/interim/rq3/rq3_posts_subset.csv`
 
 ## 3. Core Method Decisions
 
@@ -64,16 +64,18 @@ This separation avoids conflating moderation status with prompt-response measure
 ## 5. PEW Compatibility Strategy
 
 Selection is deterministic and script-based:
-- `scripts/select_pew_for_rq4.py`
+- `scripts/select_pew_for_rq3.py`
 
 A PEW row is included only when all conditions hold:
 1. Trump-targeted item.
 2. Supported judgment family (`approval`, `confidence`, or `policy_support`).
-3. Not in excluded forms (thermometer, trait, affective reaction, knowledge-only, broad favorability).
+3. Not in excluded forms (thermometer, trait, affective reaction, knowledge-only, broad favorability, broad presidential job approval).
 4. Exactly one issue-topic match.
 
+Broad Trump job-approval items are retained in the audit file but excluded from topic-specific comparison because they measure global presidential evaluation rather than an issue-specific public-opinion pattern.
+
 Output includes transparent diagnostics:
-- `include_for_rq4`
+- `include_for_rq3`
 - `exclude_code`
 - `rule_trace`
 
@@ -82,9 +84,9 @@ Output includes transparent diagnostics:
 1. Compute topic overlap:
    - `scripts/report_topic_overlap.py`
 2. Build final overlap-constrained subsets:
-   - `scripts/build_rq4_final_subsets.py`
+   - `scripts/build_rq3_final_subsets.py`
 
-Final comparison datasets (`rq4_pew_subset.csv`, `rq4_posts_subset.csv`) are restricted to the same topic set listed in `rq4_topics_final.csv`.
+Final comparison datasets (`rq3_pew_subset.csv`, `rq3_posts_subset.csv`) are restricted to the same topic set listed in `rq3_topics_final.csv`.
 
 ## 7. Reproducible Execution
 

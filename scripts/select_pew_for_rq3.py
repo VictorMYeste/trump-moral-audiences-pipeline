@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Build a minimal, deterministic PEW inventory for RQ4 without manual columns."""
+"""Build a minimal, deterministic PEW inventory for RQ3 without manual columns."""
 
 # Simple explanation of this script (step by step):
 # 1) Read the master PEW inventory.
 # 2) Detect whether each question targets Trump and what judgment type it uses.
-# 3) Exclude formats that are not comparable (thermometer, traits, affective reactions, etc.).
+# 3) Exclude formats that are not comparable (thermometer, traits, broad approval, etc.).
 # 4) Assign an issue topic with the shared topic keyword registry when there is a single clear match.
-# 5) Set `include_for_rq4` with deterministic rules and keep decision traces.
+# 5) Set `include_for_rq3` with deterministic rules and keep decision traces.
 
 from __future__ import annotations
 
@@ -21,20 +21,21 @@ import topic_rules as tr
 
 
 INPUT_DEFAULT = "data/interim/pew/pew_question_inventory.csv"
-OUTPUT_DEFAULT = "data/interim/pew/pew_rq4_inventory.csv"
+OUTPUT_DEFAULT = "data/interim/pew/pew_rq3_inventory.csv"
 
 ALLOWED_JUDGMENTS = {"approval", "confidence", "policy_support"}
 
-TRUMP_DIRECT_RE = re.compile(r"\b(trump|donald|president[- ]elect)\b", re.IGNORECASE)
+TRUMP_DIRECT_RE = re.compile(r"\b(trump|donald)\b", re.IGNORECASE)
+TRUMP_VARIABLE_RE = re.compile(r"(pol1dt|dtconf|trmp|trump)", re.IGNORECASE)
 PRESIDENT_REF_RE = re.compile(r"\b(the )?president\b", re.IGNORECASE)
 TRUMP_CONTEXT_HINT_RE = re.compile(
-    r"\b(impeach|impeachment|white house|administration|inquiry|job approval|job as president)\b",
+    r"\b(impeach|impeachment|ukraine inquiry|mueller|russia investigation)\b",
     re.IGNORECASE,
 )
 
 THERMOMETER_RE = re.compile(r"\bthermometer\b|\b0\s*(to|-)\s*100\b", re.IGNORECASE)
 TRAIT_RE = re.compile(
-    r"\b(honest|keeps? promises?|mentally sharp|even[- ]tempered|describe\s+donald trump)\b",
+    r"\b(honest|keeps? promises?|mentally sharp|mental fitness|physical fitness|fitness needed|qualities needed|effectively serve|even[- ]tempered|describe\s+donald trump)\b",
     re.IGNORECASE,
 )
 AFFECT_RE = re.compile(
@@ -44,6 +45,14 @@ KNOWLEDGE_RE = re.compile(
     r"\b(how much have you heard|as far as you know|know enough)\b", re.IGNORECASE
 )
 BROAD_FAVORABILITY_RE = re.compile(r"\b(favorable|unfavorable|favorability)\b", re.IGNORECASE)
+BROAD_JOB_APPROVAL_RE = re.compile(
+    r"\bjob\b.*\bpresident\b|\bpresident\b.*\bjob\b",
+    re.IGNORECASE,
+)
+PRESIDENT_ELECT_PLANS_RE = re.compile(
+    r"\bpresident[- ]elect\s+trump\b.*\b(policies and plans|done so far)\b",
+    re.IGNORECASE,
+)
 
 APPROVAL_RE = re.compile(r"\bapprove or disapprove\b|\bapprove\b.*\bdisapprove\b", re.IGNORECASE)
 CONFIDENCE_RE = re.compile(r"\bhow confident are you\b|\bconfidence\b", re.IGNORECASE)
@@ -58,7 +67,7 @@ TOPIC_PATTERNS: List[Tuple[str, re.Pattern[str]]] = tr.compile_topic_patterns(sc
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Select a minimal, deterministic PEW inventory for RQ4 from merged "
+            "Select a minimal, deterministic PEW inventory for RQ3 from merged "
             "pew_question_inventory.csv."
         )
     )
@@ -67,7 +76,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--only-included",
         action="store_true",
-        help="Write only rows with include_for_rq4=yes",
+        help="Write only rows with include_for_rq3=yes",
     )
     parser.add_argument(
         "--overwrite",
@@ -83,11 +92,17 @@ def normalize_whitespace(text: str) -> str:
 
 def is_trump_target(text: str, variable_name: str) -> Tuple[bool, str]:
     hay = f"{variable_name} {text}"
-    if TRUMP_DIRECT_RE.search(hay):
+    if TRUMP_DIRECT_RE.search(hay) or TRUMP_VARIABLE_RE.search(variable_name):
         return True, "trump_direct"
     if PRESIDENT_REF_RE.search(hay) and TRUMP_CONTEXT_HINT_RE.search(hay):
         return True, "president_context"
     return False, "not_trump_target"
+
+
+def is_general_presidential_approval(text: str) -> bool:
+    if not APPROVAL_RE.search(text):
+        return False
+    return bool(BROAD_JOB_APPROVAL_RE.search(text) or PRESIDENT_ELECT_PLANS_RE.search(text))
 
 
 def excluded_form_code(text: str) -> str:
@@ -134,7 +149,7 @@ def select_row(row: Dict[str, str]) -> Dict[str, str]:
     output["response_scale_raw"] = ""
     output["judgment_family"] = ""
     output["issue_topic"] = ""
-    output["include_for_rq4"] = "no"
+    output["include_for_rq3"] = "no"
     output["exclude_code"] = ""
     output["rule_trace"] = ""
 
@@ -144,7 +159,6 @@ def select_row(row: Dict[str, str]) -> Dict[str, str]:
     output["response_scale_raw"] = response_scale
     trace.append(f"judgment:{judgment_family}")
     issue_topic, topic_hits = infer_issue_topic(text, variable_name)
-    output["issue_topic"] = issue_topic
     trace.append(f"topic_hits:{'|'.join(topic_hits) if topic_hits else 'none'}")
 
     trump_ok, trump_trace = is_trump_target(text, variable_name)
@@ -158,6 +172,12 @@ def select_row(row: Dict[str, str]) -> Dict[str, str]:
     if excluded_code:
         trace.append(excluded_code)
         output["exclude_code"] = excluded_code
+        output["rule_trace"] = ";".join(trace)
+        return output
+
+    if is_general_presidential_approval(text):
+        trace.append("exclude_general_presidential_approval")
+        output["exclude_code"] = "exclude_general_presidential_approval"
         output["rule_trace"] = ";".join(trace)
         return output
 
@@ -181,7 +201,7 @@ def select_row(row: Dict[str, str]) -> Dict[str, str]:
     output["issue_topic"] = issue_topic
     trace.append(f"topic:{issue_topic}")
 
-    output["include_for_rq4"] = "yes"
+    output["include_for_rq3"] = "yes"
     output["exclude_code"] = ""
     output["rule_trace"] = ";".join(trace)
     return output
@@ -218,14 +238,14 @@ def main() -> None:
     input_fieldnames, rows = read_rows(input_path)
     selected = [select_row(row) for row in rows]
     if args.only_included:
-        selected = [row for row in selected if row["include_for_rq4"] == "yes"]
+        selected = [row for row in selected if row["include_for_rq3"] == "yes"]
 
     fieldnames = list(input_fieldnames)
     for col in [
         "response_scale_raw",
         "judgment_family",
         "issue_topic",
-        "include_for_rq4",
+        "include_for_rq3",
         "exclude_code",
         "rule_trace",
     ]:
@@ -233,18 +253,18 @@ def main() -> None:
             fieldnames.append(col)
     write_rows(output_path, selected, fieldnames)
 
-    include_counts = Counter(row["include_for_rq4"] for row in selected)
+    include_counts = Counter(row["include_for_rq3"] for row in selected)
     exclude_counts = Counter(row["exclude_code"] for row in selected if row["exclude_code"])
     judgment_counts = Counter(row["judgment_family"] for row in selected)
     topic_counts = Counter(
         row["issue_topic"]
         for row in selected
-        if row["include_for_rq4"] == "yes" and row["issue_topic"]
+        if row["include_for_rq3"] == "yes" and row["issue_topic"]
     )
 
     print(f"Input rows: {len(rows)}")
     print(f"Output rows: {len(selected)}")
-    print("include_for_rq4 counts:")
+    print("include_for_rq3 counts:")
     for key, val in sorted(include_counts.items()):
         print(f"  {key}: {val}")
     print("Top exclude_code counts:")

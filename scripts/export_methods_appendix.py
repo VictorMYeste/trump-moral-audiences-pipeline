@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Dict, Iterable, List, Sequence
 
 import preprocess_posts as pp
-import select_pew_for_rq4 as sp
+import select_pew_for_rq3 as sp
 import topic_rules as tr
 
 SPEC_DEFAULT = "data/reference/methods/filter_spec.json"
@@ -31,7 +31,7 @@ RAW_DEFAULTS = [
 POSTS_CLEAN_DEFAULT = "data/interim/preprocessing/posts_clean.csv"
 POSTS_VALIDATED_DEFAULT = "data/interim/preprocessing/posts_topic_validated.csv"
 POSTS_PROMPT_DEFAULT = "data/interim/preprocessing/posts_prompt_ready.csv"
-PEW_RQ4_DEFAULT = "data/interim/pew/pew_rq4_inventory.csv"
+PEW_RQ3_DEFAULT = "data/interim/pew/pew_rq3_inventory.csv"
 
 
 def parse_args() -> argparse.Namespace:
@@ -50,7 +50,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--posts-clean", default=POSTS_CLEAN_DEFAULT)
     parser.add_argument("--posts-validated", default=POSTS_VALIDATED_DEFAULT)
     parser.add_argument("--posts-prompt", default=POSTS_PROMPT_DEFAULT)
-    parser.add_argument("--pew-rq4", default=PEW_RQ4_DEFAULT)
+    parser.add_argument("--pew-rq3", default=PEW_RQ3_DEFAULT)
     return parser.parse_args()
 
 
@@ -188,7 +188,7 @@ def export_topic_patterns(outdir: Path, topic_spec_path: Path) -> Path:
                     "selection_rationale": rationale,
                     "source_basis": source_basis,
                     "used_in_preprocess_posts": "yes" if topic in posts_topics else "no",
-                    "used_in_select_pew_for_rq4": "yes" if topic in pew_topics else "no",
+                    "used_in_select_pew_for_rq3": "yes" if topic in pew_topics else "no",
                     "topic_spec_version": spec_version,
                 }
             )
@@ -204,7 +204,7 @@ def export_topic_patterns(outdir: Path, topic_spec_path: Path) -> Path:
             "selection_rationale",
             "source_basis",
             "used_in_preprocess_posts",
-            "used_in_select_pew_for_rq4",
+            "used_in_select_pew_for_rq3",
             "topic_spec_version",
         ],
         rows,
@@ -291,6 +291,12 @@ def export_pew_selection_rules(outdir: Path) -> Path:
             },
             {
                 "rule_group": "trump_target",
+                "rule_name": "TRUMP_VARIABLE_RE",
+                "output_code": "trump_direct (trace)",
+                "pattern": sp.TRUMP_VARIABLE_RE.pattern,
+            },
+            {
+                "rule_group": "trump_target",
                 "rule_name": "PRESIDENT_REF_RE + TRUMP_CONTEXT_HINT_RE",
                 "output_code": "president_context (trace)",
                 "pattern": f"{sp.PRESIDENT_REF_RE.pattern} && {sp.TRUMP_CONTEXT_HINT_RE.pattern}",
@@ -324,6 +330,18 @@ def export_pew_selection_rules(outdir: Path) -> Path:
                 "rule_name": "BROAD_FAVORABILITY_RE",
                 "output_code": "exclude_broad_favorability",
                 "pattern": sp.BROAD_FAVORABILITY_RE.pattern,
+            },
+            {
+                "rule_group": "excluded_form",
+                "rule_name": "BROAD_JOB_APPROVAL_RE",
+                "output_code": "exclude_general_presidential_approval",
+                "pattern": sp.BROAD_JOB_APPROVAL_RE.pattern,
+            },
+            {
+                "rule_group": "excluded_form",
+                "rule_name": "PRESIDENT_ELECT_PLANS_RE",
+                "output_code": "exclude_general_presidential_approval",
+                "pattern": sp.PRESIDENT_ELECT_PLANS_RE.pattern,
             },
             {
                 "rule_group": "judgment_family",
@@ -405,7 +423,7 @@ def export_decision_audit(
     if isinstance(spec_meta, dict):
         spec_version = str(spec_meta.get("spec_version", ""))
 
-    include_counts = Counter((r.get("include_for_rq4") or "").strip() for r in pew_rows)
+    include_counts = Counter((r.get("include_for_rq3") or "").strip() for r in pew_rows)
     pew_exclude_counts = Counter((r.get("exclude_code") or "").strip() for r in pew_rows if (r.get("exclude_code") or "").strip())
     post_exclude_counts = count_exclude_reasons(posts_validated_rows)
     moderation_counts = Counter((r.get("moderation_status") or "").strip() for r in posts_validated_rows if (r.get("moderation_status") or "").strip())
@@ -414,7 +432,7 @@ def export_decision_audit(
     pew_topic_counts = Counter(
         (r.get("issue_topic") or "").strip()
         for r in pew_rows
-        if (r.get("include_for_rq4") or "").strip().lower() == "yes" and (r.get("issue_topic") or "").strip()
+        if (r.get("include_for_rq3") or "").strip().lower() == "yes" and (r.get("issue_topic") or "").strip()
     )
     post_topic_counts = Counter((r.get("topic") or "").strip() for r in posts_prompt_rows if (r.get("topic") or "").strip())
     overlap_topics = sorted(set(pew_topic_counts) & set(post_topic_counts))
@@ -434,7 +452,7 @@ def export_decision_audit(
         ["posts_clean_rows", str(len(posts_clean_rows))],
         ["posts_topic_validated_rows", str(len(posts_validated_rows))],
         ["posts_prompt_ready_rows", str(len(posts_prompt_rows))],
-        ["pew_rq4_rows", str(len(pew_rows))],
+        ["pew_rq3_rows", str(len(pew_rows))],
         ["pew_include_yes", str(include_counts.get("yes", 0))],
         ["pew_include_no", str(include_counts.get("no", 0))],
         ["hard_drop_inferred", str(max(0, len(raw_rows) - len(posts_clean_rows)))],
@@ -506,7 +524,7 @@ def main() -> None:
     posts_clean_rows = read_csv_rows(Path(args.posts_clean))
     posts_validated_rows = read_csv_rows(Path(args.posts_validated))
     posts_prompt_rows = read_csv_rows(Path(args.posts_prompt))
-    pew_rows = read_csv_rows(Path(args.pew_rq4))
+    pew_rows = read_csv_rows(Path(args.pew_rq3))
 
     out_filter = export_filter_table(spec, outdir)
     out_topics = export_topic_patterns(outdir, topic_spec_path)

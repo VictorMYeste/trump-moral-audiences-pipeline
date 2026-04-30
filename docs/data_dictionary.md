@@ -1,6 +1,6 @@
 # Data Dictionary
 
-This document defines the main generated datasets used in the RQ4 pipeline.
+This document defines the main generated datasets used in the RQ3 pipeline.
 
 ## Scope
 
@@ -8,10 +8,10 @@ Covered files:
 - `data/interim/preprocessing/posts_topic_validated.csv`
 - `data/interim/preprocessing/posts_prompt_ready.csv`
 - `data/interim/pew/pew_question_inventory.csv`
-- `data/interim/pew/pew_rq4_inventory.csv`
-- `data/interim/rq4/rq4_topics_final.csv`
-- `data/interim/rq4/rq4_pew_subset.csv`
-- `data/interim/rq4/rq4_posts_subset.csv`
+- `data/interim/pew/pew_rq3_inventory.csv`
+- `data/interim/rq3/rq3_topics_final.csv`
+- `data/interim/rq3/rq3_pew_subset.csv`
+- `data/interim/rq3/rq3_posts_subset.csv`
 
 Not covered:
 - raw source data in `data/raw/`
@@ -24,10 +24,10 @@ Not covered:
 | `posts_topic_validated.csv` | `scripts/preprocess_posts.py` | raw post CSV | one post |
 | `posts_prompt_ready.csv` | `scripts/preprocess_posts.py` | `posts_topic_validated` in-memory state | one post kept for prompting |
 | `pew_question_inventory.csv` | `scripts/merge_pew_inventories.py` | per-wave PEW partial inventories | one PEW variable/question row |
-| `pew_rq4_inventory.csv` | `scripts/select_pew_for_rq4.py` | `pew_question_inventory.csv` | one PEW variable/question row with RQ4 decision fields |
-| `rq4_topics_final.csv` | `scripts/build_rq4_final_subsets.py` | `pew_rq4_inventory.csv` + `posts_prompt_ready.csv` | one overlap topic |
-| `rq4_pew_subset.csv` | `scripts/build_rq4_final_subsets.py` | `pew_rq4_inventory.csv` | one PEW row in final overlap topics (`include_for_rq4=yes`) |
-| `rq4_posts_subset.csv` | `scripts/build_rq4_final_subsets.py` | `posts_prompt_ready.csv` | one prompt-ready post in final overlap topics |
+| `pew_rq3_inventory.csv` | `scripts/select_pew_for_rq3.py` | `pew_question_inventory.csv` | one PEW variable/question row with RQ3 decision fields |
+| `rq3_topics_final.csv` | `scripts/build_rq3_final_subsets.py` | `pew_rq3_inventory.csv` + `posts_prompt_ready.csv` | one overlap topic |
+| `rq3_pew_subset.csv` | `scripts/build_rq3_final_subsets.py` | `pew_rq3_inventory.csv` | one PEW row in final overlap topics (`include_for_rq3=yes`) |
+| `rq3_posts_subset.csv` | `scripts/build_rq3_final_subsets.py` | `posts_prompt_ready.csv` | one prompt-ready post in final overlap topics |
 
 ## Shared Topic Labels
 
@@ -48,7 +48,7 @@ Current canonical topics:
 The following columns are shared by:
 - `posts_topic_validated.csv`
 - `posts_prompt_ready.csv`
-- `rq4_posts_subset.csv`
+- `rq3_posts_subset.csv`
 
 | Column | Type | Meaning | Typical values |
 |---|---|---|---|
@@ -86,8 +86,8 @@ The following columns are shared by:
 | `text_anon` | string | Anonymized text used for prompting. | free text |
 
 Notes:
-- `rq4_posts_subset.csv` is a filtered subset of `posts_prompt_ready.csv`, so `keep_for_prompt` is expected to be `yes`.
-- In current runs, `rq4_posts_subset.csv` typically has `topic_confidence=high` and empty `review_flag`.
+- `rq3_posts_subset.csv` is a filtered subset of `posts_prompt_ready.csv`, so `keep_for_prompt` is expected to be `yes`.
+- In current runs, `rq3_posts_subset.csv` typically has `topic_confidence=high` and empty `review_flag`.
 
 ## Shared Schema: PEW Inventory Base
 
@@ -101,8 +101,8 @@ The base PEW inventory columns are:
 
 Used in:
 - `pew_question_inventory.csv`
-- `pew_rq4_inventory.csv` (plus RQ4 decision columns)
-- `rq4_pew_subset.csv` (same columns as `pew_rq4_inventory.csv`)
+- `pew_rq3_inventory.csv` (plus RQ3 decision columns)
+- `rq3_pew_subset.csv` (same columns as `pew_rq3_inventory.csv`)
 
 | Column | Type | Meaning |
 |---|---|---|
@@ -113,13 +113,13 @@ Used in:
 | `variable_name` | string | PEW variable ID. Can be empty for placeholder metadata rows. |
 | `question_text_raw` | string | Extracted/cleaned question label text from `.sav` strings. |
 
-## Additional Schema: PEW RQ4 Decision Fields
+## Additional Schema: PEW RQ3 Decision Fields
 
-Columns appended by `scripts/select_pew_for_rq4.py`:
+Columns appended by `scripts/select_pew_for_rq3.py`:
 - `response_scale_raw`
 - `judgment_family`
 - `issue_topic`
-- `include_for_rq4`
+- `include_for_rq3`
 - `exclude_code`
 - `rule_trace`
 
@@ -127,8 +127,8 @@ Columns appended by `scripts/select_pew_for_rq4.py`:
 |---|---|---|---|
 | `response_scale_raw` | enum string | Deterministic inferred response-format family. | `approve_disapprove`, `very_somewhat_not_too_not_at_all_confident`, `favor_oppose`, `support_oppose`, `unknown` |
 | `judgment_family` | enum string | High-level judgment type used for inclusion logic. | `approval`, `confidence`, `policy_support`, `other` |
-| `issue_topic` | string | Deterministic single-topic match from shared topic registry. Empty when no unique match. | canonical topic or empty |
-| `include_for_rq4` | enum string | Final deterministic inclusion decision. | `yes`, `no` |
+| `issue_topic` | string | Deterministic single-topic match from shared topic registry for included issue-specific rows. Empty when no unique match or when an excluded row only has diagnostic topic hits. | canonical topic or empty |
+| `include_for_rq3` | enum string | Final deterministic inclusion decision. | `yes`, `no` |
 | `exclude_code` | string | First exclusion rule that fired. Empty when included. | e.g., `exclude_not_trump_target`, `exclude_judgment_not_supported` |
 | `rule_trace` | string | Semicolon-delimited diagnostics trace of decision path and topic hits. | free trace string |
 
@@ -160,16 +160,17 @@ Purpose:
 Current observed properties:
 - May include placeholder wave rows (`variable_name` empty) when no kept variable is available for that wave under current extraction/filter settings.
 
-### `data/interim/pew/pew_rq4_inventory.csv`
+### `data/interim/pew/pew_rq3_inventory.csv`
 
 Purpose:
-- Full PEW inventory with deterministic RQ4 selection diagnostics.
+- Full PEW inventory with deterministic RQ3 selection diagnostics.
 
 Current observed properties:
-- Contains both `include_for_rq4=yes` and `no`.
+- Contains both `include_for_rq3=yes` and `no`.
 - Included rows should have empty `exclude_code`.
+- Broad Trump job-approval rows are retained with `exclude_code=exclude_general_presidential_approval`; their topic hits remain visible in `rule_trace`, but `issue_topic` is left empty.
 
-### `data/interim/rq4/rq4_topics_final.csv`
+### `data/interim/rq3/rq3_topics_final.csv`
 
 Columns:
 - `topic`: canonical overlap topic.
@@ -179,17 +180,17 @@ Columns:
 Purpose:
 - Final topic list used to align both PEW and post subsets.
 
-### `data/interim/rq4/rq4_pew_subset.csv`
+### `data/interim/rq3/rq3_pew_subset.csv`
 
 Purpose:
 - Final PEW rows restricted to:
-  - `include_for_rq4=yes`
+  - `include_for_rq3=yes`
   - topics present in final overlap list
 
 Schema:
-- Same 12 columns as `pew_rq4_inventory.csv`.
+- Same 12 columns as `pew_rq3_inventory.csv`.
 
-### `data/interim/rq4/rq4_posts_subset.csv`
+### `data/interim/rq3/rq3_posts_subset.csv`
 
 Purpose:
 - Final prompt-ready post rows restricted to final overlap topics.
@@ -199,4 +200,4 @@ Schema:
 
 Current observed properties:
 - `keep_for_prompt=yes` for all rows.
-- Rows are topic-aligned with `rq4_pew_subset.csv` via `rq4_topics_final.csv`.
+- Rows are topic-aligned with `rq3_pew_subset.csv` via `rq3_topics_final.csv`.

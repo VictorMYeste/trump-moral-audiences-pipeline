@@ -1,6 +1,6 @@
 # Pipeline Summary
 
-Generated (UTC): `2026-03-30T13:26:54.237307+00:00`
+Generated (UTC): `2026-04-30T15:52:17.832439+00:00`
 
 ## Headline Counts
 
@@ -9,9 +9,9 @@ Generated (UTC): `2026-03-30T13:26:54.237307+00:00`
 | wave_partial_files | 157 |
 | wave_partial_rows_total | 981 |
 | merged_inventory_rows | 981 |
-| rq4_inventory_rows | 981 |
-| rq4_include_yes | 93 |
-| rq4_include_no | 888 |
+| rq3_inventory_rows | 981 |
+| rq3_include_yes | 25 |
+| rq3_include_no | 956 |
 | posts_validated_rows | 23230 |
 | posts_prompt_ready_rows | 5270 |
 | final_topics_rows | 5 |
@@ -179,15 +179,16 @@ Generated (UTC): `2026-03-30T13:26:54.237307+00:00`
 | W99_Nov21-1 | 1 | data/pew_datasets/W99_Nov21-1/pew_question_inventory_partial.csv |
 | W9_Nov14 | 1 | data/pew_datasets/W9_Nov14/pew_question_inventory_partial.csv |
 
-## RQ4 Exclude Codes
+## RQ3 Exclude Codes
 
 | exclude_code | count |
 | --- | --- |
-| exclude_not_trump_target | 466 |
-| exclude_judgment_not_supported | 304 |
+| exclude_not_trump_target | 502 |
+| exclude_judgment_not_supported | 303 |
 | exclude_affective_reaction | 47 |
-| exclude_trait | 39 |
-| exclude_no_topic_match | 19 |
+| exclude_trait | 44 |
+| exclude_general_presidential_approval | 31 |
+| exclude_no_topic_match | 16 |
 | exclude_multi_topic_ambiguous | 5 |
 | exclude_knowledge_or_awareness | 5 |
 | exclude_thermometer | 2 |
@@ -198,7 +199,7 @@ Generated (UTC): `2026-03-30T13:26:54.237307+00:00`
 | issue_topic | count |
 | --- | --- |
 | covid_public_health | 5 |
-| economy_jobs_trade | 75 |
+| economy_jobs_trade | 7 |
 | foreign_policy_national_security | 5 |
 | immigration_border | 4 |
 | judiciary_courts | 4 |
@@ -229,7 +230,7 @@ Generated (UTC): `2026-03-30T13:26:54.237307+00:00`
 | topic | pew_included_rows | prompt_ready_rows |
 | --- | --- | --- |
 | covid_public_health | 5 | 251 |
-| economy_jobs_trade | 75 | 1116 |
+| economy_jobs_trade | 7 | 1116 |
 | foreign_policy_national_security | 5 | 1112 |
 | immigration_border | 4 | 539 |
 | judiciary_courts | 4 | 300 |
@@ -239,7 +240,7 @@ Generated (UTC): `2026-03-30T13:26:54.237307+00:00`
 | topic | pew_rows | post_rows |
 | --- | --- | --- |
 | covid_public_health | 5 | 251 |
-| economy_jobs_trade | 75 | 1116 |
+| economy_jobs_trade | 7 | 1116 |
 | foreign_policy_national_security | 5 | 1112 |
 | immigration_border | 4 | 539 |
 | judiciary_courts | 4 | 300 |

@@ -1,11 +1,14 @@
 rule_group,rule_name,output_code,pattern
-trump_target,TRUMP_DIRECT_RE,trump_direct (trace),\b(trump|donald|president[- ]elect)\b
-trump_target,PRESIDENT_REF_RE + TRUMP_CONTEXT_HINT_RE,president_context (trace),\b(the )?president\b && \b(impeach|impeachment|white house|administration|inquiry|job approval|job as president)\b
+trump_target,TRUMP_DIRECT_RE,trump_direct (trace),\b(trump|donald)\b
+trump_target,TRUMP_VARIABLE_RE,trump_direct (trace),(pol1dt|dtconf|trmp|trump)
+trump_target,PRESIDENT_REF_RE + TRUMP_CONTEXT_HINT_RE,president_context (trace),\b(the )?president\b && \b(impeach|impeachment|ukraine inquiry|mueller|russia investigation)\b
 excluded_form,THERMOMETER_RE,exclude_thermometer,\bthermometer\b|\b0\s*(to|-)\s*100\b
-excluded_form,TRAIT_RE,exclude_trait,\b(honest|keeps? promises?|mentally sharp|even[- ]tempered|describe\s+donald trump)\b
+excluded_form,TRAIT_RE,exclude_trait,\b(honest|keeps? promises?|mentally sharp|mental fitness|physical fitness|fitness needed|qualities needed|effectively serve|even[- ]tempered|describe\s+donald trump)\b
 excluded_form,AFFECT_RE,exclude_affective_reaction,\b(feel|frustrated|angry|hopeful|proud|surprised|excited|upset)\b
 excluded_form,KNOWLEDGE_RE,exclude_knowledge_or_awareness,\b(how much have you heard|as far as you know|know enough)\b
 excluded_form,BROAD_FAVORABILITY_RE,exclude_broad_favorability,\b(favorable|unfavorable|favorability)\b
+excluded_form,BROAD_JOB_APPROVAL_RE,exclude_general_presidential_approval,\bjob\b.*\bpresident\b|\bpresident\b.*\bjob\b
+excluded_form,PRESIDENT_ELECT_PLANS_RE,exclude_general_presidential_approval,\bpresident[- ]elect\s+trump\b.*\b(policies and plans|done so far)\b
 judgment_family,APPROVAL_RE,approval,\bapprove or disapprove\b|\bapprove\b.*\bdisapprove\b
 judgment_family,CONFIDENCE_RE,confidence,\bhow confident are you\b|\bconfidence\b
 judgment_family,FAVOR_OPPOSE_RE,policy_support,\bfavor or oppose\b|\bfavor\b.*\boppose\b

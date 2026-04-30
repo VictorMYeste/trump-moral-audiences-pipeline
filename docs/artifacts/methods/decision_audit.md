@@ -1,7 +1,7 @@
 # Decision Audit
 
-Generated (UTC): `2026-03-30T13:26:56.402531+00:00`
-Rule spec version: `1.1.0`
+Generated (UTC): `2026-04-30T15:52:18.126477+00:00`
+Rule spec version: `1.2.0`
 
 ## Stage Counts
 
@@ -11,9 +11,9 @@ Rule spec version: `1.1.0`
 | posts_clean_rows | 23230 |
 | posts_topic_validated_rows | 23230 |
 | posts_prompt_ready_rows | 5270 |
-| pew_rq4_rows | 981 |
-| pew_include_yes | 93 |
-| pew_include_no | 888 |
+| pew_rq3_rows | 981 |
+| pew_include_yes | 25 |
+| pew_include_no | 956 |
 | hard_drop_inferred | 8136 |
 
 ## Post Exclusion Reasons
@@ -46,11 +46,12 @@ Rule spec version: `1.1.0`
 
 | exclude_code | count |
 | --- | --- |
-| exclude_not_trump_target | 466 |
-| exclude_judgment_not_supported | 304 |
+| exclude_not_trump_target | 502 |
+| exclude_judgment_not_supported | 303 |
 | exclude_affective_reaction | 47 |
-| exclude_trait | 39 |
-| exclude_no_topic_match | 19 |
+| exclude_trait | 44 |
+| exclude_general_presidential_approval | 31 |
+| exclude_no_topic_match | 16 |
 | exclude_multi_topic_ambiguous | 5 |
 | exclude_knowledge_or_awareness | 5 |
 | exclude_thermometer | 2 |
@@ -61,7 +62,7 @@ Rule spec version: `1.1.0`
 | topic | pew_included_rows | prompt_ready_rows |
 | --- | --- | --- |
 | covid_public_health | 5 | 251 |
-| economy_jobs_trade | 75 | 1116 |
+| economy_jobs_trade | 7 | 1116 |
 | foreign_policy_national_security | 5 | 1112 |
 | immigration_border | 4 | 539 |
 | judiciary_courts | 4 | 300 |

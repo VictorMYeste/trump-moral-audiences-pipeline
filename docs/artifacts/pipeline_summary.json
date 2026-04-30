@@ -1,12 +1,12 @@
 {
-  "generated_utc": "2026-03-30T13:26:54.237307+00:00",
+  "generated_utc": "2026-04-30T15:52:17.832439+00:00",
   "counts": {
     "wave_partial_files": 157,
     "wave_partial_rows_total": 981,
     "merged_inventory_rows": 981,
-    "rq4_inventory_rows": 981,
-    "rq4_include_yes": 93,
-    "rq4_include_no": 888,
+    "rq3_inventory_rows": 981,
+    "rq3_include_yes": 25,
+    "rq3_include_no": 956,
     "posts_validated_rows": 23230,
     "posts_prompt_ready_rows": 5270,
     "final_topics_rows": 5,
@@ -799,21 +799,22 @@
       "rows": "1"
     }
   ],
-  "rq4_exclude_counts": {
-    "exclude_not_trump_target": 466,
+  "rq3_exclude_counts": {
+    "exclude_not_trump_target": 502,
     "exclude_affective_reaction": 47,
-    "exclude_judgment_not_supported": 304,
+    "exclude_judgment_not_supported": 303,
+    "exclude_general_presidential_approval": 31,
     "exclude_multi_topic_ambiguous": 5,
-    "exclude_no_topic_match": 19,
+    "exclude_no_topic_match": 16,
     "exclude_knowledge_or_awareness": 5,
     "exclude_broad_favorability": 1,
-    "exclude_trait": 39,
+    "exclude_trait": 44,
     "exclude_thermometer": 2
   },
-  "rq4_included_topic_counts": {
-    "economy_jobs_trade": 75,
+  "rq3_included_topic_counts": {
     "judiciary_courts": 4,
     "immigration_border": 4,
+    "economy_jobs_trade": 7,
     "covid_public_health": 5,
     "foreign_policy_national_security": 5
   },
@@ -847,7 +848,7 @@
     },
     {
       "topic": "economy_jobs_trade",
-      "pew_rows": "75",
+      "pew_rows": "7",
       "post_rows": "1116"
     },
     {

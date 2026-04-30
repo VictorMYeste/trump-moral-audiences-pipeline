@@ -15,7 +15,7 @@ Validator:
 
 The project uses one topic system for:
 1. Post preprocessing (`scripts/preprocess_posts.py`)
-2. PEW alignment (`scripts/select_pew_for_rq4.py`)
+2. PEW alignment (`scripts/select_pew_for_rq3.py`)
 
 Using a shared registry prevents silent drift between topic filters in different scripts.
 
@@ -43,7 +43,7 @@ Keywords are selected with a conservative, high-precision policy:
 ## 4. Reuse Contract
 
 1. Topic matching logic must be loaded from `topic_keywords.json` via `scripts/topic_rules.py`.
-2. `scripts/preprocess_posts.py` and `scripts/select_pew_for_rq4.py` should not hardcode topic regexes.
+2. `scripts/preprocess_posts.py` and `scripts/select_pew_for_rq3.py` should not hardcode topic regexes.
 3. `scripts/validate_topic_rules.py` must pass before pipeline execution.
 
 ## 5. Audit and Appendix Outputs
@@ -57,7 +57,7 @@ This table includes:
 3. `applies_to`
 4. `selection_rationale`
 5. `source_basis`
-6. script-usage flags (`used_in_preprocess_posts`, `used_in_select_pew_for_rq4`)
+6. script-usage flags (`used_in_preprocess_posts`, `used_in_select_pew_for_rq3`)
 7. topic spec version
 
 ## 6. Change-Control Checklist

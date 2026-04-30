@@ -2248,10 +2248,10 @@ Rows read: 981
 Duplicate rows dropped (pew_wave + variable_name): 0
 Rows written: 981
 Output: data/interim/pew/pew_question_inventory.csv
-[4/12] Selecting PEW rows for RQ4...
+[4/12] Selecting PEW rows for RQ3...
 Input rows: 981
 Output rows: 981
-include_for_rq4 counts:
+include_for_rq3 counts:
   no: 888
   yes: 93
 Top exclude_code counts:
@@ -2275,7 +2275,7 @@ Included topic counts:
   foreign_policy_national_security: 5
   immigration_border: 4
   judiciary_courts: 4
-Output: data/interim/pew/pew_rq4_inventory.csv
+Output: data/interim/pew/pew_rq3_inventory.csv
 [5/12] Preprocessing posts...
 Input files: 2
   - data/raw/trump_archive_me2bert_filtered_2009_2021.csv
@@ -2309,10 +2309,10 @@ keep_for_prompt counts:
   no: 17960
   yes: 5270
 [6/12] Reporting topic overlap...
-PEW file: data/interim/pew/pew_rq4_inventory.csv
+PEW file: data/interim/pew/pew_rq3_inventory.csv
 Posts file: data/interim/preprocessing/posts_prompt_ready.csv
 PEW rows: 981
-PEW included rows (include_for_rq4=yes): 93
+PEW included rows (include_for_rq3=yes): 93
 PEW excluded rows: 888
 Prompt-ready posts rows: 5270
 
@@ -2368,8 +2368,8 @@ Top prompt-ready post topic counts (top 20):
   crime_policing_criminal_justice  | 505  
   judiciary_courts                 | 300  
   covid_public_health              | 251  
-[7/12] Building final RQ4 topic list and subsets...
-PEW file: data/interim/pew/pew_rq4_inventory.csv
+[7/12] Building final RQ3 topic list and subsets...
+PEW file: data/interim/pew/pew_rq3_inventory.csv
 Posts file: data/interim/preprocessing/posts_prompt_ready.csv
 min_pew_per_topic: 1
 min_posts_per_topic: 1
@@ -2380,9 +2380,9 @@ Overlap topics before thresholds: 5
 Final topics after thresholds: 5
 PEW subset rows written: 93
 Posts subset rows written: 3318
-Topics output: data/interim/rq4/rq4_topics_final.csv
-PEW subset output: data/interim/rq4/rq4_pew_subset.csv
-Posts subset output: data/interim/rq4/rq4_posts_subset.csv
+Topics output: data/interim/rq3/rq3_topics_final.csv
+PEW subset output: data/interim/rq3/rq3_pew_subset.csv
+Posts subset output: data/interim/rq3/rq3_posts_subset.csv
 [8/12] Writing run provenance artifact...
 Run provenance written: reports/run_provenance.md
 Run provenance JSON: reports/run_provenance.json

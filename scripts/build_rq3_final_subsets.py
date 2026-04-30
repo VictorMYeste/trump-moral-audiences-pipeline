@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Build final RQ4 topic list plus PEW/posts subsets from overlap topics."""
+"""Build final RQ3 topic list plus PEW/posts subsets from overlap topics."""
 
 # Simple explanation of this script (step by step):
-# 1) Load the PEW inventory already filtered for RQ4 and the prompt-ready posts.
+# 1) Load the PEW inventory already filtered for RQ3 and the prompt-ready posts.
 # 2) Find topics that exist in both datasets.
 # 3) Apply minimum thresholds per topic (PEW rows and post rows).
 # 4) Write three final outputs: topic list, PEW subset, and post subset.
@@ -16,18 +16,18 @@ from pathlib import Path
 from typing import Dict, List, Tuple
 
 
-PEW_DEFAULT = "data/interim/pew/pew_rq4_inventory.csv"
+PEW_DEFAULT = "data/interim/pew/pew_rq3_inventory.csv"
 POSTS_DEFAULT = "data/interim/preprocessing/posts_prompt_ready.csv"
-OUTDIR_DEFAULT = "data/interim/rq4"
+OUTDIR_DEFAULT = "data/interim/rq3"
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Build final RQ4 topics and write PEW/posts subsets restricted to overlap topics."
+            "Build final RQ3 topics and write PEW/posts subsets restricted to overlap topics."
         )
     )
-    parser.add_argument("--pew", default=PEW_DEFAULT, help=f"PEW RQ4 CSV (default: {PEW_DEFAULT})")
+    parser.add_argument("--pew", default=PEW_DEFAULT, help=f"PEW RQ3 CSV (default: {PEW_DEFAULT})")
     parser.add_argument(
         "--posts",
         default=POSTS_DEFAULT,
@@ -89,9 +89,9 @@ def main() -> None:
     if not posts_path.exists():
         raise FileNotFoundError(f"Posts file not found: {posts_path}")
 
-    topics_path = outdir / "rq4_topics_final.csv"
-    pew_subset_path = outdir / "rq4_pew_subset.csv"
-    posts_subset_path = outdir / "rq4_posts_subset.csv"
+    topics_path = outdir / "rq3_topics_final.csv"
+    pew_subset_path = outdir / "rq3_pew_subset.csv"
+    posts_subset_path = outdir / "rq3_posts_subset.csv"
 
     if not args.overwrite:
         for target in [topics_path, pew_subset_path, posts_subset_path]:
@@ -103,16 +103,16 @@ def main() -> None:
     pew_fields, pew_rows = read_csv(pew_path)
     posts_fields, posts_rows = read_csv(posts_path)
 
-    required_pew_cols = {"issue_topic", "include_for_rq4"}
+    required_pew_cols = {"issue_topic", "include_for_rq3"}
     if not required_pew_cols.issubset(set(pew_fields)):
-        raise ValueError("PEW CSV must include columns: issue_topic, include_for_rq4")
+        raise ValueError("PEW CSV must include columns: issue_topic, include_for_rq3")
     if "topic" not in set(posts_fields):
         raise ValueError("Posts CSV must include column: topic")
 
     pew_included = [
         row
         for row in pew_rows
-        if normalized(row.get("include_for_rq4", "")).lower() == "yes"
+        if normalized(row.get("include_for_rq3", "")).lower() == "yes"
         and normalized(row.get("issue_topic", ""))
     ]
     pew_topic_counts = Counter(normalized(row.get("issue_topic", "")) for row in pew_included)

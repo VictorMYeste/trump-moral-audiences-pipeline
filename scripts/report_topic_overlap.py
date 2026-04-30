@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Report topic overlap between PEW RQ4 inventory and prompt-ready posts."""
+"""Report topic overlap between PEW RQ3 inventory and prompt-ready posts."""
 
 # Simple explanation of this script (step by step):
-# 1) Read the PEW inventory for RQ4 and the prompt-ready posts.
+# 1) Read the PEW inventory for RQ3 and the prompt-ready posts.
 # 2) Count topics in both datasets.
 # 3) Show overlap (shared topics) and topics that are missing on one side.
 # 4) Print diagnostic tables to support coverage decisions.
@@ -16,18 +16,18 @@ from pathlib import Path
 from typing import Dict, List, Set
 
 
-PEW_DEFAULT = "data/interim/pew/pew_rq4_inventory.csv"
+PEW_DEFAULT = "data/interim/pew/pew_rq3_inventory.csv"
 POSTS_DEFAULT = "data/interim/preprocessing/posts_prompt_ready.csv"
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Print topic coverage overlap between PEW RQ4 inventory and prompt-ready "
+            "Print topic coverage overlap between PEW RQ3 inventory and prompt-ready "
             "posts."
         )
     )
-    parser.add_argument("--pew", default=PEW_DEFAULT, help=f"PEW RQ4 CSV (default: {PEW_DEFAULT})")
+    parser.add_argument("--pew", default=PEW_DEFAULT, help=f"PEW RQ3 CSV (default: {PEW_DEFAULT})")
     parser.add_argument(
         "--posts",
         default=POSTS_DEFAULT,
@@ -88,16 +88,16 @@ def main() -> None:
     pew_rows = read_csv(pew_path)
     posts_rows = read_csv(posts_path)
 
-    required_pew = {"issue_topic", "include_for_rq4", "exclude_code"}
+    required_pew = {"issue_topic", "include_for_rq3", "exclude_code"}
     if not required_pew.issubset(pew_rows[0].keys() if pew_rows else set()):
         raise ValueError(
-            "PEW CSV must include columns: issue_topic, include_for_rq4, exclude_code"
+            "PEW CSV must include columns: issue_topic, include_for_rq3, exclude_code"
         )
     if "topic" not in (posts_rows[0].keys() if posts_rows else set()):
         raise ValueError("Posts CSV must include column: topic")
 
-    pew_included = [row for row in pew_rows if row.get("include_for_rq4", "").strip().lower() == "yes"]
-    pew_excluded = [row for row in pew_rows if row.get("include_for_rq4", "").strip().lower() != "yes"]
+    pew_included = [row for row in pew_rows if row.get("include_for_rq3", "").strip().lower() == "yes"]
+    pew_excluded = [row for row in pew_rows if row.get("include_for_rq3", "").strip().lower() != "yes"]
 
     pew_topic_included_counts = Counter(
         normalize_topic(row.get("issue_topic", "")) for row in pew_included if normalize_topic(row.get("issue_topic", ""))
@@ -122,7 +122,7 @@ def main() -> None:
     print(f"PEW file: {pew_path}")
     print(f"Posts file: {posts_path}")
     print(f"PEW rows: {len(pew_rows)}")
-    print(f"PEW included rows (include_for_rq4=yes): {len(pew_included)}")
+    print(f"PEW included rows (include_for_rq3=yes): {len(pew_included)}")
     print(f"PEW excluded rows: {len(pew_excluded)}")
     print(f"Prompt-ready posts rows: {len(posts_rows)}")
     print("")
