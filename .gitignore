@@ -25,3 +25,6 @@ data/interim/
 
 # Local generated run artifacts
 reports/
+
+# Paper
+paper/
